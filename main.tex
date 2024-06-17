@@ -1,0 +1,130 @@
+\documentclass[12pt,a4paper,twoside,english,final]{ETHthesis}
+
+\input{_packages}
+\input{_macros}
+\input{mypackages}
+\input{notation}
+
+\bibliography{ref}
+
+
+\include{glossary}
+
+\begin{document}
+\initETHthesis
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COVER PAGE %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\dissnum{$000000$}
+\title{Learning to align single-cell populations}
+\author{Stefan Stark}
+% \acatitle{\normalsize M.Sc. in Applied Mathematics and Physics,\\Moscow Institute of Physics and Technology}
+\dateofbirth{March $11$, $1992$}
+\citizen{United States}
+%\date{November 2020}
+\Year{2024}
+\examiners{
+	\normalsize
+  Prof.\ Dr.\ Gunnar R\"atsch (ETH Zurich), examiner\linebreak
+  Dr.\ Kjong-van Lehmann (RWATH), examiner\linebreak
+  Prof. Dr.\ Andreas Krause (ETH Zurich), co-examiner\linebreak
+  Prof. Dr.\ Oliver Stegle (EMBL), co-examiner\linebreak
+}
+\support{}
+\disclaimer{}
+\pagestyle{empty}
+\hypersetup{pageanchor=false}
+\maketitle
+\hypersetup{pageanchor=true}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{plain}
+\pagenumbering{roman}
+%\include{sections/preamble}
+\cleardoublepageempty{}
+\selectlanguage{english}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\cftbeforechapskip}{4mm}
+\setcounter{tocdepth}{1}
+\pagestyle{myheadings}
+\pdfbookmark[0]{\contentsname}{contents}
+\tableofcontents
+\cleardoublepageempty{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GLOSSARY %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printnoidxglossaries
+\cleardoublepageempty{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BODY %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{arabic}
+\cleardoublepageempty{}
+\include{outline.tex}
+
+
+% \graphicspath{{chapter_1/}}
+% \include{chapter_1/chap_1_intro}
+
+% \graphicspath{{chapter_2/}}
+% \include{chapter_2/chap_2_content}
+
+% % multi-brwt and binary annotations
+% \graphicspath{{chapter_3/}}
+% \include{chapter_3/chap_3_content}
+% \graphicspath{{chapter_4/}}
+% \include{chapter_4/chap_4_content}
+% \graphicspath{{chapter_5/}}
+% \include{chapter_5/chap_5_content}
+% \graphicspath{{chapter_6/}}
+% \include{chapter_6/chap_6_content}
+
+% \include{sections/discussion}
+
+\cleardoublepageempty{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \appendix
+% \part{Appendix}
+% \include{sections/appendix}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LIST OF TABLES / FIGURES / ALGORITHMS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pdfbookmark[-1]{Lists of Tables}{lot}
+\phantomsection\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables{}
+\cleardoublepageempty{}
+% \listsubcaptions
+\pdfbookmark[-1]{Lists of Figures}{lof}
+\phantomsection\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures{}
+\cleardoublepageempty{}
+\pdfbookmark[-1]{Lists of Algorithms}{loa}
+\phantomsection\addcontentsline{toc}{chapter}{\listalgorithmname}
+\listofalgorithms{}
+\cleardoublepageempty{}
+
+
+%%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY %
+%%%%%%%%%%%%%%%%%
+\let\l\relax
+\phantomsection\addcontentsline{toc}{chapter}{\bibname}
+\pdfbookmark[-1]{Bibliography}{book:bibliography}
+\printbibliography{}
+\cleardoublepageempty{}
+\clearpage
+\cleardoublepageempty{}
+\end{document}

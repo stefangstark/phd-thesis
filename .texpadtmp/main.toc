@@ -1,0 +1,52 @@
+\babel@toc {english}{}\relax 
+\vspace {-\cftbeforepartskip }
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}{Introduction}}{2}{chapter.1}%
+\contentsline {subsection}{\numberline {1.0.1}{Scope}}{2}{subsection.1.0.1}%
+\contentsline {subsection}{\numberline {1.0.2}{Publications}}{2}{subsection.1.0.2}%
+\contentsline {subsection}{\numberline {1.0.3}{Collaborators}}{2}{subsection.1.0.3}%
+\contentsline {section}{\numberline {1.1}{Individual cells as complex machinery}}{2}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}{central dogma}}{2}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}{pathways \& signaling hierarchies}}{2}{subsection.1.1.2}%
+\contentsline {section}{\numberline {1.2}{ Single-cell profiling technologies}}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}{scRNA-seq}}{2}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}{CyTOF}}{2}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}{4i \& Proteomic imaging}}{2}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}{Constructing single-cell representations}}{2}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}{eg. autoencoders}}{2}{subsection.1.3.1}%
+\contentsline {section}{\numberline {1.4}{Casting as alignment}}{2}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}{Holistic view of cells}}{2}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}{Dynamic processes}}{2}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}{The observation problem}}{2}{subsection.1.4.3}%
+\contentsline {chapter}{\numberline {2}{Multi-modal integration}}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}{Learning perturbation responses}}{6}{chapter.3}%
+\contentsline {section}{\numberline {3.1}{Related works}}{6}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}{Piece-wise linear approximations}}{6}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}{Linear shifts in latent space}}{6}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}{Optimal transport}}{6}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}{Primal OT formulation}}{6}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}{Dual OT formulation}}{6}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}{Neural optimal transport}}{6}{subsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}{ICNNs}}{6}{subsubsection.3.2.3.1}%
+\contentsline {section}{\numberline {3.3}{Predicting perturbation responses with CellOT}}{6}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}{IID: learning cancer treatment outcomes in two modalities}}{6}{subsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.1.1}{utilized metrics}}{6}{subsubsection.3.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.3.1.2}{lack of ground truth \& qualitative analyses}}{6}{subsubsection.3.3.1.2}%
+\contentsline {subsection}{\numberline {3.3.2}{OOD: generalizing responses}}{6}{subsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.1}{Cross species}}{6}{subsubsection.3.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.3.2.2}{Lupus patients}}{6}{subsubsection.3.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.3.2.3}{Stem cell development}}{6}{subsubsection.3.3.2.3}%
+\contentsline {chapter}{\numberline {4}{Clinical applications}}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}{Cohort description}}{7}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}{challenges, standardization, normalization}}{7}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}{heterogeneity, overview, etc}}{7}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}{Learning patient responses}}{7}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}{quantitative metrics}}{7}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}{clinical associations}}{7}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}{ Predicting patient responses}}{7}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}{ quantitative metrics}}{7}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}{ prediction task}}{7}{subsection.4.3.2}%
+\contentsline {chapter}{\numberline {5}{Towards single-cell foundation models: interpretable latent spaces}}{9}{chapter.5}%
+\contentsline {chapter}{List of Tables}{11}{section*.1}%
+\contentsline {chapter}{List of Figures}{13}{section*.2}%
+\contentsline {chapter}{List of Algorithms}{15}{section*.3}%

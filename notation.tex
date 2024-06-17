@@ -1,0 +1,303 @@
+% !TEX root = main.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Overall commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comments
+\newcommand{\FL}[1]{{\textcolor{blue}{{\bf FL:} #1}}}
+
+% Common expressions
+\newcommand{\ie}{\textit{i.e.}\xspace}
+\newcommand{\eg}{\textit{e.g.}\xspace}
+\newcommand{\iid}{\textit{i.i.d.}\xspace}
+
+% Full citations
+\makeatletter
+\newcommand{\upmax}{\def\blx@maxcitenames{99}}
+\newcommand{\dnmax}{\def\blx@maxcitenames{1}}
+\makeatother
+\newcommand{\myfullcite}[1]{\upmax\fullcite{#1}\dnmax}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN BACKGROUND
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Big-O notation
+\newcommand{\Or}[1]{\mathcal{O}\mathopen{}\left(#1\right)\mathclose{}}
+\newcommand{\OrTilde}[1]{\tilde{\mathcal{O}}\mathopen{}\left(#1\right)\mathclose{}}
+\newcommand{\Th}[1]{\Theta\mathopen{}\left(#1\right)\mathclose{}}
+\newcommand{\Om}[1]{\Omega\mathopen{}\left(#1\right)\mathclose{}}
+
+\newcommand{\encase}[1]{{\left[#1\right]}}
+\newcommand{\brac}[1]{{\left(#1\right)}}
+
+
+% Real numbers
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+% Optimization notation
+\newcommand{\trace}{\operatorname{tr}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\norm}[1]{\Vert #1 \Vert}
+\newcommand{\ip}[2]{\big\langle #1, \, #2 \big\rangle}
+\newcommand{\prox}[1]{\mathrm{prox}_{#1}}
+\newcommand{\proj}[1]{\mathrm{proj}_{#1}}
+\newcommand{\lmo}{\textit{lmo}\xspace}
+\def\bbE{{\mathbb{E}}}
+\def\E{{\mathbb{E}}}
+\def\sR{{\mathbb{R}}}
+\def\sZ{{\mathbb{Z}}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Optimization problems
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\lin}{lin}
+\DeclareMathOperator{\cone}{cone}
+
+% VI Commands
+\newcommand{\dkl}{D^{KL}}
+\newcommand{\KL}{D^{KL}}
+\newcommand{\relbo}{\textsc{RELBO}\xspace}
+
+
+% Algorithms
+\newcommand{\FW}{{\textsf{\tiny FW}}}
+
+
+\DeclareMathOperator{\l1}{L1-ball}
+\DeclareMathOperator{\Cf}{C_f}
+\DeclareMathOperator{\radius}{\mathrm{radius}}
+\DeclareMathOperator{\diam}{\mathrm{diam}}
+\DeclareMathOperator{\mdw}{mDW(\cA)}
+\DeclareMathOperator{\ama}{{\cA\cup-\cA}}
+\DeclareMathOperator{\amx}{\left\lbrace\cA\cup-\frac{\theta_k}{\|\theta_k\|_\cA}\right\rbrace}
+\DeclareMathOperator{\amxnok}{\left\lbrace\cA\cup-\frac{\theta}{\|\theta\|_\cA}\right\rbrace}
+\DeclareMathOperator{\faces}{faces}
+\DeclareMathOperator{\gfaces}{g-faces}
+\DeclareMathOperator{\madw}{mADW(\cA)}
+\DeclareMathOperator{\cw}{CWidth(\cA)}
+\DeclareMathOperator{\clip}{clip}
+
+% Matchal laetters
+\def\cA{\mathcal{A}}
+\def\cB{\mathcal{B}}
+\def\cD{\mathcal{D}}
+\def\cF{\mathcal{F}}
+\def\cH{\mathcal{H}}
+\def\cK{\mathcal{K}}
+\def\cL{\mathcal{L}}
+\def\cN{\mathcal{N}}
+\def\cQ{\mathcal{Q}}
+\def\cS{\mathcal{S}}
+\def\cT{\mathcal{T}}
+\def\cZ{\mathcal{Z}}
+
+% Random Variables
+\def\rva{{\mathbf{a}}}
+\def\rvb{{\mathbf{b}}}
+\def\rvc{{\mathbf{c}}}
+\def\rvd{{\mathbf{d}}}
+\def\rve{{\mathbf{e}}}
+\def\rvf{{\mathbf{f}}}
+\def\rvg{{\mathbf{g}}}
+\def\rvh{{\mathbf{h}}}
+\def\rvu{{\mathbf{i}}}
+\def\rvj{{\mathbf{j}}}
+\def\rvk{{\mathbf{k}}}
+\def\rvl{{\mathbf{l}}}
+\def\rvm{{\mathbf{m}}}
+\def\rvn{{\mathbf{n}}}
+\def\rvo{{\mathbf{o}}}
+\def\rvp{{\mathbf{p}}}
+\def\rvq{{\mathbf{q}}}
+\def\rvr{{\mathbf{r}}}
+\def\rvs{{\mathbf{s}}}
+\def\rvt{{\mathbf{t}}}
+\def\rvu{{\mathbf{u}}}
+\def\rvv{{\mathbf{v}}}
+\def\rvw{{\mathbf{w}}}
+\def\rvx{{\mathbf{x}}}
+\def\rvy{{\mathbf{y}}}
+\def\rvz{{\mathbf{z}}}
+
+\def\sfA{\mathsf{A}}
+\def\sfQ{\mathsf{Q}}
+\def\sfZ{\mathsf{Z}}
+
+% Random variables
+\def\reta{{\textnormal{$\eta$}}}
+\def\ra{{\textnormal{a}}}
+\def\rb{{\textnormal{b}}}
+\def\rc{{\textnormal{c}}}
+\def\rd{{\textnormal{d}}}
+\def\re{{\textnormal{e}}}
+\def\rf{{\textnormal{f}}}
+\def\rg{{\textnormal{g}}}
+\def\rh{{\textnormal{h}}}
+\def\ri{{\textnormal{i}}}
+\def\rj{{\textnormal{j}}}
+\def\rk{{\textnormal{k}}}
+\def\rl{{\textnormal{l}}}
+% rm is already a command, just don't name any random variables m
+\def\rn{{\textnormal{n}}}
+\def\ro{{\textnormal{o}}}
+\def\rp{{\textnormal{p}}}
+\def\rq{{\textnormal{q}}}
+\def\rr{{\textnormal{r}}}
+\def\rs{{\textnormal{s}}}
+\def\rt{{\textnormal{t}}}
+\def\ru{{\textnormal{u}}}
+\def\rv{{\textnormal{v}}}
+\def\rw{{\textnormal{w}}}
+\def\rx{{\textnormal{x}}}
+\def\ry{{\textnormal{y}}}
+\def\rz{{\textnormal{z}}}
+
+
+\def\va{{\textbf{a}}}
+\def\vb{{\textbf{b}}}
+\def\vc{{\textbf{c}}}
+\def\vd{{\textbf{d}}}
+\def\ve{{\textbf{e}}}
+\def\vf{{\textbf{f}}}
+\def\vg{{\textbf{g}}}
+\def\vh{{\textbf{h}}}
+\def\vi{{\textbf{i}}}
+\def\vj{{\textbf{j}}}
+\def\vk{{\textbf{k}}}
+\def\vl{{\textbf{l}}}
+\def\vm{{\textbf{m}}}
+\def\vn{{\textbf{n}}}
+\def\vo{{\textbf{o}}}
+\def\vp{{\textbf{p}}}
+\def\vq{{\textbf{q}}}
+\def\vr{{\textbf{r}}}
+\def\vs{{\textbf{s}}}
+\def\vt{{\textbf{t}}}
+\def\vu{{\textbf{u}}}
+\def\vv{{\textbf{v}}}
+\def\vw{{\textbf{w}}}
+\def\vx{{\textbf{x}}}
+\def\vy{{\textbf{y}}}
+\def\vz{{\textbf{z}}}
+
+% Matrix
+\def\mA{{\textbf{A}}}
+\def\mB{{\textbf{B}}}
+\def\mC{{\textbf{C}}}
+\def\mD{{\textbf{D}}}
+\def\mE{{\textbf{E}}}
+\def\mF{{\textbf{F}}}
+\def\mG{{\textbf{G}}}
+\def\mH{{\textbf{H}}}
+\def\mI{{\textbf{I}}}
+\def\mJ{{\textbf{J}}}
+\def\mK{{\textbf{K}}}
+\def\mL{{\textbf{L}}}
+\def\mM{{\textbf{M}}}
+\def\mN{{\textbf{N}}}
+\def\mO{{\textbf{O}}}
+\def\mP{{\textbf{P}}}
+\def\mQ{{\textbf{Q}}}
+\def\mR{{\textbf{R}}}
+\def\mS{{\textbf{S}}}
+\def\mT{{\textbf{T}}}
+\def\mU{{\textbf{U}}}
+\def\mV{{\textbf{V}}}
+\def\mW{{\textbf{W}}}
+\def\mX{{\textbf{X}}}
+\def\mY{{\textbf{Y}}}
+\def\mZ{{\textbf{Z}}}
+
+\def\gA{{\mathcal{A}}}
+\def\gB{{\mathcal{B}}}
+\def\gC{{\mathcal{C}}}
+\def\gD{{\mathcal{D}}}
+\def\gE{{\mathcal{E}}}
+\def\gF{{\mathcal{F}}}
+\def\gG{{\mathcal{G}}}
+\def\gH{{\mathcal{H}}}
+\def\gI{{\mathcal{I}}}
+\def\gJ{{\mathcal{J}}}
+\def\gK{{\mathcal{K}}}
+\def\gL{{\mathcal{L}}}
+\def\gM{{\mathcal{M}}}
+\def\gN{{\mathcal{N}}}
+\def\gO{{\mathcal{O}}}
+\def\gP{{\mathcal{P}}}
+\def\gQ{{\mathcal{Q}}}
+\def\gR{{\mathcal{R}}}
+\def\gS{{\mathcal{S}}}
+\def\gT{{\mathcal{T}}}
+\def\gU{{\mathcal{U}}}
+\def\gV{{\mathcal{V}}}
+\def\gW{{\mathcal{W}}}
+\def\gX{{\mathcal{X}}}
+\def\gY{{\mathcal{Y}}}
+\def\gZ{{\mathcal{Z}}}
+
+
+\renewcommand{\P}{P}
+\newcommand{\Q}{Q}
+
+\DeclareRobustCommand{\myhammer}{%
+  \begingroup\normalfont
+  \includegraphics[height=1.1\fontcharht\font`\B]{sections/disent/figures/hammer.pdf}%
+  \endgroup
+}
+\newcommand{\PA}{\textbf{PA}}
+\newcommand{\supp}{\operatorname{supp}}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\newcommand{\softmax}[1]{\texttt{Softmax}\,(#1)}
+\newcommand{\dotp}[1]{\texttt{dot}\,(#1)}
+\newcommand{\reducesum}[1]{\texttt{reduce\_sum}\,(#1)}
+\newcommand{\gru}[2]{\texttt{GRU}\,(#1, \ #2)}
+\newcommand{\slots}[0]{\texttt{slots}}
+\newcommand{\attn}[0]{\texttt{attn}}
+\newcommand{\inp}[0]{\texttt{inputs}}
+\newcommand{\mlp}[0]{\texttt{MLP}}
+\newcommand{\sam}[0]{Slot Attention\xspace}
+\newcommand{\w}[0]{\texttt{w}}
+\newcommand{\updates}[0]{\texttt{updates}}
+\newcommand{\layernorm}[0]{\texttt{LayerNorm}}
+\newcommand\myeq{\mkern0.5mu{=}\mkern6mu}
+% \renewcommand{\algorithmiccomment}[1]{#1}
+
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\select}{select}
+\newcommand{\kmer}{\operatorname{\text{k-mer}}}
+
+\makeatletter\renewcommand{\ALG@beginalgorithmic}{\small}\makeatother
+\newcommand*\Let[2]{#1 $\gets$ #2}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+\algrenewcommand\algorithmicrequire{\textbf{Precondition:}}
+\algrenewcommand\algorithmicensure{\textbf{Postcondition:}}
+% declaration of the new block
+% \algblock{ParFor}{EndParFor}
+% customising the new block
+% \algnewcommand\algorithmicparfor{\textbf{parfor}}
+\algnewcommand\algorithmicpardo{\textbf{do}}
+% \algnewcommand\algorithmicendparfor{\textbf{end\ parfor}}
+% \algrenewtext{ParFor}[1]{\algorithmicparfor\ #1\ \algorithmicpardo}
+% \algrenewtext{EndParFor}{\algorithmicendparfor}
+
+% declaration of the new block
+\algblock{ParForAll}{EndParForAll}
+% customising the new block
+\algnewcommand\algorithmicparforall{\textbf{for all}}
+\algnewcommand\algorithmicparforalldo{\textbf{parallel do}}
+\algrenewtext{ParForAll}[1]{\algorithmicparforall\ #1\ \algorithmicparforalldo}
+\algtext*{EndParForAll}%
+
+\def\code#1{\texttt{#1}}

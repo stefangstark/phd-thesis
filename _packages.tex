@@ -1,0 +1,97 @@
+% !TEX root = main.tex
+\usepackage{ETHthesis}
+\usepackage[english]{babel}
+
+% Fonts
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[usenames, dvipsnames]{xcolor}
+\usepackage[dottedtoc,floatperchapter,parts]{classicthesis}
+
+% \usepackage[showframe]{geometry} # Useful to check hbox issues
+\usepackage{amsmath, amssymb, amsthm}
+
+% Biblio
+\usepackage{csquotes}
+\usepackage[backend=bibtex,
+            style=alphabetic, natbib=true, url=false,
+            isbn=false, backref=true, maxcitenames=3,
+            maxbibnames=35]{biblatex}
+
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{bbm}
+\usepackage{dsfont}
+\usepackage{mathtools}
+\usepackage{graphicx}
+
+% Tables
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+% Algorithms
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm,algorithmicx}
+\usepackage{eqparbox}
+\usepackage{xspace}
+
+\usepackage{enumitem}
+\setlist[enumerate]{leftmargin=*}
+
+\usepackage{titlesec}
+\usepackage{hyperref}
+\hypersetup{pdfauthor={Mikhail Karasikov}, pdftitle={}, pdfsubject={A thesis submitted to attain the degree of Doctor of Sciences to ETH Zurich},
+            pdflang={en}, bookmarksnumbered, pageanchor=true, plainpages=false, colorlinks=true, linktocpage=true,
+            citecolor=MidnightBlue, filecolor=BrickRed, linkcolor=NavyBlue, urlcolor=ForestGreen}
+
+\definecolor{light-gray}{gray}{0.65}
+\titleformat{\chapter}% Command
+[display]% shape
+{\bfseries\Large}% Format for the whole title
+{\filleft{\fontsize{80}{100}\selectfont\color{light-gray}\thechapter}}% Label
+{-25pt}% horizontal separation (vertical for display)
+{\filleft\fontsize{26}{35}\selectfont}% Before Code
+[\vspace{5pt}\titlerule]
+
+%% Page Layout
+\setlength{\topmargin}{-7.5mm}
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{+12.5mm}
+\setlength{\textheight}{220mm}
+\setlength{\footskip}{+20.mm}
+\setlength{\textwidth}{161mm} %!!!
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.25ex minus 0.25ex}
+\iftwoside
+\setlength{\oddsidemargin}{3mm}
+\setlength{\evensidemargin}{-3mm}
+\else
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\fi
+\raggedbottom
+
+%% Float Placement
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.1}
+\renewcommand{\baselinestretch}{1.15}
+
+% Allow subsubsections to have numbers (and be references)
+\setcounter{secnumdepth}{3}
+% Allow subsubsections to appear in the TOC
+\setcounter{tocdepth}{3}
+% \setcounter{lofdepth}{2} % we want subfigures in the list of figures
+
+%% Line spacing
+\linespread{1.25}
+
+%% Avoid Widows and Orphans
+\widowpenalty=1000
+\clubpenalty=1000
+
+\vfuzz2pt % Don't report over-full v-boxes if over-edge is small
+\hfuzz2pt % Don't report over-full h-boxes if over-edge is smallq
