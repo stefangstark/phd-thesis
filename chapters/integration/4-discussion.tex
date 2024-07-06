@@ -1,0 +1,40 @@
+\section{Discussion}
+We have developed SCIM, a new technology-invariant approach that pairs single-cell measurements across multi-modal datasets, without requiring feature correspondences.
+This development enables real multi-modal single-cell analysis, and opens up new opportunities to gain a multi-view understanding of the dynamics of individual cells in various disease or developmental states.
+The underlying autoencoder framework, combined with a customized bipartite matching approach, ensures scalability even to large numbers of cells.
+ 
+We demonstrate that our model performs well on simulated data as well as on real-world melanoma and bone marrow samples profiled with scRNA and CyTOF.
+The SCIM framework is presented here on two and three data modalities and easily extends to additional technologies, providing a new and effective solution to the multi-level data integration problem.
+Integration of Image Mass Cytometry \cite{Giesen2014} or single-cell ATAC-seq data \cite{Buenrostro2015} for example, could enable the spatial analysis of regulatory and global expression changes not just in cancer but also in other diseases such as multiple sclerosis, where detailed spatiotemporal information has already been shown to provide relevant insights \cite{Ramaglia2019}.
+Notably, SCIM allows for the integration of cell populations  undergoing branching processes, enabling the study of temporal phenomena, such as developmental and cell fate determination.
+The scalability of our framework ensures applicability beyond single samples, facilitating the study of large cohorts or the integration of SCIM into analytical workflows.
+ 
+As the low-dimensional representation of the data produced by SCIM is used solely to perform cell matching, it can be combined with any other analytical methods.
+The truly observed signals per cell pair measured with different technologies can be used for any downstream analysis.
+By adopting a divergence measure \cite{Wang2009}, we addressed common constraints in adversarial training, such as training instability and convergence problems.
+To ensure scalability, we used a modified bipartite matching solution to efficiently match corresponding cells across technologies.
+Our extensions guarantee  wider applicability of SCIM, since shifts in cell-type composition across disjoint aliquots, even coming from the same sample, can be expected.
+Furthermore, the introduction of the \textit{null} node ensures a higher quality of matches by avoiding forced mismatches and thus, improving confidence in the cell-to-cell assignments.
+
+With increasing data dimensionality, the number of nearest neighbours (\textit{k}) should also rise, since more ties are likely to occur.
+Nevertheless, the difference in the number of true positives across various values of \textit{k} for the same dataset remains within 6\% in our experiments.
+Hence, we can state that performance is robust against the choice of this hyperparameter.
+Depending on the actual data, bounded or unbounded edge capacities (nearest neighbor approach) may be preferable.
+Furthermore, SCIM is itself inherently modular, and other matching strategies that may be more suitable to other data types or experimental designs can be easily deployed on the integrated latent codes.
+
+SCIM helps bridge the gap between data generation and integrative interpretation of diverse multi-modal data in the rapidly expanding field of single-cell biology, providing users with an easily scalable algorithm designed to maximize the information it provides and not limited to fit a particular analytical approach.
+
+\paragraph{Recent developments}
+% TODO: major: read the OT integration paper for more models, write discussion
+\begin{enumerate}
+  \item GLUE, etc
+\end{enumerate}
+
+\begin{enumerate}
+  \item SCIM has inspired applications in independent analyses of multimodal single-cell datasets
+  \item explain FLE \& WAH papers, usecase, modalities
+  \item the authors replace the auto-encoder framework with a simpler CCA
+  \item nonetheless they have cited SCIM as inspiration and retained the bipartite matching
+  \item MEI et al use GLUE and then bipartite match
+\end{enumerate}
+
