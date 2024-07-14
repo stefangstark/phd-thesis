@@ -1,0 +1,14 @@
+**.log
+**.aux
+**.blg
+**.lof
+**.gz
+**.DS_store
+**.fls
+**.fdb_latexmk
+**.lot
+**.out
+**.pdf
+
+examples
+.texpadtmp
