@@ -1,7 +1,7 @@
 \section{Results}
 
 \subsection{IID performance}
-\begin{figure}[htb]
+\begin{figure}[h]
   \begin{center}
     \includegraphics[width=0.95\textwidth]{./figures/cellot-cohort/iid-predictions.pdf}
   \end{center}
@@ -11,7 +11,7 @@
 % TODO: caption
 % TODO: text
 
-\begin{figure}
+\begin{figure}[h]
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/iid-associations.pdf}
   \end{center}
@@ -21,7 +21,7 @@
 % TODO: caption
 % TODO: text
 
-\begin{figure}
+\begin{figure}[h]
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/ood-eval-logmmd.pdf}
   \end{center}
@@ -30,12 +30,12 @@
     For each $\text{(drug, patient)}$ pair, models are trained on the entire cohort with that patient held out.
     Each model predicts the drug response of the heldout patient
     and logMMD values are computed between the distribution of predicted treated states and the true treated states.
-    Negative values correspond to settings where $\textsc{CellOT}$ improve over the the corresponding baseline.
+    Negative values correspond to settings where $\textsc{CellOT}$ improves over the corresponding baseline.
   }
 \label{fig:ood-eval-logmmd}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/ood-eval-marker.pdf}
   \end{center}
@@ -44,7 +44,7 @@
     For each $\text{(drug, patient)}$ pair, models are trained on the entire cohort with that patient held out.
     Each model predicts the drug response of the heldout patient
     and marker EMD values are computed between the distribution of predicted treated states and the true treated states.
-    Negative values correspond to settings where $\textsc{CellOT}$ improve over the the corresponding baseline.
+    Negative values correspond to settings where $\textsc{CellOT}$ improves over the corresponding baseline.
   }
   \label{fig:ood-eval-marker}
 \end{figure}
@@ -87,25 +87,8 @@
 \end{figure}
 % TODO: text
 
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/condot.pdf}
-  \end{center}
-  \caption{
-    Predicting strongly differential responses to Dabrafenib of holdout samples using Conditional CellOT.
-    a) Dendrogram of sample-level pairwise similarities of Dabrafenib responses, computed using the MMD distances between each sample's distribution of IID-predicted responses reveal similarly responding clusters of non-BRAF samples, BRAF samples with no lines of treatment, and BRAF samples with at least one line of treatment.
-    Samples (columns) are colored based on the number of lines of treatment and driver mutation status.
-    b) Differential effect strength of Dabrafenib, measured using the EMD of its marker, pERK, between control and treated cells of samples with and without the BRAF driver mutation that the treatment targets.
-    c) Predicted responses of pERK for samples with and without the BRAF driver mutation, in both IID and OOD settings.
-    OOD $\textsc{CellOT}$ is not able to generalize the differential responses out-of-distribution, while the conditional model has improved performance when compared to the IID model.
-    d) Improvements of the pERK marker EMD for predictions made by the conditional CellOT vs other approaches. The metric is computed on the predictions of each approach on cells from holdout samples and the pairwise differences to conditional CellOT are shown. Negative values correspond to improvements Conditional CellOT makes. 
-    e) pERK marker marginals for CellOT and conditional CellOT models for BRAF positive (top) and negative (bottom) samples.
-  }\label{fig:conditional-ot}
-\end{figure}
-% TODO: text
-
 \subsection{OOD performance}
-\begin{figure}
+\begin{figure}[ht!]
   \label{fig:ood-main}
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/ood.pdf}
@@ -127,7 +110,7 @@
   }
 \end{figure}
 
-In order to simulate the clinic environment, we construct, for each patient, a training set composed of all other patients in the cohort (Fig\ref{fig:ood-main}a).
+In order to simulate the clinic environment, we construct, for each patient, a training set composed of all other patients in the cohort (Fig \ref{fig:ood-main}a).
 Then, for each perturbation available,
 we train a model on the control and treated cells across the whole observed cohort
 and apply this model to predict the responses of the unseen patient.
@@ -140,7 +123,7 @@ For instance, for trametinib, this feature is pERK.
 The marker feature is of particular interest to the clinician as this typically corresponds to the cellular pathways the treatment is designed to control.
 
 Within each treatment, we compare the ability of CellOT to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
-Fig\ref{fig:ood-main}b shows for which treatments there are significant differences across the whole cohort between
+Fig \ref{fig:ood-main}b shows for which treatments there are significant differences across the whole cohort between
 the metric reported by CellOT and the baseline approach, as measured by a relative t-test (p-value < 0.01).
 The full distributions for the differences of these metrics can be found in Figures \ref{fig:ood-eval-logmmd} and \ref{fig:ood-eval-marker}.
 We demonstrate that we are able to make strong gains in many perturbation settings, including most of the targeted therapies.
@@ -149,19 +132,56 @@ Many other treatments tend to have more subtle effects, wherein individual effec
 However, CellOT rarely underperforms against the baselines, and in the few cases when it does, it does so with small effect sizes.
 Note that while scGen tends to capture the response of a particular marker feature (EMD metric), it struggles to capture realistic cellular states (MMD metric), while the other baseline methods have the inverse behavior.
 CellOT is able to offer the best of both, highlighting its robustness and stability.
-We furthermore provide some example marginals (Fig\ref{fig:ood-main}c, full set in Supplemental Fig \ref{}), showcasing how CellOT is able to learn biologically relevant states.
+We furthermore provide some example marginals (Fig \ref{fig:ood-main}c, full set in Fig \ref{fig:ood-predict-marginals}), showcasing how CellOT is able to learn biologically relevant states.
 We include the MMD metric corresponding to the selected CellOT predictions, to give a general indication of how well the model is performing.
 
-Finally, for some treatments, we observed strongly differential responses across the cohort.
-This is in particular true for some types of targeted therapies which are intended to be prescribed for patients with specific driver mutations.
-In the case of dabrafenib, we see such a strongly differential structure in the responses across the cohort.
-Fig\ref{fig:ood-main}d) reports a dendrogram computed over the pairwise similarities over the set of each patient’s individual CellOT responses, computed as in Fig 4a, where a strong clustering of BRAF v600 patients is observed.
-We then train a version of CellOT with conditional parameters \cite{} able to inform and influence its learned responses with clinical metadata, Fig\ref{fig:ood-main}e.
-We condition on both driver mutation status as well as the number of lines of treatment.
-While we trained this model across all treatments and holdout patients,
-CellOT was already able to capture such differential response behavior and the added conditional parameters did not improve its performance.
-Marginals highlighting the differential response behavior are shown in Fig\ref{fig:ood-main}f, where it can been seen that conditional CellOT better learns that mekakyd, a sample without the driver mutation, has a minimal response to dabrafenib, while the stronger response of modulol, a BRAF v600 positive patient, is captured, see Supplemental Fig X for a more indepth analysis.
+\subsection{Learning differential responses with conditional parameters}
 
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/condot.pdf}
+  \end{center}
+  \caption{
+    Predicting strongly differential responses to Dabrafenib of holdout samples using Conditional CellOT.
+    a) Dendrogram of sample-level pairwise similarities of Dabrafenib responses, computed using the MMD distances between each sample's distribution of IID-predicted responses reveal similarly responding clusters of non-BRAF samples, BRAF samples with no lines of treatment, and BRAF samples with at least one line of treatment.
+    Samples (columns) are colored based on the number of lines of treatment and driver mutation status.
+    b) Differential effect strength of Dabrafenib, measured using the EMD of its marker, pERK, between control and treated cells of samples with and without the BRAF driver mutation that the treatment targets.
+    c) Predicted responses of pERK for samples with and without the BRAF driver mutation, in both IID and OOD settings.
+    OOD $\textsc{CellOT}$ is not able to generalize the differential responses out-of-distribution, while the conditional model has improved performance when compared to the IID model.
+    d) Improvements of the pERK marker EMD for predictions made by the conditional CellOT vs other approaches. The metric is computed on the predictions of each approach on cells from holdout samples and the pairwise differences to conditional CellOT are shown. Negative values correspond to improvements Conditional CellOT makes. 
+    e) pERK marker marginals for CellOT and conditional CellOT models for BRAF positive (top) and negative (bottom) samples.
+  }\label{fig:conditional-ot}
+\end{figure}
+
+A common strategy in the design of cancer therapies is to tailor the treatment to interact with some specific mechanism that fails across a number of different cancers.
+These \emph{targetted} therapies would, for instance, be designed to treat patients with some driver mutation, such as the infamous BRAF driver mutation \cite{}.
+In such cases, the cellular profile might not capture information crucial to determining the nature of the response, e.g. the presense of the BRAF mutation,
+and therefore $\textsc{CellOT}$ performance, as we have described thus far, may struggle.
+Here we apply the framework described by \cite{} to include sample metadata, in the form of \emph{conditional} parameters, in order to help the transport function learn such differential responses.
+
+Here, we focus on the dabrafenib treatment, a targetted therapy to treat BRAF-positive patients.
+We observe a strongly differential structure in the responses across the cohort.
+Sample similarities are determined by computing the MMD between the learned (IID) single-cell responses of each pair of samples.
+Fig \ref{fig:conditional-ot}a) shows a dendrogram computed over the set of these pairwise similarities where were we find three main clusters: non-BRAF samples, BRAF positive samples with no previous lines of treatment, and BRAF positive samples with at least one line of treatment.
+While the differential response across BRAF status can be easily explained by the targetted nature of the treatment, the differential resposne to number of treatment lines might be due to a particularly advanced or difficult cancer that necessitates several rounds of treatment.
+Fig \ref{fig:conditional-ot}b shows the differential response of pERK, the marker feature for dabrafenib, across BRAF mutation status, by computing the EMD of pERK between the control and observed dabrafenib responses.
+Here we observe that dabrafenib induces a strong pERK response in patients with the BRAF mutation, but a weak response in those without,
+an observation is in agreement with the intended design and use of the drug.
+
+In order to learn the strongly differential response of dabrafenib,
+we train a version of CellOT whose inputs inputs are \emph{conditioned} \cite{condot} with the status of the sample's driver mutation and lines of treatment. 
+These conditional parameters are able to inform and influence its learned responses with clinical metadata
+This is acheived by concatenating a one-hot encoding of each metadata to the cellular features.
+Note that while the potentials trained by $\textsc{CellOT}$ must be convex in their inputs,
+they do not need to be convex in these conditional inputs \cite{icnn}.
+
+By comparing the conditional $\textsc{CellOT}$ predictions to vanilla $\textsc{CellOT}$ trained in the IID and OOD settings, we observe that the conditional version is able to better capture the differential pERK responses.
+In Fig \ref{fig:conditional-ot}c) we see that the IID $\textsc{CellOT}$, which is able to learn patient-specific responses, indicates that BRAF samples respond to dabrafenib by decreasing pERK levels, while non-BRAF samples have a negligible response.
+OOD $\textsc{CellOT}$, on the other hand, predicts all samples, regardless of their BRAF status, to respond to dabrafenib with a slight decrease of pERK levels, and report little to no difference across BRAF status.
+The conditional $\textsc{CellOT}$, however, is able to correctly predict a differential response across BRAF status.
+This is futher quantified in Fig \ref{fig:conditional-ot}d), where we see consistent improvement in OOD pERK prediction when using conditional $\textsc{CellOT}$ over vanilla $\textsc{CellOT}$ and other baseline models.
+Finally, marginals highlighting the learned differential responses are shown in Fig \ref{fig:conditional-ot}e,
+where it can been seen that conditional $\textsc{CellOT}$ indeed learns the pERK response of BRAF positive samples (top) and non-response of negative (bottom).
 
 \subsection{Future progression status of incoming samples}
 In this experiment we demonstrate the clinical utility of predicting single-cell perturbation responses of incoming patients.
