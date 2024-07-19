@@ -123,7 +123,7 @@ Fig \ref{fig:ood-main}b shows for which treatments there are significant differe
 the metric reported by CellOT and the baseline approach, as measured by a relative t-test (p-value < 0.01).
 The full distributions for the differences of these metrics can be found in Figures \ref{fig:ood-eval-logmmd} and \ref{fig:ood-eval-marker}.
 We demonstrate that we are able to make strong gains in many perturbation settings, including most of the targeted therapies.
-These therapies are of particular interest as they are among some of the most commonly administered treatments \cite{} and, in addition, tend to have the strongest effects.
+These therapies are of particular interest as they are among some of the most commonly administered treatments \cite{need} and, in addition, tend to have the strongest effects.
 Many other treatments tend to have more subtle effects, wherein individual effects can dominate the response and thus generalization is difficult to attain.
 However, CellOT rarely underperforms against the baselines, and in the few cases when it does, it does so with small effect sizes.
 Note that while scGen tends to capture the response of a particular marker feature (EMD metric), it struggles to capture realistic cellular states (MMD metric), while the other baseline methods have the inverse behavior.
@@ -150,10 +150,10 @@ We include the MMD metric corresponding to the selected CellOT predictions, to g
 \end{figure}
 
 A common strategy in the design of cancer therapies is to tailor the treatment to interact with some specific mechanism that fails across a number of different cancers.
-These \emph{targetted} therapies would, for instance, be designed to treat patients with some driver mutation, such as the infamous BRAF driver mutation \cite{}.
+These \emph{targetted} therapies would, for instance, be designed to treat patients with some driver mutation, such as the infamous BRAF driver mutation \cite{need}.
 In such cases, the cellular profile might not capture information crucial to determining the nature of the response, e.g. the presense of the BRAF mutation,
 and therefore $\textsc{CellOT}$ performance, as we have described thus far, may struggle.
-Here we apply the framework described by \cite{} to include sample metadata, in the form of \emph{conditional} parameters, in order to help the transport function learn such differential responses.
+Here we apply the framework described by \cite{need} to include sample metadata, in the form of \emph{conditional} parameters, in order to help the transport function learn such differential responses.
 
 Here, we focus on the dabrafenib treatment, a targetted therapy to treat BRAF-positive patients.
 We observe a strongly differential structure in the responses across the cohort.
