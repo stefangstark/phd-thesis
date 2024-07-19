@@ -27,7 +27,7 @@
   \end{center}
   \caption{
     Pairwise logMMD differences comparing $\textsc{CellOT}$ and baseline approaches.
-    For each $\text{(drug, patient)}$ pair, models are trained on the entire cohort with that patient held out.
+    For each (drug, patient) pair, models are trained on the entire cohort with that patient held out.
     Each model predicts the drug response of the heldout patient
     and logMMD values are computed between the distribution of predicted treated states and the true treated states.
     Negative values correspond to settings where $\textsc{CellOT}$ improves over the corresponding baseline.
@@ -41,14 +41,13 @@
   \end{center}
   \caption{
     Pairwise marker EMD differences comparing $\textsc{CellOT}$ and baseline approaches.
-    For each $\text{(drug, patient)}$ pair, models are trained on the entire cohort with that patient held out.
+    For each (drug, patient) pair, models are trained on the entire cohort with that patient held out.
     Each model predicts the drug response of the heldout patient
     and marker EMD values are computed between the distribution of predicted treated states and the true treated states.
     Negative values correspond to settings where $\textsc{CellOT}$ improves over the corresponding baseline.
   }
   \label{fig:ood-eval-marker}
 \end{figure}
-% TODO: caption
 
 \begin{figure}
   \begin{center}
@@ -60,7 +59,6 @@
     The inlay shows the selected heldout sample's logMMD score against the rest of the cohort.
   }\label{fig:ood-predict-marginals}
 \end{figure}
-% TODO: text
 
 \begin{figure}
   \begin{center}
@@ -72,7 +70,6 @@
   b) Morphology features of mykokig cells indicate the presence of artifacts. The cluster map shows the distribution of each extracted morphology feature (rows) for cells sampled from mykokig and a subset of 5 samples from the full cohort. A large fraction of mykokig cells exhibit a strange unique morphology pattern of small round cells.
   }\label{fig:progression-exclude-mykokig}
 \end{figure}
-% TODO: text
 
 \begin{figure}
   \begin{center}
@@ -85,7 +82,6 @@
     Sample motamuh consistently ranks worst across all samples in the cohort for these prediction tasks.
   }\label{fig:progression-exclude-motamuh}
 \end{figure}
-% TODO: text
 
 \subsection{OOD performance}
 \begin{figure}[ht!]
@@ -139,7 +135,7 @@ We include the MMD metric corresponding to the selected CellOT predictions, to g
 
 \begin{figure}[h]
   \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/condot.pdf}
+    \includegraphics[width=\textwidth]{figures/cellot-cohort/condot.pdf}
   \end{center}
   \caption{
     Predicting strongly differential responses to Dabrafenib of holdout samples using Conditional CellOT.
@@ -183,22 +179,49 @@ This is futher quantified in Fig \ref{fig:conditional-ot}d), where we see consis
 Finally, marginals highlighting the learned differential responses are shown in Fig \ref{fig:conditional-ot}e,
 where it can been seen that conditional $\textsc{CellOT}$ indeed learns the pERK response of BRAF positive samples (top) and non-response of negative (bottom).
 
-\subsection{Future progression status of incoming samples}
-In this experiment we demonstrate the clinical utility of predicting single-cell perturbation responses of incoming patients.
-We aim to understand if we can predict whether a patient will progress within 90 days using predicted single-cell responses, i.e. without access to treated cell states.
+\subsection{Identifying at-risk patients from predicted cellular responses}
+The ability to understand whether or not a tumor will progress quickly is of clinical importance as it is an indicator of the severity of the cancer.
+In this experiment we demonstrate the clinical utility of predicted single-cell perturbation responses of incoming patients by classifying the progression status of this sample 90 days after treatment.
+Here, we simulate the clinic enviornment, and assume that we have access to the control and perturbed states from a (training) cohort.
+Given an incoming sample, we observe only their untreated cells, \emph{predict} their cellular responses using the OOD $\textsc{CellOT}$ maps described above, and finally identify the progression status from a model trained on the observed responses of the cohort.
+
+\paragraph{Subcohort selection}
 To ensure that we select treatments that are relevant to the situation of individual patients, we limit ourselves to the treatments that had been prescribed to samples by the medical board associated with the Tumor Profiler project.
-From the total cohort, 22 samples had been prescribed small molecule treatments.
-Of these 22, we removed three samples due to quality control: mykokig, had evidence of unfiltered artifacts in its observed treated cells \ref{}, \textsc{motamuh}, as it represents an extreme outlier in IID and OOD response prediction tasks \ref{} , and \textsc{mecygyr}, as it had showed evidence of immediate progression at the start of the study ( < 5 days).
-We simulate the clinic environment by splitting the patients into a train (75\%) and test (25\%) set, wherein we have access to the control and treated cells of all patients in the training set, and only have access to control cells of patients in the testset.
+From the total cohort, 22 samples had been prescribed a studied small molecule treatment.
+Of these 22, we removed three samples due to quality control: \textsc{mykokig}, had evidence of unfiltered artifacts in its observed treated cells \ref{fig:progression-exclude-mykokig}, \textsc{motamuh}, as it represents an extreme outlier in IID and OOD response prediction tasks \ref{fig:progression-exclude-motamuh} , and \textsc{mecygyr}, as it had showed evidence of immediate progression at the start of the study ( $<$ 5 days), leaving a subcohort of 19 samples.
+Of these 19, 9 progress within 90 days and 10 do not, which yields a balanced binary prediction task.
+We simulate the clinic environment by splitting the patients into a train (75\%) and test (25\%) set, (i.e. within each split, 4 of the 19 samples are heldout), where we have access to the control and treated cells of all patients in the training set, and can only access the control cells of patients in the testset.
 
-Our prediction model works as follows: first, single-cell responses are clustered and patients are represented as frequencies over these clusters, and then an SVM classification model is trained to predict the binary progression status using the patient representations.
+\paragraph{Prediction model}
+Our prediction model, summarized in Fig \ref{fig:ood-main}d, works as follows: first, single-cell responses are clustered and patients are represented as frequencies over these clusters, and then an SVM classification model is trained to predict the binary progression status using the patient representations.
 To construct the patient representations of the training set, a KMeans clustering is computed using the single-cell treatment responses from all patients in the training set, as predicted using the IID CellOT models \ref{}.
-We perform a soft assignment of each cell to the k cluster centers, via a softmax transformation over the negative distances to each cluster center, to smooth cluster assignments and help include a notion of cluster similarities.
-After this step, each cell is now represented as a probability over the set of cluster centers.
-A patient-level representation is constructed by averaging the cluster assignments over all cells in each patient.
-For test set patients, since we assume we do not have access to treated cell states, we use the OOD CellOT predictions instead of the IID predictions.
+We perform a soft assignment of each cell to the k cluster centers, via a softmax transformation over the negative distances to each cluster center, to smooth cluster assignments and help include a notion of cluster similarities, Fig \ref{fig:ood-main}e left.
+After this step, each cell is now represented as a probability over the set of cluster centers, Fig \ref{fig:ood-main}e right.
+A patient-level representation is constructed by averaging the cluster assignments over all cells from each patient.
+At test time, the OOD-predicted cell responses are used instead of the IID, as we are unable to access their treated cell states.
+The predicted responses are mapped to the cluster centers, the sample frequencies are computed and the held out sample is classified with the SVM.
+Note that the visualizations in Fig \ref{fig:ood-main}e are constructed on IID responses of all samples in the subcohort.
+Within each split, these structures are re-computed on the training set only.
 
+\paragraph{Evaluation}
 Since this is a balanced classification task, we report accuracy as our metric and consider 50\% a trivial lower bound.
 For each model setting we perform 100 75\%-25\% train-test splits, i.e. in each split, 4 of the 19 samples are heldout.
 We include a model that predicts the progression stats at 90 days with meta information at the sample level, specifically a random forest over the subtype, lines of treatment, and known driver mutation, represented as the concatenation over one-hot encodings of each category.
 We furthermore compare our approach to a similar approach that uses predicted treated states, control cells, and single-cell responses predicted by the baselines \ref{}.
+
+The prediction accuracy of holdout samples over 100 train-test splits are shown in Fig \ref{fig:ood-main}f, where we compare using single-cell responses to using control and (predicted) treated states.
+In addition, we include a random forest model trained on relevant metadata information, the sample’s subtype, known driver mutation and lines of treatment.
+% TODO: fill with actual numbers
+The random forest trained on sample metadata and SVM classification using control states only struggle to peform, yielding accuracies of XXX +/- XX.
+The SVM classification using treated states fares slightly better, reporting accuracies of XXX +/- XX.
+We see the most drastic improvement using \emph{response} information, which reports accuracies of XXX +/- XX.
+% TODO: add fig
+Comparisons to the autoencoder approaches as well as ablations over the number of clusters can be found in Fig \ref{}, where we show specifically that $\textsc{CellOT}$ responses are stable with respect to classification parameters and out perform baseline approaches.
+
+A benefit of using a straight-forward clustering approach is the ability to interpret the behavior of the model.
+We can interpret the decisions made by the model by analyzing the cluster means and patient frequencies over them shown in Fig \ref{fig:ood-main}e.
+Here, progression status at 90 days and the misclassification rate of test set samples are shown as row colors.
+We see that cells from cluster 5 exhibit a general non-response to the selected perturbations.
+Furthermore, samples that have high representation of these responses are more likely to progress,
+while samples that exhibit higher degrees of heterogeneity in response are shown to have a better progression status.
+
