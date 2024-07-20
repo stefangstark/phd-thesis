@@ -5,16 +5,31 @@
 
 \section{Individual cells as complex machinery}
 \subsection{central dogma}
-\subsection{pathways \& signaling hierarchies}
+\subsubsection{DNA}
 
-\section{Principles of cancer}
+\subsubsection{RNA}
+
+\subsubsection{Proteins}
+\begin{enumerate}
+  \item amino acid sequences
+  \item protein folding
+\end{enumerate}
+
+\subsection{pathways \& signaling hierarchies}
+\begin{enumerate}
+  \item signalling pathways
+  \item ligand-receptor mechanisms
+\end{enumerate}
+\subsubsection{cell cycle}
+% TODO: maybe simple overview MAPK/ERK pathway?
+
+\section{Hallmarks of Cancer}
 Cancer is a family of genetic diseases in which normal cells undergo genetic mutations that cause them to undergo unchecked growth-promoting, resulting in a mass of abnormal cells known as a tumor.
 This growth can lead to serious health complications as cells
 can go on to invade nearby tissues and spread to other parts of the body.
 The development of effective cancer treatment strategies has been at the forefront of biological research, including moonshot projects such as \cite{need}. % eg moon shots
-Many of the methods and applications explored within this thesis are motivated by problems and challenges arising from udnerstanding and treating cancer.
+Many of the methods and applications developed and explored within this thesis are motivated by the challenges arising from understanding and treating cancer.
 
-\subsection{hallmarks}
 A major complication towards the treatment of cancer lie in the myriad mechanisms cells use to escape the natural regulatory processes that prevent unchecked growth \cite{need}.
 The \emph{Hallmarks of Cancer}, proposed by \citeauthor{foo} in \citeyear{foo} and updated in \citeyear{foo} and \citeyear{foo} is a framework designed to understand the key capabilities and enabling characteristics that are exhibited by cancer cells.
 The framework describes eight hallmark capabilities,
@@ -26,43 +41,73 @@ The framework describes eight hallmark capabilities,
 "Inducing angiogensis",
 "Resisting cell death",
 and "Deregulatin cellular energetics."
-These hallmark capabilities can be considered as "gates" in the sense that they each represent some core regulator process to prevent cancer cell activity.
-The framework also introduces two enabling characteristics, "Genome instability \& mutation" and "Tumor-promoting inflammation", that describe the class of mechanisms by which a cell can pass each "gate" and obtain the function of a hallmark characteristic.
-In essensce, the framework poses that cancer cells, by way of genetic mutations or tumor-promoting inflammation, both
-i) sustain, promote, or generate cell growth signals, and, simultaneously,
-ii) ignore or resist cell death and cell growth supression signals.
+These hallmark capabilities can be considered as "gates" in the sense that they each represent some core regulatory process that must be bypassed in order for a normal cell to become a cancerous, a process known as tumorigenesis. % TODO: citation needed?
+The framework also introduces two enabling characteristics, "Genome instability \& mutation" and "Tumor-promoting inflammation", that describe the general mechanisms cells use to bypass each "gate" in order to obtain the property of each hallmark characteristic.
+In essensce, the framework poses that cancer cells, by way of genetic mutations or tumor-promoting inflammation, need to both
+a) sustain, promote, or generate cell growth signals, and, simultaneously,
+b) ignore or resist cell death and cell growth supression signals.
 
-Below some example mechanisms underlying a subset of the hallmarks are described.
+\subsubsection{Genome instability \& mutation}
+Genetic mutations are one of the underlying causes that enable cells to gain hallmark capabilities.
+These mutation typically change the coding of specific proteins key to cellular regulation.
+As a result, these proteins become composed of slightly different amino acids and their shape and therefore function are changed.
+This can cause gain or loss-of function, resulting in abnormal activation or deactivation of important cellular pathways.
+Mutations in genes coding for these proteins are known as \emph{driver} mutations, as they take some of the core responsibility of guiding or driving tumorigenisis \cite{martinez-jimenez2020}.
+identifying and then interrupting or reversing the effects of these driver mutations is a central strategy in cancer treatment \cite{need}.
 
-\paragraph{Sustaining proliferative signaling}
-\begin{enumerate}
-  \item normal cells control growth-promoting signals
-  \item cancer cells deregulate these signals
-  \item keep growth signals active
-  \item signals are in the form of "growth factors that bind cell-surface receptors," e.g. "tyrosine kinase domains"
-  \item (somatic) mutations: BRAF \cite{davies2010}, PI3K \cite{jiang2009,yuan2008}
-  \item mTOR % TODO: read more about this
-\end{enumerate}
+Mutations in the BRAF gene are one of the most infamous examples of driver mutations.
+Cell growth and proliferation are normal aspects of the cell life cycle.
+In healthy cells, the signals that govern these processes are well regulated such that normal functions are maintained.
+A signature property of cancer cells, on the other hand, is to deregulate these sources, resulting in abnormally high growth signals.
+Changes to the BRAF protein, a key member of the RAS/MAPK signaling pathway \cite{davies2010}, a major intracellular signaling cascade that regulates cellular growth and proliferation,
+can result in sustained growth-promoting signals.
+Around 40\% of human melanomas contain a mutation in the BRAF gene, with 
+85\% of these mutations are within the V600E subunit \cite{spathis2019}.
+Consequently, many resources have been allocated towards the understanding of this protein, its common mutations \cite{smiech2020}, and treatment strategies \cite{cheng2017}.
 
+Another example, mutations to TP53 \ldots % TODO: expand
 
-\paragraph{Evading growth suppressors}
-\begin{enumerate}
-  \item learn to evade death signals
-\end{enumerate}
+Mutations can be classified by one of two classes:
+\emph{germline}, mutations present at birth, or
+\emph{somatic}, mutations acquired throughout one's lifetime, e.g. via smoking, from exposure to UV radiation, or from simple random chance.
+A complication towards robust cancer treatments stems from the fact that individuals will have unique mutation combinations and the development of "one-size-fits-all" treatments are difficult or impossible.
+While driver mutations appear in some subset of genes, they can affect different subunits and/or have different effects on the proteins downstream behavior \cite{smiech2020}.
 
-\paragraph{Resisting cell death}
+As tumor cells proliferate, they copy and propogate their genetic mutations.
+Tumor "clones" are genetically distinct cancer cells, arising from some original cancer cell.
+Cancer cells, when compared to nomral cells, typically have an increased mutational-burden, arising, for instance, from mutations in DNA-repair mechanisms.
+As a result, cancer cells are more susceptible to acequiring new somatic mutations which induces a branching process within tumor clones, forming what is known as tumor subclones.
+The presense of these subclones represents a further complication in effective cancer treatment as these are not only specific to the individual but treatments need to address all active subclones which may exhibit differential responses to therapies.
 
-\paragraph{Enable replicative immortality}
+\subsection{TME and "Tumor-promoting inflammation"}
 
-\paragraph{Induce angiogensis}
-
-\paragraph{Activate invasion and metastasis}
-
-\subsection{TME}
+%\paragraph{Sustaining proliferative signaling}
+%This can be accomplished through several mechanisms,
+%including the self-production of growth factor ligands \cite{need},
+%the prompting of neighboring cells to produce and emit growth ligands \cite{need},
+%or the over production of surface receptor proteins \cite{need}.
+%
+%% TODO: maybe move to a "driver mutation" section
+%\paragraph{Evading growth suppressors}
+%While sustained growth-promoting signals are one capability cancer cells must exhibit, they must also ignore external signals that supress growth.
+%"Tumor suppressor genes" are a natural reglatory function that identify cellular abnormalites typically linked to cancer and send growth-inhibiting signals \cite{need}
+%Cancer cells evade or ignore these signals in order to continue to grow unchecked,
+%typically by deactivating the pathways these signals activate.
+%Common "choke points" of these pathways include the RB and TP53 proteins,
+%which act as "central nodes \ldots that govern the decision of cells to proliferate."
+%% TODO: rephrase and expand
+%
+%\paragraph{Resisting cell death}
+%
+%\paragraph{Enable replicative immortality}
+%
+%\paragraph{Induce angiogensis}
+%
+%\paragraph{Activate invasion and metastasis}
+%
 
 
 \section{Single-cell profiling technologies}
-
 \subsection{scRNA-seq}
 \subsubsection{autoencoders}
 
@@ -73,6 +118,8 @@ Below some example mechanisms underlying a subset of the hallmarks are described
 \subsection{mention spatial}
 
 \section{Casting as alignment}
+We have seen that in order to understand complex biological processes, such as the mechanisms underlying a cancer, cellular behavior must be understood on many levels, from its mutational state, "rna-state", protein levels, etc.
+
 \subsection{Holistic view of cells}
 \subsection{Dynamic processes}
 \subsection{Tumor profiler project}
