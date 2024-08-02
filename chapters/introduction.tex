@@ -4,35 +4,119 @@
 \subsection{Collaborators}
 
 \section{Individual cells as complex machinery}
+\begin{enumerate}
+  \item building blocks, basic unit of life
+  \item make up everything from A to Z \ldots
+  \item huge variance in form and function, cell types
+  \item incredible complex machinery that determines this form/function
+\end{enumerate}
+
+\paragraph{Goal}
+\begin{enumerate}
+  \item the goal of this section is to give a high level itroduction to cellular biology in order to motivate the requirements and context of the methods this thesis develops and applies
+  \item my hope that it is useful for a person with an ML/computational/mathematical background to appreciate the complexities of the biological contexts explored here, especially those involving the treatment of cancer
+\end{enumerate}
+
+% TODO: outline & write
 \subsection{central dogma}
-\subsubsection{DNA}
-
-\subsubsection{RNA}
-
-\subsubsection{Proteins}
 \begin{enumerate}
-  \item amino acid sequences
-  \item protein folding
+  \item reiterate diversity of cells, cell types
+  \item cells share DNA, but how the information in the DNA is extracted has a profound effect on the identity of the cell
+  \item need to introduce genes, genetic information
 \end{enumerate}
 
-\subsection{pathways \& signaling hierarchies}
-\begin{enumerate}
-  \item signalling pathways
-  \item ligand-receptor mechanisms
-\end{enumerate}
-\subsubsection{cell cycle}
-% TODO: maybe simple overview MAPK/ERK pathway?
+Cellular behavior is driven in large part by molecules called proteins that exert influence through chemical interactions within their inter- and intra-cellular environments.
+In essence, proteins are one-dimensional sequences of twenty distinct orangic compounds known as amino acids.
+These sequences are constructed by processing the genetic code through an information extraction pipeline known as the \emph{central dogma}.
+On a high level, genes, particular sections of the genetic code stored in the form DNA, are transcribed into a corresponding RNA molecules, which are then translated into a specific proteins.
+While the reality is more complicated, the information flow generally proceeds from DNA to RNA to proteins.
+
+\paragraph{DNA} The genetic code is stored in the form of DNA (dioxyribose nucelic acid) molecules.
+These long polymer chains are sequences of only four unique monomers called nucleotides.
+When a cell divides, its DNA is replicated such that the daughter cells are composed of identical copies of the genetic code.
+As DNA forms the base of the central dogma, the root of the information flow, it is important that its makeup is conserved.
+While DNA famously exhibits a double-stranded helical structure,
+each nucleotide has a unique corresponding partner whose bonds connect the two strands.
+The genetic code, as represented by DNA, is often regarded as a one-dimensional string.
+This double-stranded structure represents a redundancy in information and is exploited by cellular processes aimed at conserving the integrety of the genetic code \cite{need}.
+Furthermore, in eukaryotic cells, from which all multi-cellular organisms (fungi, plants, and animals) are comprised, DNA is stored within the nucleus of the cell.
+The nucleus protects the DNA with its own membrane that regulates the information that can pass in and out of it and the DNA itself generally does not leave the nucleus \cite{}.
+
+\paragraph{RNA} RNA (ribonucleic acid) is the intermediate step in the central dogma and plays a central in gene expression and regulation.
+Since DNA is typically secured and isolated from interacting with the cellular environemnt, RNA can be understood as its intermediary.
+RNA is constructed in a process called \emph{transcription}, where DNA is unwound and converted into RNA.
+Like DNA, RNA is composed of a sequence of four unique nucleotides, which are the same as DNA except that thymine (T) is replaced with uracil (U).
+Unlike DNA, RNA is single-stranded and is more easily changed "on-the-fly,"
+% TODO: explain RNA is more "adaptable"
+In a processes called \emph{translation}, RNA strands are read to create specific proteins.
+In this way, RNA plays the central role in gene expression, determining what proteins are created as well as the rate of their creation.
+As the cells of a single organism share the vast majority of their DNA, 
+gene expression is what allows them to differentiate and specialize.
+Gene expression is also used to understand what processes the cell activates or de-activates due to changes in its enviornment \cite{need}.
+
+\paragraph{Proteins} Proteins represent the final stage of the central dogma and are largely responsible for the behavior and general function of a cell.
+Like DNA and RNA, proteins can be conceptualized as one-dimensional sequences over an alphabet of twenty \emph{amino acids}.
+During translation, this sequence is read from the genetic code where triplets of RNA nucleotides are converted into a single amino acid.
+In a process known as \emph{protein folding}, chemical interactions between a protein's amino acids cause it to contort, yielding complicated 3D structures.
+The function of a protein is fundamentally tied to its 3D form.
+For instance, hemoglobin, a protein found in red blood cells that plays a critical role in the transport of oxygen, has a 3D shape that interacts chemically with oxygen molecules in order to absorb and release them.
+
+
+\subsection{Cellular signalling}
+Cellular processes are controlled and executed, in large part, via signals to proteins encoded as chemical interactions
+As described above, the 3D form of a protein largely determines its function.
+These forms are not static and can change, either through the breaking and reforming of bonds between a protein's amino acids, or through the binding of some external chemical object.
+Returning to the example of oxygen transport with hemoglobin -- the function of hemoglobin is to i) bind oxygen in the lung and ii) release it throughout the body.
+Hemoglobin has two stable conformations that favor either the capture or release of oxygen molecules.
+The preferred conformation is driven by chemical interactions determined by pH and oxygen concentration of the environemnt.
+% TODO: cite from https://en.wikipedia.org/wiki/Bohr_effect
+
+A common form of cellular signalling occurs through the forming of chemical bonds between a protein and some external chemical object.
+An object that binds to a protein is called a ligand and they can range in complexity from simple ions to entire proteins.
+Protein-ligand interactions are typically made through multiple bonds across many amino acids, often in the form of some "pocket" or "cavity" within the 3D shape of the protein.
+As a result of this complexity, proteins have a high specificity for ligand binding and usually are able to interact with only a few ligands.
+Ligand binding can, for instance, change or stabalize a protein's shape, influence its chemical properties, form multi-protein complexes, etc.
+
+Cells interact and respond to their environments through complex and highly regulated signalling heirarchies called \emph{pathways}.
+These pathways are composed of dozens of proteins that illicit ceullar response by capturing and relaying chemical signals from the external cellular enviornment into the cell interior.
+Signaling within these pathways is often carried out through ligand binding that can \emph{activate} or \emph{deactivate} proteins, i.e. change their properties such that they included or excluded from participating in some cellular action.
+Pathways govern fundamental cellular decisions, for instance, dictating how and when to grow, divide, differentiate, die, etc.
+These decisions are typically enacted through the activation (or deactivation) of some key protein, or by ordering the transcription and translation of some specific gene.
+Figure \ref{need} depics the general structure of a signalling pathway and a cartoon of the MAPK-ERK pathway, a pathway essential to regulating cell growth.
+% TODO: add \cite{han2021} figure 1
+% Many genetic diseases, for instance cancer (\ref{need}), disrupt or hi-jack these signalling pathways.
+% Thus the understanding of their composition and signalling mechanisms are core biological problems.
+
+\subsubsection{Centralized databases of pathways}
+Centralized databases of cellular signaling pathways are important resources to the biological research community.
+These databases are curated through a combination of manual curation, literature reviews, and computational approaches, and distill the last few decades of cell biology research.
+Reactome and Hallmark are two prominent centralized databases of cellular signalling pathways.
+Reactome is a curated database of human biological pathways, including metabolic, signaling, and disease pathways.
+It provides a comprehensive view of cellular processes and their interconnections.
+Hallmark, part of the Molecular Signatures Database (MSigDB), is a collection of curated gene sets that represent well-defined biological processes, including signaling pathways.
+These databases are widely used for pathway analysis, gene set enrichment analysis, and network analysis to understand cellular responses to different stimuli.
+Other prominent databases in this field include KEGG, Biocarta, and WikiPathways.
+These resources are crucial for understanding cellular signaling and identifying key regulators of biological processes.
+
+\subsection{Genotype, phenotype, and mutations}
+A useful abstraction is the distinction between an organisms's \emph{genotype}, the full set of information contained in its genetic code, and its \emph{phenotype}, the full set of its observable characteristics.
+As we have seen, this relationship is far from one-to-one -- there are many factors beyond the genetic sequence that regulate and influence processes transcription and translation.
+However, it can happen that \emph{mutations}, changes in the genetic sequence, produce drastic effects on the phenotype.
+For example, while redundancies between the 64 unique nucleotide triplets and the 20 unique amino acids they code for, mutations in the genetic sequence can sometimes cause the translation of a different amino acid.
+If this change occurs within some critical location of the protein, it can alter its form and potentially invalidate its original function.
+Returning again to hemoglobin, this is the mechanism behind the genetic disorder sickle-cell aenemia, where a single point mutation changes the shape of the protein such that it cannot bind oxygen and perform its essential role.
+As we will see \ref{need}, mutations play a critical role in the development of cancer, albeit in more nuanced or complicated contexts.
 
 \section{Hallmarks of Cancer}
-Cancer is a family of genetic diseases in which normal cells undergo genetic mutations that cause them to undergo unchecked growth-promoting, resulting in a mass of abnormal cells known as a tumor.
+Cancer is a family of genetic diseases in which normal cells undergo genetic mutations that cause them to grow uncontrolably, resulting in a mass of abnormal cells known as a tumor.
 This growth can lead to serious health complications as cells
-can go on to invade nearby tissues and spread to other parts of the body.
-The development of effective cancer treatment strategies has been at the forefront of biological research, including moonshot projects such as \cite{need}. % eg moon shots
-Many of the methods and applications developed and explored within this thesis are motivated by the challenges arising from understanding and treating cancer.
+can then invade nearby tissues and spread to other parts of the body.
+The development of effective cancer treatment strategies has been at the forefront of biological research over the last couple decades, including moonshot projects such as \cite{need}. % eg moon shots
+Many of the methods and applications developed and explored within this thesis are motivated by the challenges arising from the understanding and treatment of cancer.
 
-A major complication towards the treatment of cancer lie in the myriad mechanisms cells use to escape the natural regulatory processes that prevent unchecked growth \cite{need}.
-The \emph{Hallmarks of Cancer}, proposed by \citeauthor{foo} in \citeyear{foo} and updated in \citeyear{foo} and \citeyear{foo} is a framework designed to understand the key capabilities and enabling characteristics that are exhibited by cancer cells.
-The framework describes eight hallmark capabilities,
+A major complication towards the treatment of cancer lie in the myriad mechanisms cells can use to escape the natural regulatory processes that prevent unchecked growth \cite{need}.
+The \emph{Hallmarks of Cancer}, proposed by \citeauthor{foo} in \citeyear{foo} and updated in \citeyear{foo} and \citeyear{foo} is a framework designed to understand the key capabilities and enabling characteristics that cancer cells exihibit.
+The framework describes Figure \ref{fig:hallmarks} eight hallmark capabilities,
 "Sustaining proliferative signaling", 
 "Evading growth suppressors",
 "Avoiding immune destruction",
@@ -43,7 +127,7 @@ The framework describes eight hallmark capabilities,
 and "Deregulatin cellular energetics."
 These hallmark capabilities can be considered as "gates" in the sense that they each represent some core regulatory process that must be bypassed in order for a normal cell to become a cancerous, a process known as tumorigenesis. % TODO: citation needed?
 The framework also introduces two enabling characteristics, "Genome instability \& mutation" and "Tumor-promoting inflammation", that describe the general mechanisms cells use to bypass each "gate" in order to obtain the property of each hallmark characteristic.
-In essensce, the framework poses that cancer cells, by way of genetic mutations or tumor-promoting inflammation, need to both
+In essensce, the framework poses that cancer cells, by way of genetic mutations and tumor-promoting inflammation, both
 a) sustain, promote, or generate cell growth signals, and, simultaneously,
 b) ignore or resist cell death and cell growth supression signals.
 
@@ -65,62 +149,270 @@ Around 40\% of human melanomas contain a mutation in the BRAF gene, with
 85\% of these mutations are within the V600E subunit \cite{spathis2019}.
 Consequently, many resources have been allocated towards the understanding of this protein, its common mutations \cite{smiech2020}, and treatment strategies \cite{cheng2017}.
 
-Another example, mutations to TP53 \ldots % TODO: expand
+Another class of driver mutations occur so-called "tumor suppressor genes."
+These genes code for proteins that are key members of the body's natural reglatory function that detect cancerous abnormalites and, in response, send growth-inhibiting signals \cite{need}.
+Cancer cells must evade or ignore these signals in order to continue to grow unchecked,
+typically by interrupting the pathways activated by these signals.
+Common "choke points" of these pathways include the RB and TP53 proteins,
+which act as "central nodes \ldots that govern the decision of cells to proliferate."
+Mutations that interrupt the basic duties of these genes can be particularly harmful.
 
-Mutations can be classified by one of two classes:
-\emph{germline}, mutations present at birth, or
-\emph{somatic}, mutations acquired throughout one's lifetime, e.g. via smoking, from exposure to UV radiation, or from simple random chance.
+Mutations can be classified into one of two classes:
+\emph{germline} mutations that are inherited and present at birth, or
+\emph{somatic} mutations that are acquired throughout one's lifetime, e.g. by smoking, exposure to UV radiation, or simple random chance \cite{need}.
 A complication towards robust cancer treatments stems from the fact that individuals will have unique mutation combinations and the development of "one-size-fits-all" treatments are difficult or impossible.
-While driver mutations appear in some subset of genes, they can affect different subunits and/or have different effects on the proteins downstream behavior \cite{smiech2020}.
+Futhermore, while driver mutations appear in some subset of genes, they can affect different subunits and/or have different effects on the proteins downstream behavior \cite{smiech2020}.
 
 As tumor cells proliferate, they copy and propogate their genetic mutations.
-Tumor "clones" are genetically distinct cancer cells, arising from some original cancer cell.
-Cancer cells, when compared to nomral cells, typically have an increased mutational-burden, arising, for instance, from mutations in DNA-repair mechanisms.
-As a result, cancer cells are more susceptible to acequiring new somatic mutations which induces a branching process within tumor clones, forming what is known as tumor subclones.
+Tumor "clones" are genetically (and phenotypically) distinct cancer cells, arising from some original cancer cell.
+Cancer cells, when compared to normal cells, are typically more susceptible to acquiring somatic mutations, due to, for instance, mutations in DNA-repair mechanisms \cite{negrini2010,salk2010}.
+As a result, the genetics of cancer cells can exihibit a branching process within tumor clones, resulting in tumor "subclones", \ref{fig:subclone}
 The presense of these subclones represents a further complication in effective cancer treatment as these are not only specific to the individual but treatments need to address all active subclones which may exhibit differential responses to therapies.
 
-\subsection{TME and "Tumor-promoting inflammation"}
+\subsection{"Tumor-promoting inflammation" and the tumor microenvironment}
+Inflammation refers to an organism's natural biological response to harmful stimuli,
+for instance, the immune system response to a foreign disease.
+While it has been known that immune cells interact with and are involved in tumor formation \cite{need}, research over the last few decades has indicated that these interactions are crucial to the behavior of the tumor \cite{need}.
+This has lead to a sea-change in basic models of cancer -- tumors are not some relatively homogeneous mass of cancer cells experiencing unchecked growth, but a complex orchestra of interacting cells.
+Under this tumor microenvironment (TME) model, tumors can be understood as something not unlike an organ that survives and propogates thanks to complex signaling interactions between many different cell types \cite{balkwill2012}, which are, as described above, specific to the individual. \ref{fig:tme}
+Specifics of the TME have been shown to contribute to immune evasion \cite{pansy2021},
+immunospression \cite{balta2021}, and immune cell reprogramming \cite{cao2022}.
+It has also been shown that the immune responses within the TME can have 
+have the counter-intuitive effect of \emph{promoting} tumor development \cite{hanahan2011}, for instance by supplying factors that promote growth \cite{denardo2010}. % TODO: check.
 
-%\paragraph{Sustaining proliferative signaling}
-%This can be accomplished through several mechanisms,
-%including the self-production of growth factor ligands \cite{need},
-%the prompting of neighboring cells to produce and emit growth ligands \cite{need},
-%or the over production of surface receptor proteins \cite{need}.
-%
-%% TODO: maybe move to a "driver mutation" section
-%\paragraph{Evading growth suppressors}
-%While sustained growth-promoting signals are one capability cancer cells must exhibit, they must also ignore external signals that supress growth.
-%"Tumor suppressor genes" are a natural reglatory function that identify cellular abnormalites typically linked to cancer and send growth-inhibiting signals \cite{need}
-%Cancer cells evade or ignore these signals in order to continue to grow unchecked,
-%typically by deactivating the pathways these signals activate.
-%Common "choke points" of these pathways include the RB and TP53 proteins,
-%which act as "central nodes \ldots that govern the decision of cells to proliferate."
-%% TODO: rephrase and expand
-%
-%\paragraph{Resisting cell death}
-%
-%\paragraph{Enable replicative immortality}
-%
-%\paragraph{Induce angiogensis}
-%
-%\paragraph{Activate invasion and metastasis}
-%
+%While the TME is not directly addressed within this thesis it is important to appreciate the underlying sources of tumor heterogeneity that must be captured by methods.
+%Emerging spatial transcriptomic technologies \cite{need,need}, capable of measuring, for example, gene expression spatially-resolved at the single-cell level,
+%have been shown to be promising directions towards the understanding of the TME \cite{need}.
 
+\subsection{Treating cancer}
+%\begin{enumerate}
+%  \item strategies try to block or reverse the mechanisms that enable critical hallmarks
+%  \item highly personalized as mutations and TME are typically unique to patient
+%  \item targetted therapies developed for common driver mutations
+%  \item treatments need to apply to subclones, combo therapies
+%  \item modeled as intervention/perturbation
+%\end{enumerate}
+Common strategies to combat cancer usually involve blocking or reversing the specific mechanisms that enable critical hallmark capabilities.
+Since the mutations and TME that drive the cancer hallmark capabilities can be unique to the individual,
+developing a sweeping, generalized treatment to cancer is difficult.
+Instead treatments are typically \emph{personalized} to the distinct mechanisms underlying each tumor.
+There are two main approaches to treating cancer:
+immunotherapy, which bolster the host immune system to identify and eliminate cancer cells,
+and chemotherapy, which target and attack the cancer cells themselves \cite{need}.
+A class of chemotherapy come in the form of orally ingested drugs that are designed to interact with specific pathways affected by cancerous mutations.
+\emph{Targeted} therapies are a subclass of these chemotherapies that are designed for specific driver mutations.
+% TODO: for isntance, dabrafenib does XYZ to BRAF-mutated cancer cells
+In general, these treatments can be conceptualized as perturbations over the hetergeneous makeup of a tumor, in which cells can have differential resposnes depending on their states, subclones, microenvironment, etc.
+\emph{Combination} therapies are another common strategy where two or more drugs are prescribed that either have synergistic effects or target multiple hallmark capabilities.
+This strategy has been shown to be effective across multiple subclones, to bolster a targetted therapy, or to combat aggressive cancers \cite{need}.
 
 \section{Single-cell profiling technologies}
-\subsection{scRNA-seq}
-\subsubsection{autoencoders}
+% TODO: history of bulk/single-cell sequencing
+\begin{enumerate}
+  \item even with the simplified view described here, there many information levels that determine cellular behavior
+  \item first advances into studying cell behavior, microscopes, hooke
+  \item nowadays, many technologies exist, taking different profiles of cells, different persepectives, etc
+  \item sequencing vs imaging vs whatever cytof is? 
+\end{enumerate}
 
-\subsection{proteomic technologies}
-\subsubsection{CyTOF}
-\subsubsection{4i \& other imaging}
-\subsubsection{marker choices}
-\subsection{mention spatial}
+Even with the simplified views described here, there are many levels of information -- e.g. DNA, RNA, protein -- that determine and govern cellular behavior.
+As consequnce, cellular observations can come in many different forms and flavors, depending upon the interested level of information.
+% TODO: explain omics
+The first observations of cells \ldots % TODO: expand
+Nowadays many strategies and technologies have been developed to measure and construct different cellular profiles, at the resolution of individual cells.
+% TODO: connecting sentence?
 
-\section{Casting as alignment}
-We have seen that in order to understand complex biological processes, such as the mechanisms underlying a cancer, cellular behavior must be understood on many levels, from its mutational state, "rna-state", protein levels, etc.
+%Genetic and transcriptomic information is measured with (single-cell) sequencing technologies that extract fragments of DNA/RNA and identify the sequences of nucleotides.
+%The measurement of proteomic information has a wider range of approaches, including fluorescent-based imaging and mass spe
 
-\subsection{Holistic view of cells}
-\subsection{Dynamic processes}
+%\subsection{scRNA-seq}
+%\begin{enumerate}
+%  \item human genome project \& next gen sequencing
+%  \item extract the genetic information
+%  \item assembly/alignment of sequences
+%  \item laid groundwork
+%\end{enumerate}
+
+Transcriptomic information -- the state of expressed RNA in a cell -- is measured using sequencing technologies.
+These technologies are rooted in the Human Genome project,
+a monumental scientific achievement that laid groundwork with the development of "next-gen" sequencing technology. % TODO: rephrase
+The human genome contains on the order of % TODO: N nucleotides
+which takes % TODO: N gb
+to store.
+Measuraing this sequence end-to-end is infeasible.
+Next gen sequencing technologies instead isolate and measure the nucleotide sequence of small fragments called reads.
+The human genome project demonstrated how to assemble a geneome, that is piece together the full sequence from overlapping fragments, like a collassal jigsaw puzzle \cite{verify,need}
+While the genome of each individual is distinct, the vast majority is conserved,
+so, given some population of individuals, a \emph{reference} genome can be constructed to represent some average or canonical member of the population.
+Once a refernce is constructed, instead of assembling the code of a new individual from scratch, reads can then be \emph{mapped} onto the reference.
+
+%\begin{enumerate}
+%  \item bulk vs single-cell
+%  \item measure cellular information at the sample level
+%  \item these technologies are typically cheaper to operate but provide low-resolution measurements
+%  \item sub-sample structure, e.g. cell type, is recovered with deconvolution methods
+%\end{enumerate}
+Whereas the human genome project was concerned with the measurement of genomic information,
+the measurement of transcriptomic information, i.e. the nucleotide sequences of the free-floating RNA within a cell, follows the same general strategy.
+Transcriptomic states are of particular interest as they represent something like a "real-time" snapshot of a cell's current actions.
+Bulk sequencinc technologies were the first iteration of technologies to measure cellular RNA states.
+These technologies pool cells from a heterogeneous multi-cellular sample,
+extract the RNA of individual cells, and measure a single signal that represents a composite of RNA states across all cells in the sample.
+These technologies offer cheaper but low-resolution profiles, as the information from the individual are grouped together.
+Deconvolution methods applied to a population of bulk measurements are popular approaches to infer higher resolution measurements, such as cell-type "signatures".
+This approach is still quite limited as they rely on cell states that are conserved across many individuals in the population and we have seen,
+such as in the case of cancer, that cellular behavior can be unique to the individual.
+
+%\begin{enumerate}
+%  \item over the last decade, single-cell sequencing methods have emerged
+%  \item measure genetic and transcriptomic information at the single-cell level
+%  \item typically operate by isolating and profilling individual cells
+%  \item barcodes, UMI, etc
+%  \item explain different popular platforms, e.g. used by tupro
+%  \item these have become esssential towards our understanding of heterogeneous cellular populations
+%  \item offer "high" resolution insight, observation of individual cells
+%\end{enumerate}
+
+The last decade has seen the development of single-cell sequencing technologies
+that has revolutionized the study of cellular behaviors, especially in the context of heterogeneous samples \cite{need}. % TODO: cite method of the year
+These technologies are capable of mechanically isolating individual cells,
+i.e. via % TODO: look up how its done
+, and then sequencing its expressed RNA.
+% TODO: maybe explain a few technologies
+% TODO: maybe merge with next par
+
+%\begin{enumerate}
+%  \item cell-x-gene count matrix, challenges
+%  \item high dimsenional, 20k genes genes
+%  \item noisy
+%  \item the handling of this challenging data is explored in next section
+%\end{enumerate}
+
+Instead of a single measurement over a sample, single-cell sequencing methods produce observations in the form of large count matrices of cells -x- genes,
+where counts refer to the number of reads found in a cell that map to one of its genes.
+For reference, humans have on the order of 20k protein coding genes.
+While these methods offer deep insight into the inner workings of an individual cell, they must do so at the cost of much less transcriptomic information.
+Single-cell technologies rely on a processing step in which successfully captured reads are first replicated before aligned.
+The failure rates associated with capturing and replicating reads are thought to cause a "dropout" effect, where the single-cell observation fails to detect genes that are actually expressed.
+However, it is understood that cells may express only a small fraction of genes at any given time \cite{need}.
+This biological sparsity is then conflated with the technical sparsity due to the dropout effect.
+Dealing with the sparsity and (relatively) low information content of this data is a major challenge in the analysis and modeling of single-cell data.
+Popular computational strategies utilized in the analsis ofscRNA-seq data is explored in the next section \ref{need}.
+
+\subsection{Proteomic technologies}
+%\begin{enumerate}
+%  \item main challenges in dna/rna stem from extracting and aligning sequencing information
+%  \item proteins have macroscopic and checmical properties that can be exploited for profiling
+%  \item general strategy: construct some chemical "label" that i) emits an easily identified signal and ii) has a modular group, sometimes called an antibody, that can be engineered to bind to specific proteins of interest
+%  \item the single-cell protein abundance is measured, in proxy, by isolating an individual cell and measuring the abundance of the signal emitted by all bound labels
+%  \item the main drawback of these methods is their reliance on custom-made antibodies that are specific to a protein of interest
+%  \item it requires that the practioneer select what proteins they want to measure apriori to running the experiment
+%  \item these proteins are often selected as key proteins within some pathway of interest and are referred to as "markers" as they "mark" for the state of these pathways
+%  \item label-free methods attempt to directly measure the chemical properties but come with their own set of computational and signal processing challenges
+%  \item here we describe two proteomic profiling technologies that are further explored in this thesis
+%\end{enumerate}
+
+Whereas the main challenges in genomic and transcriptomic profiling arise from the extraction and alignment of nucleotide sequences,
+approaches for proteomic profiling can exploit the macroscopic and checmical properties of proteins.
+As proteins are directly responsible for a large portion cellular identity and behavior, protein profiling in turn offer a "direct" view into the current state of a cell.
+
+There are two main strategies to achieve this profiling.
+Label-based approaches target proteins of interest, while label-free approaches attempt to measure all proteins in a cell.
+The former approaches are currently more developed than the latter, which comes with their own set of signal-processing challenges.
+Label-based approaches require that the proteins of interest are defined apriori and are typically chosen to be key participants in cellular pathways.
+These proteins are called "markers" as they "mark" for the activity level of their respective pathway.
+
+The general approach behind label-based proteomic profiling strategies involve constructing some chemical "label" that i) emits an easily identified signal and ii) has a modular group, sometimes called an antibody, that are engineered to bind to unique proteins of interest.
+The label abundance within each cell is then measured as a proxy of the cell's protein abundance.
+When compared to sequencing, these approaches tend to scale to a larger number of cells, at the cost of measuring fewer biological features.
+The number of features a label-based profling methods are limited by the facts that i) the modular groups need to be designed to uniquely bind to specific individual proteins and ii) the signals the labels emit are easy to measure because they have wide "bandwidths" in their obserble spaces
+(imagine an old radio that requires clean incoming signals such that such that only a small number of radio towers can effectively communicate with it without overlapping frequencies).
+Two such label-based profiling technologies are utilized in this thesis:
+CyTOF, which communicates signals in a chemical space, and 4i, which communicates signals in visual space.
+
+\paragraph{CyTOF}
+%\begin{enumerate}
+%  \item labels are selected for proteins of interest and tagged with heavy metals
+%  \item labels bind within their cells, then cells are isolated and atomized
+%  \item the chemical composition is then measured using time-of-flight mass spectrometry
+%    which stratfies a cloud of ions based on their individual mass-to-charge ratio
+%  \item heavy metals are chosen as they have a specific mass-to-charge ratio and do not occurr frequently in biological samples
+%  \item protein abundance is then measured by the abundance of the signature ts associated heavy metal emits
+%\end{enumerate}
+CyTOF (cytometry time of flight) % TODO: check
+measures protein levels using labels consisting of heavy metals, which tend to appear rarely in biology and have unique signals that are easy to identify.
+Once these labels bind to their specific target proteins, cells are first isolated and then atomized, reducing all structures within the cell to their atomic components.
+Then atoms are shot through what is essentially a microscopic rail gun and a detector measures how far they travel.
+The distance each atom travels is directly related to its mass-to-charge ratio, that is lighter and/or more charged particles are shot farther.
+Thus, the atomic cloud is observed in terms of a composite signal over the mass-to-charge ratios of all atoms within.
+Protein abundance is then approximated based on the relative abundance of the corresponding levels of detected heavy metal signatures,
+which have unique fingerprints in the mass-to-charge space.
+
+\paragraph{4i}
+%\begin{enumerate}
+%  \item image-based
+%  \item light-emitting labels attach to proteins of interest
+%  \item light channels are limited so an iterative staining procedure washes and re-applys a new set of label to multiple the number of profiled proteins
+%  \item an extremely high-resoultion picture of the sample is taken with subcellular resolution and color channels that correspond to the different labels used
+%  \item an image processing pipeline identifies cellular boundaries and extracts a set of observables for each cell
+%  \item these observables include morphological features, like cell area, and protein abundance features, such as the average intensity of the label over the cell or its nucleus
+%\end{enumerate}
+4i (iterative \ldots) % TODO: get name
+is an imaging-based technology that measures protein levels with immunofluorescent labels \cite{gabri}. % TODO: check
+Labels bind to their target proteins and emit a specific color of light
+that is then measured with an extemely high-resoultion camera capable of observing sub-cellular features.
+Thus, the protein levels are approximated by the intensity of the colored light emitted by its label.
+Furthermore, as the number of available color channels is limited,
+4i describes a novel iterative washing and staining protocol that allows for the use of differently labelled color chanels.
+An image processing pipeline is then used to identify cellular boundaries and extract a set of observables of each individual cell.
+These observations include not only the intensity levels of each marker, but morphological features such as cell area, circumference, roundness, etc.
+
 \subsection{Tumor profiler project}
-\subsection{The observation problem}
+% TODO: expand this
+\begin{enumerate}
+  \item source of data for this project
+  \item multi-modal single-cell profiling
+\end{enumerate}
+
+
+
+\section{Representation learning}
+\subsection{autoencoders, vae}
+\subsection{normalization, hvg, etc of scRNA-seq}
+% TODO: outline
+
+\section{Aligning cellular states across contexts}
+We have seen that in order to understand complex biological processes, such as the mechanisms governing the development of cancer, cellular behavior must be understood across many time points and levels, e.g. from its mutational state, levels of gene regulation, abundance of signalling proteins, etc.
+Although technologies exist to measure cells on each of these levels,
+a common shared limitation is their requirement to consume or destroy profiled cells.
+So while we would ideally like to make multiple observations of an individual cell, for example with different profiling technologies or at different points in time, we are typically limited to make only one observation.
+
+\subsection{Methods to align single-cell populations}
+A major focus of this theis is the development and applications of methods that can \emph{reconstruct} multiple observations of individual cells with computional approaches.
+
+In this case, the general strategy is to take some cellular sample
+and observe it in the desired multiple states
+by dividing the sample in such a way that the set of cells within each observation are similar in composition.
+The challenge of the methods development is to reconstruct the corresponding cellular states by \emph{alignment} of these multiple observations.
+Say $\eta$ represents the distribution of cellular states representing the sample of interest, and $\mu$ and $\nu$ represent the distribution of cellular states in our contexts of interest (for simplicity we assume there are only two contexts).
+We assume that $\mu$ and $\nu$ are somehow derived fro $\eta$ and our aim is to then describe how to align $\mu$ and $\nu$.
+This alignment appears in two main paradigmns, described below:
+
+% TODO: add figure
+
+\paragraph{Constructing holistic view of cells}
+Often it is advantageous to understand cellular state in the context of multiple modalities,
+for instance, to understand the joint-wise state of gene expression and protein levels.
+Here, $\mu$ and $\nu$ can be considered projects of $\eta$ from some abstract space representing a holistic cellular state into their respective observable domains, e.g. gene expresssion space or protein space, as summarized in Figure \ref{need}a.
+The key complication here is that $\mu$ and $\nu$ are typically in distinct feature spaces that might not have a trivial correspondence.
+For instance, the relationship between genes and proteins are known to not be 1-to-1 \cite{need}.
+Chapter \ref{need} describes SCIM, a framework that performs multi-modal single-cell integration in the absense of corresponding cellular feature sets.
+
+\paragraph{Constructing time-resolved cellular observations}
+The cellular responses to perturbations can be considered as a temporal process.
+Cells are exposed to some agent of perturbation, such as a drug treatment, that causes a cascade of signal activation within the cell, changing its state.
+Here, $\mu$ and $\nu$ can be considered observations of $\eta$ within the same observational domain but under different conditions, summarized in Figure \ref{need}b
+Typically $\mu$ will refer to the population treated and profiled with some control condition, while $\nu$ will refer to the population treated with the perturbation of interest and profiled after some time has passed.
+The key complication here is that the underlying cellular populations will be hetergeneous in composition and response, and these complicated responses will need to be recovered without access to paired input-output cellular states.
+Chapter \ref{need} describes CellOT, a framework to learn and predict such heterogenous perturbation responses from uncoupled cellular observations using recent advances in nueral optimal transport.
+Chapter \ref{need} explores the clinical utility of such an approach by applying it to learn and predict the responses of a cohort of melanoma patients to a set of standard-of-care treatments.
