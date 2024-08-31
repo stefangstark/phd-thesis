@@ -1,5 +1,4 @@
-\graphicspath{{figures/integration}}
-
+%\graphicspath{{figures/integration}}
 
 \section{Single-cell integration via Matching}
 SCIM performs multi-modal single-cell integration in two steps.
@@ -24,22 +23,20 @@ Finally, this training scheme allows for the addition of an arbitrary number of 
 
 \subsection{Constructing technology-invariant representations}
 SCIM encodes datasets into a shared latent space that is constructed to have two properties:
-% TODO minor reference VAE section
-First, inputs should be able to be reconstructed from their latent representations, as is typically achieved by vanilla VAEs.
-2) the latent representations of each technology should be well-integrated such that they are indistinguishable from each other.
+1) the inputs should be able to be reconstructed from their latent representations, as is typically achieved by vanilla VAEs \ref{sec:autoencoders}
+and 2) the latent representations of each technology should be well-integrated such that they are indistinguishable from each other.
 In a successful integration the resulting latent space will have corresponding cells across all technologies represented in close proximity.
 
 To construct an integrated latent space, SCIM uses a modified adversarial auto encoder framework.
-% TODO minor: explain source/target modalities
-%First, one modality is chosen as the source modality and the other modalities are regarded as the target modalities.
 This consists of the following networks: a pair of encoder ($\phi_k$) and decoder ($\psi_k$) networks for each technology $k$ and a single discriminator network ($\gamma$) acting on the latent space.
 This discriminator is a binary classifier trained to identify the latent representation of some source technology from latent representations of all other technologies using a binary cross entropy loss.
 
 SCIM yields an integrated latent space by minimizing the reconstruction error while adversarially fooling the discriminator.
 Given the measurements of a batch of cells from the target modality $t$, $x_t$, and the (fixed) latent representations of a batch of cells from the source modality $s$, $\hat{z}_s \sim \phi_s(x_s)$,
-% TODO major: fix SCIM equations, write as min-max
+% TODO: major: fix SCIM equations, write as min-max
 \begin{equation}
-1 = 2
+  
+  \label{eq:scim-loss}
 \end{equation}
 
 $\mathcal{L}_{nll}$ is the negative log-likelihood of the inputs under their reconstruction.
@@ -51,18 +48,16 @@ $\beta$ is a hyperparameter weighing the influence of the adversarial loss.
 Correctly orienting the latent space in an unsupervised manner is a challenging task \cite{Locatello2019,Uhler2019}.
 Consider, for example, a simple monotonic temporal process.
 The latent representations for one dataset could be oriented from start to end, while another could be oriented from finish to start \cite{Welch2017}.
-% TODO minor: fix eqn ref
-Equation 2 is satisfied, the representations are well integrated and inputs can be correctly reconstructed from them, yet the inter-dataset relationships are misaligned.
+Equation \ref{eq:scim-loss} satisfied, the representations are well integrated and inputs can be correctly reconstructed from them, yet the inter-dataset relationships are misaligned.
 \citet{Makhzani2015} address a similar problem by concatenating one-hot representations of labels reflecting intra-technology structure (e.g. cell type is an appropriate choice for ’omics datasets) to the discriminator inputs, showing that this supervision is necessary to orient the latent space.
 Furthermore, \citet{Locatello2019} argued that only a small number of labels are actually needed to achieve orientation.
 To this end, we adopt a semi-supervised approach for some experiments by adding a ‘censored’ label and randomly relabel cells in the training set.
 
 \paragraph{Model architecture}
 Unless specified otherwise, we adopt the following architecture settings.
-All networks use the ReLU activation. % TODO minor: cite/ref/describe ReLU?
+All networks use the ReLU activation \cite{agarap2018}.
 We set the latent dimension of all models to eight, but observed this choice to be flexible.
 We use discriminator networks with two layers and eight hidden units each.
-% TODO major: describe spectral norm?
 The Spectral Normalization framework \cite{Miyato2018} is used during training, which has been argued to stabilize discriminator training by effectively bounding its gradients.
 We use a Gaussian activation for all decoders, a 2 layer architecture with 64 hidden units for all simulated data networks, a 2 layer architecture with 8 hidden units for all CyTOF networks and a 2 layer architecture with 64 hidden units for all scRNA networks.
 The number of features and complexity of data is considered when choosing capacity and depth.
@@ -71,8 +66,7 @@ The number of features and complexity of data is considered when choosing capaci
 Optimization proceeds by iteratively fixing one technology as the source and one technology as the target.
 In the case of more than two technologies, the technology corresponding to the discriminator’s positive class must either be the source or target technology.
 Optimization proceeds with an inner and outer loop.
-% TODO minor: ref eqn correctly
-In a single inner loop step, the latent representations of the source technology are fixed and Equation XX is minimized with gradient updates to the encoder and decoder of the target modality $t$ using gradients computed on the batch $x_t$.
+In a single inner loop step, the latent representations of the source technology are fixed and Equation \ref{eq:scim-loss} minimized with gradient updates to the encoder and decoder of the target modality $t$ using gradients computed on the batch $x_t$.
 This process is repeated multiple times and then one step of the outer loop is performed.
 In a single outer loop step, the discriminator is updated to classify $z_s$ and $z_t$.
 All networks are optimized using the ADAM algorithm \cite{Kingma2013}.
@@ -83,7 +77,7 @@ Due to the min–max nature of adversarial training, model comparison is challen
 While the computer vision community has introduced a number of metrics specific to the image domain to help compare models \cite{Heusel2017,Salimans2016}, here we need to validate the quality of a set of lower-dimensional latent representations.
 To achieve this, we utilize a k-Nearest Neighbor (kNN)-based divergence estimator \cite{Wang2009}.
 The divergence score between two sets of codes $Z_s$ and $Z_t$ is calculated as:
-% TODO minor: typeset eqn
+% TODO: minor: typeset eqn
 \begin{equation}
 	a = b
 \end{equation}
@@ -122,13 +116,21 @@ The union of this graph is then used in the bipartite matching solver.
 The sparsity of these connections, regulated by the choice of the hyperparameter $k$, corresponds to a trade-off between the computational performance (memory usage, run time) and the final matching accuracy.
 
 \paragraph{Null Cell}
-The bipartite matching approach makes the assumption that each cell has a singular corresponding sibling in its paired technology.
+The bipartite matching, Figure \ref{fig:null-cell} makes the assumption that each cell has a singular corresponding sibling in its paired technology.
 However, it is reasonable to expect that differences between profiled samples exist that would invalidate this assumption.
 To allow for mismatches due to this expected variation in cellular composition,
 we expand the kNN graph with sparse connections by adding a densely connected \textit{null cell} with high capacity and relatively large edge weight. 
 This allows to capture potentially poorly matched cells by keeping them unassigned.
 The magnitude of the null match penalty is a hyperparameter that corresponds to a given percentile $p$ of the overall costs.
-% TODO minor: add figure
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/integration/null-cell.png}
+  \end{center}
+  \caption{Fast bipartite matching using a customized Minimum-Cost Maximum-Flow framework. Nodes correspond to cells with technology represented by shape, i.e. hexagons and decagons. R and S represent root and sink nodes. Edges correspond to the sparse connections between the cells, resulting from a kNN search. Edge labels indicate matching cost (first value) and edge capacity (second value). Many-to-one matches in unbalanced datasets are enabled by increasing the capacities ui (for i 2 1; . . . ; m). The null node, colored in gray, captures matches of cells (from the big- ger dataset on the left-hand side of the graph) that lack a close enough analog in the other technology. Its capacity equals the cardinality of the bigger dataset and the cost c␆0 , i.e. null match penalty, is relatively high. The thicker lines linking the nodes represent the actual matches selected by the algorithm.}
+  \label{fig:null-cell}
+\end{figure}
+
 The extended graph structure is depicted in Figure XX, where $R$ and $S$ refer to the root and sink nodes, respectively.
 Furthermore, to account for differences in the number of cells between modalities ($n$, $m$), we allow for one-to-many matches by increasing the capacity of the edges incoming to the sink ($u_i$ for $i \in {1, \ldots, m}$, assuming the nodes linked to the sink correspond to the smaller dataset, i.e. $m \leq n$.
 To prevent all matches from collapsing onto a very small set of nodes, we constrain the incoming sink capacities, excluding the null node, to equal the cardinality of the bigger dataset divided by the cardinality of the smaller dataset, with the capacities distributed uniformly across the sink edges.
