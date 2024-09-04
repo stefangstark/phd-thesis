@@ -7,19 +7,20 @@ It plays a pair of roles:
 and (ii) providing a geometry-based approach to realize couplings between two probability distributions.
 
 Let $\mu$ and $\nu$ be probability measures over spaces $\mathcal{X}$ and $\mathcal{Y}$ respectively,
-and $T : \mathcal{X} \mapsto \mathcal{Y}$.
+and $T : \mathcal{X} \mapsto \mathcal{Y}$ be a function that moves points across these spaces.
+$\mu$ will be some source distribution that will be transformed, under the plan defined by $T$ into the target distribution $\nu$.
 
 \paragraph{Push-forward operator}
 As optimal transport describes how to transform probability measures,
-it is convienent to introduce notation to help describe these transformations.
+it is convenient to introduce notation to help describe these transformations.
 While $T$ is a function that maps individual points from $\mathcal{X}$ to $\mathcal{Y}$,
 the push-forward operator, $\sharp$, allows $T_\sharp$ to
 map a \emph{whole} probability measure on $\mathcal{X}$ to a probability measure on $\mathcal{Y}$.
 Intuitively, the push-forward applies the function $T$ to all of the elementary mass particles in the measure $\mu$,
-thereby, $\sharp$ uses $T$ to "push" the measure $\mu$ from $\mathcal{X}$ onto some measure on $\mathcal{Y}$.
+thereby, "pushing" the measure $\mu$ over $\mathcal{X}$ onto some measure on $\mathcal{Y}$.
 
-While the push-forward operator can be defined over arbitraty probability measures, % TODO: cite
-for simplicity, we consider here the discrete case.
+While the push-forward operator can be defined over arbitrary probability measures \cite{villani2009},
+we consider the discrete case here for simplicity.
 Given a discrete distribution $\alpha$ over $\mathcal{X}$, $\alpha = \sum_i \mathbf{a}_i \delta_{x_i}$
 where $\sum_i \mathbf{a}_i = 1$ and $\delta_a$ is the dirac delta concentrated at some location $x \in \mathcal{X}$,
 the push-forward operator is defined as 
@@ -27,7 +28,7 @@ the push-forward operator is defined as
   \label{eq:def-pushfwd}
   T_\sharp\alpha := \sum_i \mathbf{a}_i \delta_{T(x_i)}
 \end{equation}
-$T_\sharp\alpha$ now describes a discrete probability distribution over $\mathcal{Y}$.
+and $T_\sharp\alpha$ now describes a discrete probability distribution over $\mathcal{Y}$.
 
 \subsection{Monge Maps}
 % Let $\mu$ and $\nu$ be two measures in $\mathbb{R}^d$ and a cost function $c: \mathcal{X} \times \mathcal{Y} \mapsto \mathbb{R}$.
@@ -41,7 +42,7 @@ It is defined as
   \label{eq:monge}
 \end{equation}
 
-\paragraph{Monge maps for discrete distributions}
+%\paragraph{Monge maps for discrete distributions}
 Consider two uniform discrete probability distributions, $\mu$ and $\nu$, of size $n$,
 $\mu = \frac{1}{n} \sum_{i=1}^n \delta_{x_i}$
 and $\nu = \frac{1}{n} \sum_{j=1}^n \delta_{y_j}$.
@@ -55,17 +56,17 @@ $\mathbf{C}$ can be considered as the weighted adjacency matrix of the bipartite
 Here, the optimal transport problem and bipartite matching problem are equivalent.
 % TODO: link to bipartite matching in SCIM section
 
-\paragraph{Limitations}
-The \ref{eq:monge} Monge formulation comes with its own set of limitations and challenges.
+%\paragraph{Limitations}
+The Monge formulation in equation \ref{eq:monge} comes with its own set of limitations and challenges.
 Firstly, its optimization is a complex non-convex problem.
 Furthermore, its reliance on a \emph{deterministic} transport function $T$ restricts the set of problems it can be applied to.
 Consider for instance that $\mu$ and $\nu$ are uniform discrete probability measures over $n$ and $m$ items, respectively.
 If $n < m$, then there cannot exist a Monge solution as there is no way for a $T$ to assign a source $x_i$ to more than one target $y_j$.
 Similarly, solutions for non-uniform discrete measures are not guaranteed to exists,
-due to limitations stemming from the determinism of the Monge formulation.
+due to limitations stemming from this determinism.
 
 \subsection{Kantorovich relaxation}  % eqn 2.24 in computational OT
-\citet{kantorovich1942transfer} provides a formulation to address these shortcomings with a relaxation to the
+\citeauthor{kantorovich1942transfer} provides a formulation to address these shortcomings with a relaxation to the
 Monge problem that allows for non-deterministic transportation by "splitting" mass.
 The \citet{kantorovich1942transfer} optimal transport formulation is 
 \begin{equation}\label{eq:ot-kantorovich}
@@ -76,7 +77,7 @@ The optimal transport plan $\gamma^\star$ that minimizes the Wasserstein distanc
 Computing optimal transport distances in \eqref{eq:ot-kantorovich} involves solving a linear program,
 and thus their computational cost is prohibitive for large-scale machine learning problems.
 Regularizing objective \eqref{eq:ot-kantorovich} with an entropy term results in significantly more efficient optimization
-\citep{cuturi2013sinkhorn} and differentiability w.r.t. its inputs, and thus commonly used as a loss function in machine learning applications.
+\citep{cuturi2013sinkhorn} and differentiability w.r.t. its inputs, and is commonly used as a loss function in machine learning applications.
 
 % \begin{equation}\label{eq:ot-reg}
 % W_{2}^{2, \varepsilon}(\mu, \nu)=\inf _{\gamma \in \Gamma(\mu, \nu)} \int\|x-y\|^{2} d \gamma(x, y) - \varepsilon H(\gamma),
@@ -93,19 +94,18 @@ where the set of admissible potentials is $\phi_c := \{(f, g) \in L^{1}(\mu) \ti
 
 \subsection{Brenier's Theorem}
 % TODO: minor describe
-Of particular interest of optimal transport is when $\mathcal{X} = \mathcal{Y} = \mathbb{R}^d$ and $c(x, y) = \frac{1}{2} \| x - y \|^2$.
+A particular interest of optimal transport is the setting $\mathcal{X} = \mathcal{Y} = \mathbb{R}^d$ and $c(x, y) = \frac{1}{2} \| x - y \|^2$.
 Thanks to a series of results often attributed to Brenier \cite{brenier}\ldots % TODO: minor add authors
-some convienent simplifications can be made to the Kantorovich dual formulation \ref{eq:ot-dual}.
+some convenient simplifications can be made to the Kantorovich dual formulation \ref{eq:ot-dual}.
 
-Within this setting, \citet[Theorem 2.9]{villani2021topics} simplifies the dual problem \eqref{eq:ot-dual} over the pair of functions $(f, g)$ to
-an optimization over a single $f$ and its convex conjugate, $f^*$, where $ f^*(y) = \sup_x \left<x,y\right> - f(x)$.
+These are summarized in \citet[Theorem 2.9]{villani2021topics} where the dual problem \ref{eq:ot-dual} over the pair of functions $(f, g)$ is simplified to
+an optimization over a single $f$ and its convex conjugate, $f^*$, $f^*(y) = \sup_x \left<x,y\right> - f(x)$:
 \begin{equation} \label{eq:ot-dual-brenier}
     W(\mu, \nu)= \frac{1}{2}\mathbb{E}\left[\|x\|_{2}^{2}+\|y\|_{2}^{2}\right]-\inf _{f \in \Tilde{\Phi}} \mathbb{E}_{\mu}[f(X)]+\mathbb{E}_{\nu}\left[f^{*}(Y)\right],
 \end{equation}
-where $\Tilde{\Phi}$ is the set of all convex functions in $L^1(d\mu) \times L^1(d\nu)$,
-% where $L^{1}(\mu) := \{f \text{ is measurable } \& \int f d\mu<\infty\}$,
+where $\Tilde{\Phi}$ is the set of all convex functions in $L^1(d\mu) \times L^1(d\nu)$ and
 $L^{1}(\mu)$ is the set of measurable $f$ such that $\mathbb{E}_\mu f(x) < \infty$.
-Furthermore, the optimal transport plan corresponds to \emph{gradient} of the convex conjugate, $\gamma^\star = \nabla f^\star$.
+Furthermore, these results find that the optimal transport plan corresponds to the \emph{gradient} of this convex conjugate, $\gamma^\star = \nabla f^\star$.
 \citet[Theorem 2.9]{villani2021topics} then proves the existence of an optimal pair $(f, f^*)$ of lower semi-continuous proper conjugate convex functions on $\mathbb{R}^n$ minimizing \eqref{eq:ot-dual}.
 
 \subsection{Optimal transport applications in single-cell biology}
@@ -119,8 +119,8 @@ This, however, has been shown to yield an unstable and difficult-to-solve optimi
 
 % TODO: minor rephrase to connect
 \section{Neural Optimal Transport}
-The computed couplings made by traditional OT appraoches rely on observations of the source and target distributions.
-This reliance represents a strong limitation in terms of their viablitiy in \emph{prediction} tasks.
+The computed couplings made by traditional OT approaches rely on observations of the source and target distributions.
+This reliance represents a strong limitation in terms of their viability in \emph{prediction} tasks.
 For example, in the context of single-cell perturbation prediction,
 these approaches would require that some set of perturbed states are always present,
 thus are limited in terms of their applications.
@@ -150,10 +150,11 @@ In particular, \citet{chen2018optimal} provide a theoretical analysis that any c
 
 \subsection{Parametrization of the optimal transport map}
 % TODO: fix the x and y in this section. Always f(y) and g(x) 
-In this chapter, we follow the approach taken by \citeauthor{makkuva2020optimal}.
-This approach builds off of a previous approach described by \citet{taghvaei20192} who consider solving \eqref{eq:ot-dual-brenier} by parameterizing $f$ with an ICNN and directly solving, at each update step, an optimzation problem to compute the convex conjugate $f^*$.
-As these updates are costly, \citetmain{makkuva2020optimal} relax the strict dependency between $f$ and $f^*$
-by approximating $f^*$ with another ICNN $g$.
+To parameterize the optimal transport plan, we follow the approach taken by \citeauthor{makkuva2020optimal} which 
+in turn builds off of a previous approach described by \citet{taghvaei20192}.
+This approach considers solving \eqref{eq:ot-dual-brenier} by parameterizing $f$ with an ICNN and directly solving, at each update step, an optimization problem to compute the convex conjugate $f^*$.
+As these updates are costly, \citet{makkuva2020optimal} relax the strict dependency between $f$ and $f^*$
+through an approximation of $f^*$ with another ICNN $g$.
 This results in a min-max optimization problem over a pair of competing convex neural networks:
 \begin{equation} \label{eq:ot-makkuva}
   W_{2}^2(\mu, \nu)=\sup _{\substack{f \in \Tilde{\Phi}}} \inf _{g \in \Tilde{\Phi}}  \underbrace{\frac{1}{2}\mathbb{E}\left[\|x\|_{2}^{2}+\|y\|_{2}^{2}\right]}_{\mathcal{C}_{\mu, \nu}} - \underbrace{\mathbb{E}_{\mu}[f(x)]-\mathbb{E}_{\nu}[\langle y, \nabla g(y)\rangle-f(\nabla g(y))]}_{\mathcal{V}_{\mu, \nu}(f, g)}.

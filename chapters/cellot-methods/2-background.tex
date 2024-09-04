@@ -1,8 +1,10 @@
 \section{Learning single-cell perturbation responses}
 % TODO: minor: connecting par
 
-% build up and explain kde plots
-\subsection{Cell-type approaches}  % linear shifts in dataspace
+% TODO: build up and explain kde plots
+
+\subsection{Cell-type approaches}  % TODO: linear shifts in dataspace
+
 \subsubsection{Modeling perturbation responses via matching of subpopulations}
 Within one sample distinct cell types might exhibit very different responses toward a perturbation. This heterogeneity suggests modeling perturbation effects by first identifying different subpopulations and then predicting the response for each of those subpopulations individually. In the following, we introduce a method built upon that insight, which serves as a baseline in this study.
 
@@ -20,7 +22,7 @@ Lastly, to understand the perturbation response of each subpopulation, \citet{su
 \end{align*}
 with $D_C$ denoting the Forstner metric. Predictions on unseen control cells can be thus obtained by projecting each cell into the low-dimensional oNMF space, assigning each cell to the corresponding subpopulation, obtaining the corresponding treated state through modeling the perturbation effect via $(\Delta \mu, \Delta \Sigma, \Delta w)$, and lastly, projecting these predicted treated cell states back into the original $n$-dimensional gene space.
 
-\subsection{Mechanistic and other approaches}  % others we dont talk much about
+\subsection{Mechanistic and other approaches}
 Mechanistic models \citep{suppyuan2021cellbox, suppfrohlich2018efficient} define mathematical models of molecular interactions to model the effect of perturbation.
 These methods, however, are restricted to simpler and well-understood systems as they do not capture highly nonlinear perturbation responses of a heterogeneous cell population. Further, these methods are limited in their applicability as they do not scale to genome-wide measurements \citep{suppsnijder2012single, suppberchtold2018systems, suppgreen2016systems}.
 Linear models \citep{suppdixit2016perturb, suppkamimoto2020celloracle}, on the other hand,  predict changes in cellular gene expression levels using regularized regression methods, where the model predicts a gene's expression level as a linear combination of effects of different perturbations, fitting the regulatory effect of each perturbation on each gene.

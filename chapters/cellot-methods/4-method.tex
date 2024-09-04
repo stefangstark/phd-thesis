@@ -7,41 +7,36 @@
 % High-dimensional single-cell data measured via single-cell genomics or multiplexed imaging technologies can provide this contextual information but only return  unpaired or unaligned observations of cell populations.
 % Here, \textsc{CellOT} allows us to utilize such unpaired data and enables learning cell state transitions upon perturbation.
 
-In formal terms, we denote the unperturbed control population by $\mu$ consisting of $n$ cells $x_i$ for $i = 1, \dots, n$.
-Upon perturbation $k$, the multivariate state of each cell $x_i$ of the unperturbed population changes, which we observe as the perturbed population $\nu$ (\textbf{Fig \ref{fig:fig_1}a}).
-To understand the mode of action and effect of perturbations, we seek to learn the transition and alignment between populations $\mu$ and $\nu$ via parameterizing a map $T$ (see \textbf{Fig \ref{fig:fig_1}a-b}), which explains the transition of each cell from the unperturbed cell population $\mu$ into their perturbed state $\nu$ upon treatment $k$.
-Despite originating from  different observations, map $T$ determines for each cell $x_i$ the most likely corresponding cell $T(x_i)$ in the perturbed population (\textbf{Fig \ref{fig:fig_1}c}).
+We denote the unperturbed control population by $\mu$ consisting of $n$ cells $x_i$ for $i = 1, \dots, n$.
+Upon perturbation $k$, the multivariate state of each cell $x_i$ of the unperturbed population changes, which we observe as the perturbed population $\nu$ (Fig \ref{fig:cellot-overview}a).
+To understand the mode of action and effect of perturbations, we seek to learn the transition and alignment between populations $\mu$ and $\nu$ via parameterizing a map $T$ (see \textbf{Fig \ref{fig:cellot-overview}a-b}), which explains the transition of each cell from the unperturbed cell population $\mu$ into their perturbed state $\nu$ upon treatment $k$.
+Despite originating from  different observations, map $T$ determines for each cell $x_i$ the most likely corresponding cell $T(x_i)$ in the perturbed population (\textbf{Fig \ref{fig:cellot-overview}c}).
 Finding this map then not only allows us to model single-cell trajectories upon perturbation but also to predict the perturbed state of previously unseen control cells.
-As a result, we can forecast the outcome of a perturbation $k$  by applying the learned map $T$ to a new unperturbed population $\rho^\prime_c$ (\textbf{Fig \ref{fig:fig_1}d}).
+As a result, we can forecast the outcome of a perturbation $k$  by applying the learned map $T$ to a new unperturbed population $\rho^\prime_c$ (\textbf{Fig \ref{fig:cellot-overview}d}).
 
 The optimal map $T$ aligning the control and perturbed population, which we seek to find, should best describe the incremental changes in the multivariate profile of each cell after applying a perturbation $k$.
 Using optimal transportation theory \cite{villani2021topics, santambrogio2015optimal} to recover these maps and unveil single-cell reprogramming trajectories has been proposed as a strong modeling hypothesis in the domain of single-cell biology \cite{schiebinger2019optimal, cang2020inferring, demetci2020gromov, huizing2021optimal, lavenant2021towards, zhang2021optimal}.
-Optimal transport problems return the alignment between distributions $\mu$ and $\nu$ corresponding to the minimal overall cost between aligned molecular profiles, thus determining the most likely state of each cell upon perturbation (Fig \ref{fig:fig_1}c).
+Optimal transport problems return the alignment between distributions $\mu$ and $\nu$ corresponding to the minimal overall cost between aligned molecular profiles, thus determining the most likely state of each cell upon perturbation (Fig \ref{fig:cellot-overview}c).
 $T$ is learned such that its image corresponds to $\nu$ and mass is moved from $\mu$ into $\nu$ according to a principle of minimal effort.
 % Utilizing recent advancements in neural optimal transport theory, \textsc{CellOT} considers the dual form of the transport problem and parameterizes a pair of convex potentials with neural networks.
 $T$ is recovered as the gradient of one of these potentials.
 As directly parameterizing the optimal transport map $T$ \cite{korotin2019wasserstein, yang2018scalable, prasad2020optimal} is unstable \citep[Table 1]{makkuva2020optimal}, we parameterize the convex potentials of the dual optimal transport problem $f$ and $g$ by convex neural networks \cite{amos2017input} and recover the optimal map $T$ using the gradient of a convex function $g_k$, i.e., $\nabla g_k$ \cite{makkuva2020optimal}.
-Supplementary Section \ref{supp:related_work} provides a more detailed review of optimal transport methods proposed for single-cell biology problems and how our approach deviates from previous methods.
 
 To put \textsc{CellOT}'s performance in perspective, we benchmark it against current state-of-the-art autoencoder-based methods cite{lotfollahi2019scgen, Lopez2018scvi},
 which attempt to add perturbation effects through the manipulation of a learned latent representation (review in Supplementary Section \ref{supp:related_work}).
 To further test the hypothesis of the optimal transport modeling prior, we compare the learned OT map $\nabla g_k$ for each perturbation $k$ with naive non-OT-based alignments.
 
 
-% TODO: minor: insert cellot figure 1 here
-
-% \begin{itemize}
-%   \item lack of ground truth complicates evaluation
-%   \item metrics to measure alignment of distributions
-%     \begin{itemize}
-%       \item mean-based metrics
-%       \item MMD (describe in supplment ?)
-%     \end{itemize}
-%   \item analyses to verify responses
-% \end{itemize}
+% TODO: add caption
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-methods/Bunne_Main_Fig1.pdf}
+  \end{center}
+  \caption{}\label{fig:cellot-overview}
+\end{figure}
 
 \subsection{Evaluation strategies}
-% TODO: minor rephrase
+% TODO: check wording 
 Since we lack access to the ground truth set of control and treatment observations on the single-cell level,
 we analyze the effectiveness of \textsc{CellOT} using evaluations that operate on the level of the distribution of real and predicted perturbation states.
 Three metrics are considered, i.e., MMD, $\ell_2$ feature means, and the average correlation of the feature means.
