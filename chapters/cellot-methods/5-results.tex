@@ -1,7 +1,8 @@
-\section{Applications of \textsc{CellOT}}
-\subsection{Datasets and Tasks}
+% TODO: remove online methods references
 
-We apply \textsc{CellOT} to learn treatment responses and development processes in two modalities, 4i \cite{gut2018} and scRNAseq.
+\section{Applications of \textsc{CellOT}}
+
+We apply \textsc{CellOT} to learn treatment responses and development processes in two modalities, 4i \cite{gut2018} and scRNAseq. Several settings and tasks are considered, outlined below:
 
 \paragraph{4i cell lines}
 4i profiles of a mixture of two melanoma cell lines treated with cancer treatments and a control.
@@ -43,7 +44,14 @@ the task is to generalize (o.o.d.) this response to held out species.
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/cellot-methods/Bunne_Main_Fig2.pdf}
   \end{center}
-  \caption{}\label{fig:cellot-main-marginals}
+  \caption{
+  \textsc{CellOT} outperforms current state-of-the-art methods on different data modalities.
+  Marginal distributions of marker features from  4i \textbf{(a)} and scRNA \textbf{(d)}.
+  Observed control and treated states are shown in light and dark blue.
+  \textsc{CellOT} predictions are shown in red and baseline predictions (scGen, cAE, PopAlign) are shown in gray.
+  We compare models based on the distributional distance MMD as well as average correlation coefficient $r^2$ between observed perturbed and predicted perturbed cells, for \textbf{b)} 4i and \textbf{e)} scRNA data. Error bars refer to the standard deviation over 10 bootstraps of the test set and the dashed lines correspond to the median of the identity and observed performances. Joint UMAPs of observed treated cells and cells predicted by each model for \textbf{c)} 4i and \textbf{f)} scRNA data. Projections are computed on a joint set of cells, down-sampled such that the number of observed perturbed (gray) and predicted perturbed cells (blue) are equal. An identity coupling compares treated cells to untreated cells. The analysis is conducted for drugs Trametinib, Imatinib, and Gavinostat. 4i data was generated using cell lines M130219 and M130429.}
+
+  \label{fig:cellot-main-marginals}
 \end{figure}
 
 % TODO: decide what to do about supplemental marginals
@@ -86,14 +94,19 @@ In the worst case, these limitations risk masking true and important drug respon
 \textsc{CellOT} is free of these limitations and enables scientists to query the predicted single-cell responses at the granularity best suited to answer their biological questions.
 As a proof of concept, we co-cultured the aforementioned patient-derived melanoma cell lines (see Online Methods) at equal ratios and performed a boutique drug screen, during which we exposed cells 8h to a panel of 34 drugs and measured the single-cell drug responses with the 4i technology. 
 
-
 \begin{figure}
   \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/cellot-methods/Bunne_Main_Fig3.pdf}
+  \includegraphics[width=0.65\textwidth]{figures/cellot-methods/Bunne_Main_Fig3.pdf}
   \end{center}
-  \caption{}\label{fig:cellot-main-4i-analysis}
+    \caption{CellOT facilitates the multiplexed single-cell characterization of cancer drugs.
+    \textbf{a)} One \textsc{CellOT} model was trained for each drug, all models predict on the same set of unseen control cells.
+    \textbf{b)} UMAP projections of predicted and observed cells from all perturbations.
+    \textbf{c)} UMAP projections of predicted single-cell responses.
+    \textbf{d)} Cell states of clusters computed on control cells. Each column represents a cluster and horizontal axis shows cell states sorted based on their association to the cell lines M130219 and M130429. Size and hue of the circles are scaled on the feature values. 
+    \textbf{e)} Clustergram of transport costs of drug treatments for each cell state.
+    \textbf{f)} Cell state-specific responses to drug treatments. Circles are scaled based on drug effect size. Negative values are blue, positive red.}
+  \label{fig:cellot-main-4i-analysis}
 \end{figure}
-% TODO: write caption
 
 Using \textsc{CellOT}, 
 we predict the perturbed cell states of a shared set of control (DMSO-treated) cells (figure \ref{fig:cellot-main-4i-analysis}a) for each drug.
@@ -101,7 +114,7 @@ Previous work \cite{kramer2019cellular} shows that phosphorylation levels of sig
 To assess whether this relationship was retained in predicted compared to observed perturbed cells, we analyzed the phosphorylation levels of extracellular signal-regulated kinases (pERK) using the transport maps learned by \textsc{CellOT} on each drug.
 Using 750 predicted and 750 observed perturbed cells, we computed UMAP projections joint-wise from all features except pERK.
 figure \ref{fig:cellot-main-4i-analysis}b shows the predicted and observed population individually annotated with the respective pERK levels of each cell.
-We find the spatial organization of the two projections to look almost identical and that pERK levels had a highly comparable distribution across the cells of either class and all drug treatments (further analysis in \ref{supp_fig:4i_analysis_extended}a, b.
+We find the spatial organization of the two projections to look almost identical and that pERK levels had a highly comparable distribution across the cells of either class and all drug treatments (further analysis in \ref{supp_fig:4i_analysis_extended}a, b).
 
 \subsection{CellOT disentangles subpopulation-specific drug effects}
 \textsc{CellOT} allows us to 
@@ -135,13 +148,25 @@ Our results on two co-cultured primary melanoma cell lines treated with various 
 
 \subsection{CellOT accurately infers cellular responses in unseen patients}
 
+% TODO: fix caption length
 \begin{figure}
   \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/cellot-methods/Bunne_Main_Fig4.pdf}
+    \includegraphics[width=0.6\textwidth]{figures/cellot-methods/Bunne_Main_Fig4.pdf}
   \end{center}
-  \caption{}\label{fig:cellot-main-ood}
+  \caption{
+  \textsc{CellOT} generalizes to unseen patients and cell subpopulations.
+  Out-of-sample (o.o.s., \textbf{a-c}), and out-of-distribution (o.o.d., \textbf{d-k}) setting.
+  \textbf{a)} Predicting IFN-$\beta$ responses in distribution and out-of-sample. 
+  \textbf{b)} Marginals of predicted cells from the holdout sample in the i.i.d.~(top) and o.o.s.~(bottom) setting. 
+  \textbf{c)} MMD scores between the predicted distribution and the observed treated distribution across all holdout samples in the i.i.d.~and o.o.s.~settings.
+  \textbf{d)} \textsc{CellOT} and baselines predict LPS response across heldout rat and mouse species
+  \textbf{e)} Mean gene expression for i.i.d. and o.o.d. predictions for \textsc{CellOT} and \textsc{scGen} for selected marker genes.
+  \textbf{f)} Comparison of o.o.d. performance for $r^2$ correlation feature means and MMD of \textsc{CellOT} and baselines. Data is depicted as the mean +/- standard deviation across n=10 bootstraps of the test set.
+  \textbf{g)} Marginals of the o.o.d. predictions for marker genes showing bimodal expression profiles when using rat as a holdout.
+    \textbf{h)} Cells from multipotent and oligopotent subpopulations develop for 6 days. \textsc{CellOT} predicts how cells from day 2 develop into the combined set of day 4 and 6, training on a single subpopulation.
+    \textbf{i)} MMD scores between the predicted and (observed) developed distributions for all models in both o.o.d.~ and i.i.d.~prediction tasks (jointly for day 4 and 6). Performance of \textsc{CellOT}, when predicting \textbf{j)} day 4 states and day 6 states \textbf{k)} for different cell types in each setting using $T_m$.}
+  \label{fig:cellot-main-ood}
 \end{figure}
-% TODO: write caption
 
 
 The maps between molecular states before and after treatments learned by \textsc{CellOT} contribute to a better understanding of the differences between cells that respond to certain drugs and cells that do not respond. This is crucial for inferring an incoming patient's response to drugs and settings with high cell-to-cell variability.
