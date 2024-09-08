@@ -1,0 +1,38 @@
+\section{Discussion}
+In this study, we introduced the 4iDRP platform, a next-generation ex-vivo functional platform operating seamlessly as part of the Tumor Profiler project in the clinical workflow of cancer care and explored the clinical utility of optimal transport based cellular responses powered by \textsc{CellOT}.
+Unlike various other drug profiling efforts, 4iDRP focuses on acute phenotypic cellular responses to drug treatments rather than a cell viability measure after prolonged drug exposure. 
+Accordingly, our multiplexed, 4i-based measurements capture cell physiology features aimed at generating information-rich sinmgle-cell profiles suited for reverse translational efforts as wells as clinical event predictions. 
+
+Our findings underscore the critical challenge of patient-to-patient heterogeneity and intra-sample single-cell heterogeneity in generating functional omics data from solid oncology samples.
+The need to account for underlying variability in the control state has been well established in the domains of functional genomics and compound profiling \cite{need}.
+Our work demonstrates that extending these concepts to clinically oriented efforts is both necessary and beneficial.
+We do so here with the first-ever application of a neural-optimal transport on clinical samples and develop the concept of single-cell Drug Responses (scDRs), a novel functional data modality, which captures the high-dimensional response of individual cells to treatments.
+% TODO: [one more sentence on why scDRs are great and different to other was of looking at clinical samples]  
+
+A major limitation of the current work stems from the size of the cohort.
+Although this is one of the largest cohorts measuring patient responses to cancer treatments, \textsc{CellOT} and other methods applied here are able to scale to, and benefit from, much larger cohort sizes.
+In particular, these limitations are most apparent when predicting the responses of an unseen patient from the observed responses of the rest of the cohort.
+While we rarely fail to improve over other approaches, as the drug effects become weaker in this task we are unable to show strong gains over even trivial approaches.
+We attribute this to the discussed cohort heterogeneity,
+where, in these treatments, sample-specific effects begin to outweigh drug responses and generalization becomes not feasible.
+We believe that as cohort sizes grow, more information that govern such sample-specific effects could become available and improve prediction performance.
+Scaling could furthermore be improved through the automatization of the 4i protocol through a dedicated enclosed system, as well as simplifying sample access in the clinical routine.
+Our results show that doing so could have immediate benefit to patients in hospitals and for reverse translational research of the biomedical community at-large.  
+
+%scDRs afford unprecedented mechanistic insights into drug responses compared to previous, non-multiplexed data. Nonetheless, 4i remains a targeted omics approach, capable of observing only a subset of the biology in our samples. For this study we honed our 4i panel to measure pathways mostly affected by targeted therapies. As a trade-off the platforms ability to measure markers involved in responses to other treatment types might have been blunted. Alternatively, omics methods with more encompassing readouts such as single-cell RNA sequencing functional profiling could be [Mention other omics approaches to measure analytes wholistically (RNAseq), and counter with prohibitive cost and inability to directly measure pathwayacivity]. Generating scDR using 4i or otherwise we’ll remain slow and costly - compared to other simpler functional measurements - for the foreseeable future. We believe that rather than Rather than  modular machine-learning framework capable of incorporating and learning from independently generated, non-feature-overlapping datasets  
+%
+%Multimodal  
+
+A promising approach to improve the predictive power of single-cell responses is to utilize information from multi-modal profiling or spatial contexts.
+In the context of CellOT-powered predictions, we envision two potential avenues to incorporate such information.
+Information available only on untreated cells can be considered as cell-level metadata and conditioned on, in a similar fashion to sample-level metadata.
+Other spatial and multi-modal profiles available both before and after treatment can be incorporated by learning integrative representations \cite{SCIM, GLUE}.
+These methods aim to represent cells such that they contain information across multiple profile modalities, which can be relevant towards determining disease behavior.
+Using these models, response prediction can proceed in the representation space, which can be mapped back to data space, as we have demonstrated previously \cite{bunne2023}.
+Single-cell foundation models \cite{geneformer scgpt, review}, which utilize cutting edge architectures that have had major success in modeling the complexities of language \cite{attn all you need, bert, gpt},
+promise to improve cellular representations with nuances that these architectures would be able to capture.
+With these improved and nuanced representations, the ability for response predictions to handle complex heterogeneous behavior will be essential, a characteristic at which neural-OT approaches like CellOT excel.
+
+
+The integration of scDRs into clinical workflows represents a significant advancement in precision oncology, offering a powerful tool for both translational research and personalized cancer care.
+The findings highlighted in this work demonstrate the need for continued development of sophisticated computational models and experimental approaches to harness the full potential of ex-vivo drug profiling, ultimately improving treatment outcomes for patients with advanced cancers. 
