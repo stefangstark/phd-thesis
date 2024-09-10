@@ -8,21 +8,22 @@
 % Here, \textsc{CellOT} allows us to utilize such unpaired data and enables learning cell state transitions upon perturbation.
 
 We denote the unperturbed control population by $\mu$ consisting of $n$ cells $x_i$ for $i = 1, \dots, n$.
-Upon perturbation $k$, the multivariate state of each cell $x_i$ of the unperturbed population changes, which we observe as the perturbed population $\nu$ (Fig \ref{fig:cellot-overview}a).
-To understand the mode of action and effect of perturbations, we seek to learn the transition and alignment between populations $\mu$ and $\nu$ via parameterizing a map $T$ (see \textbf{Fig \ref{fig:cellot-overview}a-b}), which explains the transition of each cell from the unperturbed cell population $\mu$ into their perturbed state $\nu$ upon treatment $k$.
-Despite originating from  different observations, map $T$ determines for each cell $x_i$ the most likely corresponding cell $T(x_i)$ in the perturbed population (\textbf{Fig \ref{fig:cellot-overview}c}).
+Upon perturbation $k$, the multivariate state of each cell $x_i$ of the unperturbed population changes, which we observe as the perturbed population $\nu$ (Figure \ref{fig:cellot-overview}a).
+To understand the mode of action and effect of perturbations, we seek to learn the transition and alignment between populations $\mu$ and $\nu$ via parameterizing a map $T$ (see Figure \ref{fig:cellot-overview}a-b), which explains the transition of each cell from the unperturbed cell population $\mu$ into their perturbed state $\nu$ upon treatment $k$.
+Despite originating from  different observations, map $T$ determines for each cell $x_i$ the most likely corresponding cell $T(x_i)$ in the perturbed population (Figure \ref{fig:cellot-overview}c).
 Finding this map then not only allows us to model single-cell trajectories upon perturbation but also to predict the perturbed state of previously unseen control cells.
-As a result, we can forecast the outcome of a perturbation $k$  by applying the learned map $T$ to a new unperturbed population $\rho^\prime_c$ (\textbf{Fig \ref{fig:cellot-overview}d}).
+As a result, we can forecast the outcome of a perturbation $k$  by applying the learned map $T$ to a new unperturbed population $\rho^\prime_c$ (Figure \ref{fig:cellot-overview}d).
 
 The optimal map $T$ aligning the control and perturbed population, which we seek to find, should best describe the incremental changes in the multivariate profile of each cell after applying a perturbation $k$.
-Using optimal transportation theory \cite{villani2021topics, santambrogio2015optimal} to recover these maps and unveil single-cell reprogramming trajectories has been proposed as a strong modeling hypothesis in the domain of single-cell biology \cite{schiebinger2019optimal, cang2020inferring, demetci2020gromov, huizing2021optimal, lavenant2021towards, zhang2021optimal}.
+Using optimal transportation theory \cite{villani2003, santambrogio2015} to recover these maps and unveil single-cell reprogramming trajectories has been proposed as a strong modeling hypothesis in the domain of single-cell biology \cite{schiebinger2019, cang2020, demetci2022, huizing2022, lavenant2023, zhang2021}.
 Optimal transport problems return the alignment between distributions $\mu$ and $\nu$ corresponding to the minimal overall cost between aligned molecular profiles, thus determining the most likely state of each cell upon perturbation (Fig \ref{fig:cellot-overview}c).
 $T$ is learned such that its image corresponds to $\nu$ and mass is moved from $\mu$ into $\nu$ according to a principle of minimal effort.
 % Utilizing recent advancements in neural optimal transport theory, \textsc{CellOT} considers the dual form of the transport problem and parameterizes a pair of convex potentials with neural networks.
 $T$ is recovered as the gradient of one of these potentials.
-As directly parameterizing the optimal transport map $T$ \cite{korotin2019wasserstein, yang2018scalable, prasad2020optimal} is unstable \citep[Table 1]{makkuva2020optimal}, we parameterize the convex potentials of the dual optimal transport problem $f$ and $g$ by convex neural networks \cite{amos2017input} and recover the optimal map $T$ using the gradient of a convex function $g_k$, i.e., $\nabla g_k$ \cite{makkuva2020optimal}.
+As directly parameterizing the optimal transport map $T$ 
+\cite{korotin2020, yang2019, prasad2022} is unstable \citep[Table 1]{makkuva2020}, we parameterize the convex potentials of the dual optimal transport problem $f$ and $g$ by convex neural networks \cite{amos2017} and recover the optimal map $T$ using the gradient of a convex function $g_k$, i.e., $\nabla g_k$ \cite{makkuva2020}.
 
-To put \textsc{CellOT}'s performance in perspective, we benchmark it against current state-of-the-art autoencoder-based methods cite{lotfollahi2019scgen, Lopez2018scvi},
+To put \textsc{CellOT}'s performance in perspective, we benchmark it against current state-of-the-art autoencoder-based methods \cite{lotfollahi2019, lopez2018},
 which attempt to add perturbation effects through the manipulation of a learned latent representation (review in Supplementary Section \ref{supp:related_work}).
 To further test the hypothesis of the optimal transport modeling prior, we compare the learned OT map $\nabla g_k$ for each perturbation $k$ with naive non-OT-based alignments.
 
@@ -50,8 +51,8 @@ However, metrics based only on feature means can be insensitive in settings wher
 % \end{equation*}
 % We report the $\ell_2$ distance between the observed signature $DS(r_k, r_c)$ and the predicted signature $DS(\hat{r}_k, r_c)$, which is a function of the difference in the means between the observed and predicted distributions.
 
-MMD refers to the kernel maximum mean discrepancy \citep{gretton2012kernel}, a metric to measure distances between distributions.
-Given two random variables x and y with distributions p and q, and a kernel function $\phi$, \citet{gretton2012kernel} define the squared MMD as
+MMD refers to the kernel maximum mean discrepancy \citep{gretton2012}, a metric to measure distances between distributions.
+Given two random variables x and y with distributions p and q, and a kernel function $\phi$, \citet{gretton2012} define the squared MMD as
 \begin{equation*}
     \text{MMD}(p, q; \phi) = \mathbb{E}_{x,x^\prime}[\phi(x, x^\prime)] + \mathbb{E}_{y,y^\prime}[\phi(y, y^\prime)] - 2\mathbb{E}_{x,y}[\phi(x, y)].
 \end{equation*}
