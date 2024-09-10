@@ -1,7 +1,11 @@
 \chapter{Introduction}
+
 \subsection{Scope}
+% TODO: write
 \subsection{Publications}
+% TODO: write
 \subsection{Collaborators}
+% TODO: write
 
 \section{Individual cells as complex machinery}
 Cells are the basic building block of life -- all living organisms are composed of one or more cells.
@@ -89,9 +93,9 @@ Figure \ref{fig:hallmarks} depicts the general structure of a signaling pathway 
 % TODO: adapt figure better
 \begin{figure}
   \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/introduction/hallmarks.pdf}
+  \includegraphics[width=0.95\textwidth]{figures/introduction/hallmarks.pdf}
   \end{center}
-  \caption{Hallmarks of cancer, adapted from \cite{han2021}
+  \caption{Hallmarks of cancer, adapted from \cite{han2021}}
   \label{fig:hallmarks}
 \end{figure}
 
@@ -408,7 +412,7 @@ Furthermore, there may be a large number of genes that mark for specific pathway
 HVG selection aims to remove such genes automatically, by determining non-informative genes whose expression does not change across the population.
 Oftentimes, this step can reduce the dimensionality from the tens of thousands to the much more manageable hundreds to thousand \cite{satija2015,zheng2017,stuart2019}.
 
-\subsection{autoencoders, vae}
+\subsection{autoencoders, vae} \label{sec:autoencoders}
 Autoencoders (AEs) have emerged has powerful and ubiquitous tools to aid in the modeling and analysis of scRNA-seq data.
 These models learn compressed representations of high-dimensional data by training a pair of neural networks, an encoder $\phi$, and a decoder $\psi$,
 to map data into and out of a low-dimensional "bottleneck" feature space such that data points can be faithfully reconstructed from their bottleneck representations.

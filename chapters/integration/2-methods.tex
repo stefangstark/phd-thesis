@@ -35,14 +35,14 @@ SCIM yields an integrated latent space by minimizing the reconstruction error wh
 Given the measurements of a batch of cells from the target modality $t$, $x_t$, and the (fixed) latent representations of a batch of cells from the source modality $s$, $\hat{z}_s \sim \phi_s(x_s)$,
 % TODO: major: fix SCIM equations, write as min-max
 \begin{equation}
-  
+	a = b
   \label{eq:scim-loss}
 \end{equation}
 
 $\mathcal{L}_{nll}$ is the negative log-likelihood of the inputs under their reconstruction.
 $\mathcal{L}_{adv}$ is the discriminator’s classification error when trying to classify the latent representation samples $\hat{z}_s$ or $\hat{z}_t$ as the source or target technology.
 $\beta$ is a hyperparameter weighing the influence of the adversarial loss.
-%At the same time, c is trained to correct- ly classify the technology of the z^s and z^t samples.
+%At the same time, c is trained to correctly classify the technology of the z^s and z^t samples.
 
 \paragraph{Latent space orientation}
 Correctly orienting the latent space in an unsupervised manner is a challenging task \cite{Locatello2019,Uhler2019}.
@@ -127,7 +127,7 @@ The magnitude of the null match penalty is a hyperparameter that corresponds to 
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/integration/null-cell.png}
   \end{center}
-  \caption{Fast bipartite matching using a customized Minimum-Cost Maximum-Flow framework. Nodes correspond to cells with technology represented by shape, i.e. hexagons and decagons. R and S represent root and sink nodes. Edges correspond to the sparse connections between the cells, resulting from a kNN search. Edge labels indicate matching cost (first value) and edge capacity (second value). Many-to-one matches in unbalanced datasets are enabled by increasing the capacities ui (for i 2 1; . . . ; m). The null node, colored in gray, captures matches of cells (from the big- ger dataset on the left-hand side of the graph) that lack a close enough analog in the other technology. Its capacity equals the cardinality of the bigger dataset and the cost c␆0 , i.e. null match penalty, is relatively high. The thicker lines linking the nodes represent the actual matches selected by the algorithm.}
+  \caption{Fast bipartite matching using a customized Minimum-Cost Maximum-Flow framework. Nodes correspond to cells with technology represented by shape, i.e. hexagons and decagons. R and S represent root and sink nodes. Edges correspond to the sparse connections between the cells, resulting from a kNN search. Edge labels indicate matching cost (first value) and edge capacity (second value). Many-to-one matches in unbalanced datasets are enabled by increasing the capacities ui (for i $\in$ 1;  . . ; m). The null node, colored in gray, captures matches of cells (from the bigger dataset on the left-hand side of the graph) that lack a close enough analog in the other technology. Its capacity equals the cardinality of the bigger dataset and the null match penalty is relatively high. The thicker lines linking the nodes represent the actual matches selected by the algorithm.}
   \label{fig:null-cell}
 \end{figure}
 

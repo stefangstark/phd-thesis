@@ -1,0 +1,63 @@
+\chapter{Appendix}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/ood-eval-logmmd.pdf}
+  \end{center}
+  \caption{
+    Pairwise logMMD differences comparing \textsc{CellOT} and baseline approaches.
+    For each (drug, patient) pair, models are trained on the entire cohort with that patient held out.
+    Each model predicts the drug response of the heldout patient
+    and logMMD values are computed between the distribution of predicted treated states and the true treated states.
+    Negative values correspond to settings where \textsc{CellOT} improves over the corresponding baseline.
+  }
+\label{fig:ood-eval-logmmd}
+\end{figure}
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/ood-eval-marker.pdf}
+  \end{center}
+  \caption{
+    Pairwise marker EMD differences comparing $\textsc{CellOT}$ and baseline approaches.
+    For each (drug, patient) pair, models are trained on the entire cohort with that patient held out.
+    Each model predicts the drug response of the heldout patient
+    and marker EMD values are computed between the distribution of predicted treated states and the true treated states.
+    Negative values correspond to settings where $\textsc{CellOT}$ improves over the corresponding baseline.
+  }
+  \label{fig:ood-eval-marker}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/ood-predict-marginals.pdf}
+  \end{center}
+  \caption{
+    Predicted response to trametinib dabrafenib combination treatment of each heldout samples.
+    Marginals are shown for the treatment's marker feature, pERK.
+    The inlay shows the selected heldout sample's logMMD score against the rest of the cohort.
+  }\label{fig:ood-predict-marginals}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/progression-exclude-mykokig.pdf}
+  \end{center}
+  \caption{
+    Sample mykokig exhibits evidence for low quality cell segmentation and is removed from the progression prediction task.
+  a) Scatter plot of number of treated cells by the variance of intensity features.  Each dot corresponds to a (treatment, sample) pair and treatments of mykokig are shown in blue. Mykokig behaves as an outlier as it has much more cells per treatment than other samples and these cells have low variance in their intensity features.
+  b) Morphology features of mykokig cells indicate the presence of artifacts. The cluster map shows the distribution of each extracted morphology feature (rows) for cells sampled from mykokig and a subset of 5 samples from the full cohort. A large fraction of mykokig cells exhibit a strange unique morphology pattern of small round cells.
+  }\label{fig:progression-exclude-mykokig}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/cellot-cohort/progression-exclude-motamuh.pdf}
+  \end{center}
+  \caption{
+    The predicted responses for sample motamuh are consistently poor and the sample is therefore removed from the progression prediction task.
+    Boxplots show the ranked MMD metric computed between each model's prediction and observed treated states for drugs considered in the progression prediction task.
+    Results for the average model are shown in the IID and OOD setting as well as CellOT predictions in the OOD setting.
+    Sample motamuh consistently ranks worst across all samples in the cohort for these prediction tasks.
+  }\label{fig:progression-exclude-motamuh}
+\end{figure}
