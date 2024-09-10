@@ -5,10 +5,7 @@
 \input{mypackages}
 \input{notation}
 
-\bibliography{ref}
-
-
-\include{glossary}
+\bibliography{thesis.bib}
 
 \begin{document}
 \initETHthesis
@@ -19,7 +16,7 @@
 \dissnum{$000000$}
 \title{Learning to align single-cell populations}
 \author{Stefan Stark}
-% \acatitle{\normalsize M.Sc. in Applied Mathematics and Physics,\\Moscow Institute of Physics and Technology}
+\acatitle{\normalsize M.Sc. in Computer Science,\\ETH Zurich} % TODO: fix cover page
 \dateofbirth{March $11$, $1992$}
 \citizen{United States}
 %\date{November 2020}
@@ -43,7 +40,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{plain}
 \pagenumbering{roman}
-%\include{sections/preamble}
+\include{chapters/preamble}
 \cleardoublepageempty{}
 \selectlanguage{english}
 
@@ -68,36 +65,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{arabic}
 \cleardoublepageempty{}
-%\include{outline.tex}
-
-
-% \graphicspath{{chapter_1/}}
- \include{chapter/integration.tex}
- 
-
-% \graphicspath{{chapter_2/}}
-% \include{chapter_2/chap_2_content}
-
-% % multi-brwt and binary annotations
-% \graphicspath{{chapter_3/}}
-% \include{chapter_3/chap_3_content}
-% \graphicspath{{chapter_4/}}
-% \include{chapter_4/chap_4_content}
-% \graphicspath{{chapter_5/}}
-% \include{chapter_5/chap_5_content}
-% \graphicspath{{chapter_6/}}
-% \include{chapter_6/chap_6_content}
-
-% \include{sections/discussion}
+\include{chapters/introduction.tex}
+\include{chapters/integration/0-integration.tex}
+\include{chapters/cellot-methods/0-cellot-methods.tex}
+\include{chapters/cellot-cohort/0-cellot-cohort.tex}
+\include{chapters/discussion}
 
 \cleardoublepageempty{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % APPENDIX %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \appendix
-% \part{Appendix}
-% \include{sections/appendix}
+\appendix
+\include{chapters/appendix}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
