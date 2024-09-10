@@ -2,8 +2,8 @@
 
 \section{Single-cell integration via Matching}
 SCIM performs multi-modal single-cell integration in two steps.
-First, we construct an integrated latent space using an adversarial autoencoder framework \cite{Makhzani2015} wherein representations are invariant to their corresponding technologies,
-inspired by a model proposed previously \cite{Uhler2019} and further extended in ~\cite{Yang2019}
+First, we construct an integrated latent space using an adversarial autoencoder framework \cite{makhzani2015} wherein representations are invariant to their corresponding technologies,
+inspired by a model proposed previously \cite{yang2019a} and further extended in ~\cite{yang2019b}.
 In the second step, we perform a strong pairwise alignment of datasets from each modality via a cell-to-cell matching strategy that efficiently extracts cross-technology cell matches from the latent space.
 SCIM assumes a shared latent representation between technologies but, unlike other approaches, does not require one-to-one or overlapping correspondences between feature sets.
 SCIM scales well in the number of cells in the input through the use of neural-nets, end-to-end training and an efficient bipartite matching algorithm.
@@ -23,7 +23,7 @@ Finally, this training scheme allows for the addition of an arbitrary number of 
 
 \subsection{Constructing technology-invariant representations}
 SCIM encodes datasets into a shared latent space that is constructed to have two properties:
-1) the inputs should be able to be reconstructed from their latent representations, as is typically achieved by vanilla VAEs \ref{sec:autoencoders}
+1) the inputs should be able to be reconstructed from their latent representations, as is typically achieved by vanilla VAEs
 and 2) the latent representations of each technology should be well-integrated such that they are indistinguishable from each other.
 In a successful integration the resulting latent space will have corresponding cells across all technologies represented in close proximity.
 
@@ -33,6 +33,7 @@ This discriminator is a binary classifier trained to identify the latent represe
 
 SCIM yields an integrated latent space by minimizing the reconstruction error while adversarially fooling the discriminator.
 Given the measurements of a batch of cells from the target modality $t$, $x_t$, and the (fixed) latent representations of a batch of cells from the source modality $s$, $\hat{z}_s \sim \phi_s(x_s)$,
+
 % TODO: major: fix SCIM equations, write as min-max
 \begin{equation}
 	a = b
@@ -45,20 +46,20 @@ $\beta$ is a hyperparameter weighing the influence of the adversarial loss.
 %At the same time, c is trained to correctly classify the technology of the z^s and z^t samples.
 
 \paragraph{Latent space orientation}
-Correctly orienting the latent space in an unsupervised manner is a challenging task \cite{Locatello2019,Uhler2019}.
+Correctly orienting the latent space in an unsupervised manner is a challenging task \cite{locatello2019a, yang2019a}.
 Consider, for example, a simple monotonic temporal process.
-The latent representations for one dataset could be oriented from start to end, while another could be oriented from finish to start \cite{Welch2017}.
+The latent representations for one dataset could be oriented from start to end, while another could be oriented from finish to start \cite{welch2017}.
 Equation \ref{eq:scim-loss} satisfied, the representations are well integrated and inputs can be correctly reconstructed from them, yet the inter-dataset relationships are misaligned.
-\citet{Makhzani2015} address a similar problem by concatenating one-hot representations of labels reflecting intra-technology structure (e.g. cell type is an appropriate choice for ’omics datasets) to the discriminator inputs, showing that this supervision is necessary to orient the latent space.
-Furthermore, \citet{Locatello2019} argued that only a small number of labels are actually needed to achieve orientation.
+\citet{makhzani2015} address a similar problem by concatenating one-hot representations of labels reflecting intra-technology structure (e.g. cell type is an appropriate choice for ’omics datasets) to the discriminator inputs, showing that this supervision is necessary to orient the latent space.
+Furthermore, \citet{locatello2019} argued that only a small number of labels are actually needed to achieve orientation.
 To this end, we adopt a semi-supervised approach for some experiments by adding a ‘censored’ label and randomly relabel cells in the training set.
 
 \paragraph{Model architecture}
 Unless specified otherwise, we adopt the following architecture settings.
-All networks use the ReLU activation \cite{agarap2018}.
+All networks use the ReLU activation \cite{agarap2019}.
 We set the latent dimension of all models to eight, but observed this choice to be flexible.
 We use discriminator networks with two layers and eight hidden units each.
-The Spectral Normalization framework \cite{Miyato2018} is used during training, which has been argued to stabilize discriminator training by effectively bounding its gradients.
+The Spectral Normalization framework \cite{miyato2018} is used during training, which has been argued to stabilize discriminator training by effectively bounding its gradients.
 We use a Gaussian activation for all decoders, a 2 layer architecture with 64 hidden units for all simulated data networks, a 2 layer architecture with 8 hidden units for all CyTOF networks and a 2 layer architecture with 64 hidden units for all scRNA networks.
 The number of features and complexity of data is considered when choosing capacity and depth.
 
@@ -69,13 +70,13 @@ Optimization proceeds with an inner and outer loop.
 In a single inner loop step, the latent representations of the source technology are fixed and Equation \ref{eq:scim-loss} minimized with gradient updates to the encoder and decoder of the target modality $t$ using gradients computed on the batch $x_t$.
 This process is repeated multiple times and then one step of the outer loop is performed.
 In a single outer loop step, the discriminator is updated to classify $z_s$ and $z_t$.
-All networks are optimized using the ADAM algorithm \cite{Kingma2013}.
+All networks are optimized using the ADAM algorithm \cite{kingma2013}.
 
 
 \paragraph{Model Selection}
-Due to the min–max nature of adversarial training, model comparison is challenging since one cannot directly compare the minimized objective functions of converged models \cite{Lucic2017}.
-While the computer vision community has introduced a number of metrics specific to the image domain to help compare models \cite{Heusel2017,Salimans2016}, here we need to validate the quality of a set of lower-dimensional latent representations.
-To achieve this, we utilize a k-Nearest Neighbor (kNN)-based divergence estimator \cite{Wang2009}.
+Due to the min–max nature of adversarial training, model comparison is challenging since one cannot directly compare the minimized objective functions of converged models \cite{lucic2017}.
+While the computer vision community has introduced a number of metrics specific to the image domain to help compare models \cite{heusel2017,salimans2016}, here we need to validate the quality of a set of lower-dimensional latent representations.
+To achieve this, we utilize a k-Nearest Neighbor (kNN)-based divergence estimator \cite{wang2009}.
 The divergence score between two sets of codes $Z_s$ and $Z_t$ is calculated as:
 % TODO: minor: typeset eqn
 \begin{equation}
@@ -87,15 +88,15 @@ Model selection can proceed at scale by selecting parameter configurations that 
 
 \subsection{Bipartite matching of single-cell embeddings}
 In its second step, SCIM performs multi-modal integration by identifying pairs of corresponding cells across two modalities using their representations in the latent space constructed in the first step.
-We identify pairs by solving a combinatorial bipartite matching problem \cite{Ahuja1993,DellAmico2000}, wherein the bipartite graph is constructed by connecting cells between each pair of technologies, weighted by their distances in the latent space.
+We identify pairs by solving a combinatorial bipartite matching problem \cite{ahuja1993,dellamico2000}, wherein the bipartite graph is constructed by connecting cells between each pair of technologies, weighted by their distances in the latent space.
 The bipartite matching problem then identifies an optimal set of paired cells that minimizes the total edge cost of all matches.
 In order to achieve this efficiently and at scale, we approximate the full bipartite graph with a k-Nearest Neighbors (kNN) graph that identifies a set of potential matches for each cell and reduces the complexity of the problem.
-We then extend the graph to account for single-cell data characteristics and solve the bipartite matching within a general framework of Minimum-Cost Maximum-Flow problems \cite{Ahuja1993,Klein1967}.
+We then extend the graph to account for single-cell data characteristics and solve the bipartite matching within a general framework of Minimum-Cost Maximum-Flow problems \cite{ahuja1993,klein1967}.
 
 \paragraph{Min\-cost Max\-flow matching}
 Based on a Euclidean cost matrix, we aim at finding the maximum number of cell pairs with minimum cost.
 This corresponds to finding a maximum flow that can be pushed through the graph, where each edge between cells has capacity 1, while minimizing the overall cost.
-To solve the Minimum-Cost Maximum-Flow problem in a computationally efficient way we use an implementation of the network simplex algorithm \cite{Kiraly2012}.
+To solve the Minimum-Cost Maximum-Flow problem in a computationally efficient way we use an implementation of the network simplex algorithm \cite{kiraly2012}.
 
 \paragraph{Evaluation}
 Since it is not possible to profile the same cell in multiple modalities, we lack a set of ground truth cell pairs to evaluate against.

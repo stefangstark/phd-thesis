@@ -46,9 +46,9 @@ As DNA forms the base of the central dogma, the root of the information flow, it
 While DNA famously exhibits a double-stranded helical structure,
 each nucleotide has a unique corresponding partner whose bonds connect the two strands.
 The genetic code, as represented by DNA, is often regarded as a one-dimensional string.
-This double-stranded structure represents a redundancy in information and is exploited by cellular processes aimed at conserving the integrity of the genetic code \cite{need}.
+This double-stranded structure represents a redundancy in information and is exploited by cellular processes aimed at conserving the integrity of the genetic code.
 Furthermore, in eukaryotic cells, from which all multi-cellular organisms (fungi, plants, and animals) are comprised, DNA is stored within the nucleus of the cell.
-The nucleus protects the DNA with its own membrane that regulates the flow of chemical entities in and out of it and the DNA itself generally does not leave the nucleus \cite{need}.
+The nucleus protects the DNA with its own membrane that regulates the flow of chemical entities in and out of it and the DNA itself generally does not leave the nucleus \cite{milo2015}.
 
 \paragraph{RNA} RNA (ribonucleic acid) is the intermediate step in the central dogma and plays a central in gene expression and regulation.
 Since DNA is typically secured and isolated from interacting with the cellular environment, RNA can be understood as its intermediary.
@@ -75,7 +75,7 @@ either through the breaking and reforming of bonds between a protein's amino aci
 or through the binding of some external chemical object.
 Returning to the example of oxygen transport by hemoglobin -- the function of hemoglobin is to i) bind oxygen in the lung and ii) release it throughout the body.
 Hemoglobin has two stable conformations that favor either the capture or release of oxygen molecules.
-The preferred conformation is driven by chemical interactions determined by pH and oxygen concentration of the environment \cite{bohreffect}.
+The preferred conformation is driven by chemical interactions determined by pH and oxygen concentration of the environment \cite{riggs1971}.
 
 A common form of cellular signaling occurs when a protein and some external chemical object interact through the formation of chemical bonds.
 An entity that binds to a protein is called a ligand and these ligands can range in complexity from simple ions to entire proteins.
@@ -95,7 +95,7 @@ Figure \ref{fig:hallmarks} depicts the general structure of a signaling pathway 
   \begin{center}
   \includegraphics[width=0.95\textwidth]{figures/introduction/hallmarks.pdf}
   \end{center}
-  \caption{Hallmarks of cancer, adapted from \cite{han2021}}
+  \caption{Hallmarks of cancer, adapted from \cite{hanahan2011}
   \label{fig:hallmarks}
 \end{figure}
 
@@ -103,12 +103,13 @@ Figure \ref{fig:hallmarks} depicts the general structure of a signaling pathway 
 \paragraph{Centralized pathway databases}
 Centralized databases of cellular signaling pathways are important resources to the biological research community.
 These databases are curated through a combination of manual curation, literature reviews, and computational approaches, and distill the last few decades of cell biology research.
-Reactome and Hallmark are two prominent centralized databases of cellular signaling pathways.
+Reactome \cite{vastrik2007} and the Molecular Signatures Database (MSigDB) \cite{liberali2014} are two prominent centralized databases of cellular signaling pathways.
 Reactome is a curated database of human biological pathways, including metabolic, signaling, and disease pathways.
 It provides a comprehensive view of cellular processes and their interconnections.
-Hallmark, part of the Molecular Signatures Database (MSigDB), is a collection of curated gene sets that represent well-defined biological processes, including signaling pathways.
+MSigDB is a collection of gene sets expertly curated and automatically generated that represent a wide range of biological processes and signaling pathways.
+Their "Hallmark" gene set contains a refined set of 50 pathways that represent essential gene functions.
 These databases are widely used for pathway analysis, gene set enrichment analysis, and network analysis to understand cellular responses to different stimuli.
-Other prominent databases in this field include KEGG, Biocarta, and WikiPathways.
+Other prominent databases in this field include KEGG \cite{kanehisa2000}, Biocarta \cite{nishimura2001}, and WikiPathways \cite{agrawal2024}.
 These resources are crucial for understanding cellular signaling and identifying key regulators of biological processes.
 
 \subsection{Genotype, phenotype, and mutations}
@@ -117,24 +118,24 @@ As we have seen, this relationship is far from one-to-one -- there are many fact
 However, it can happen that \emph{mutations}, changes in the genetic sequence, produce drastic effects on the phenotype.
 For example, while redundancies exist between the 64 unique nucleotide triplets and the 20 unique amino acids they code for, changes to genetic code can sometimes cause a different amino acid to be translated.
 If this change occurs within some important location within the protein, such as one critical to its shape or structure of a ligand binding site, the intended function of the protein can be invalidated.
-Returning again to hemoglobin, the genetic disorder sickle-cell aenemia is caused by a point mutation, a single nucleotide change in the genetic code, that alters the shape of the protein such that it cannot bind oxygen, to devastating effect.
-As we will see (Section \ref{sec:cancer-mutations}), mutations play a critical role in the development of cancer, albeit in more nuanced and/or complicated contexts.
+Returning again to hemoglobin, the genetic disorder sickle-cell anemia is caused by a point mutation, a single nucleotide change in the genetic code, that alters the shape of the protein such that it cannot bind oxygen, to devastating effect.
+As we will see, mutations play a critical role in the development of cancer, albeit in more nuanced and/or complicated contexts.
 
 \section{Hallmarks of Cancer}
 Cancer is a family of genetic diseases in which normal cells exhibit abnormal behavior that causes them to grow and proliferate uncontrollably, resulting in a mass of cells known as a tumor.
 This growth can lead to serious health complications as cells
 can then invade nearby tissues and spread to other parts of the body.
-Over the last few decades, the development of effective cancer treatment strategies has been at the forefront of biomedical research and has been the target of large moonshot projects \cite{need} and large international consortia \cite{icgc,tcga}.
-Despite this, cancer has remained an active research enviornment, challenging researchers to understand and control complex and nuanced cellular behaviors that can often times be specific to the tumor.
+Over the last few decades, the development of effective cancer treatment strategies has been at the forefront of biomedical research and has been the target of large moonshot projects \cite{need} and large international consortia \cite{icgc2020}.
+Despite this, cancer has remained an active research environment, challenging researchers to understand and control complex and nuanced cellular behaviors that can often times be specific to the tumor.
 Many of the methods developed and applications explored within this thesis are motivated by challenges arising from understanding and treating cancer.
 
 A major complication towards the treatment of cancer lie in the myriad mechanisms cells can use to escape the natural regulatory processes that prevent unchecked growth.
-The \emph{Hallmarks of Cancer}, proposed by \citeauthor{foo} in \citeyear{foo} and updated in \citeyear{foo} and \citeyear{foo}, is a framework to understand the key capabilities and enabling characteristics of cancer cells.
+The \emph{Hallmarks of Cancer}, proposed by \citet{hanahan2000} in \citeyear{hanahan2000} and updated in \citeyear{hanahan2011} \cite{hanahan2011} and \citeyear{hanahan2022} \citep{hanahan2022}, is a framework to understand the key capabilities and enabling characteristics of cancer cells.
 The framework (Figure \ref{fig:hallmarks}) describes eight capabilities, which can be considered as something akin to "gates" in the sense that they each represent some core regulatory process that must be bypassed in order for a normal cell to become cancerous, a process known as tumorigenesis.
 In addition, the framework also describes two enabling characteristics, "Genome instability \& mutation" and "Tumor-promoting inflammation", which describe the general mechanisms used to bypass each "gate" and obtain the property of each hallmark characteristic.
 In essence, the framework poses that in order for a cell to become a cancer cell, it must, by way of genetic mutations and tumor-promoting inflammation, both
 i) sustain, promote, or generate cell growth signals, and, simultaneously,
-ii) ignore or resist growth suppression or death (apoptosis) signals.
+ii) ignore or resist growth suppression or death (apoptosis) signals \cite{hanahan2011}.
 
 \subsubsection{Genome instability \& mutations} \label{sec:cancer-mutations}
 Genetic mutations are one of the underlying causes that enable cells to gain hallmark capabilities.
@@ -142,17 +143,17 @@ These "hallmark-granting" mutations typically change the coding of specific prot
 As a result, these proteins become composed of slightly different amino acids and their shape and therefore function are changed.
 This can cause gain or loss-of function, resulting in abnormal activation or deactivation of important cellular pathways.
 Mutations in genes coding for these proteins are known as \emph{driver} mutations, as they take some of the core responsibility of guiding or driving tumorigenesis \cite{martinez-jimenez2020}.
-identifying and then interrupting or reversing the effects of these driver mutations is a central strategy in cancer treatment \cite{need}.
+identifying and then interrupting or reversing the effects of these driver mutations is a central strategy in cancer treatment.
 
 Mutations in the BRAF gene are one of the most infamous examples of driver mutations.
 Cell growth and proliferation are normal aspects of the cell life cycle.
 In healthy cells, the signals that govern these processes are well regulated such that normal functions are maintained.
 A signature property of cancer cells, on the other hand, is to deregulate these sources, resulting in abnormally high growth signals.
-Changes to the BRAF protein, a key member of the RAS/MAPK signaling pathway \cite{davies2010}, a major intracellular signaling cascade that regulates cellular growth and proliferation,
+Changes to the BRAF protein, a key member of the RAS/MAPK signaling pathway \cite{davies2011}, a major intracellular signaling cascade that regulates cellular growth and proliferation,
 can result in sustained growth-promoting signals.
 Around 40\% of human melanomas contain a mutation in the BRAF gene, and 
 85\% of these mutations are within the V600E subunit \cite{spathis2019}.
-Consequently, many resources have been allocated towards the understanding of this protein, its common mutations \cite{smiech2020}, and treatment strategies \cite{cheng2017}.
+Consequently, many resources have been allocated towards the understanding of this protein, its common mutations \cite{smiech2020}, and treatment strategies \cite{cheng2018}.
 
 Another class of driver mutations occur in so-called "tumor suppressor genes."
 These genes code for proteins that are key members of the body's natural regulatory function that detect cancerous abnormalities and, in response, send growth-inhibiting signals \cite{joyce2024}.
@@ -162,14 +163,14 @@ Mutations that interrupt the basic duties of these genes can be particularly har
 
 Mutations can be classified into one of two classes:
 \emph{germline} mutations that are inherited and present at birth, or
-\emph{somatic} mutations that are acquired throughout one's lifetime, e.g. by smoking, exposure to UV radiation, or simple random chance \cite{griffiths2008}.
+\emph{somatic} mutations that are acquired throughout one's lifetime, e.g. by smoking, exposure to UV radiation, or simple random chance \cite{hanahan2011}.
 A complication towards robust cancer treatments stems from the fact that individuals will have unique mutation combinations and the development of "one-size-fits-all" treatments are difficult or impossible.
 Futhermore, while driver mutations appear in some subset of genes, they can affect different subunits and/or have different effects on the proteins downstream behavior \cite{smiech2020}.
 
 As tumor cells proliferate, they copy and propagate their genetic mutations.
 Tumor "clones" are genetically (and phenotypically) distinct cancer cells, arising from some original cancer cell.
 Cancer cells, when compared to normal cells, are typically more susceptible to acquiring somatic mutations, due to, for instance, mutations in DNA-repair mechanisms \cite{negrini2010,salk2010}.
-As a result, the genetics of cancer cells can exhibit a branching process within tumor clones, resulting in tumor "subclones", \ref{fig:subclone}
+As a result, the genetics of cancer cells can exhibit a branching process within tumor clones, resulting what are known as tumor subclones.
 The presence of these subclones represents a further complication in effective cancer treatment as these are not only specific to the individual but treatments need to address all active subclones which may exhibit differential responses to therapies.
 
 \subsection{"Tumor-promoting inflammation" and the tumor microenvironment}
@@ -177,7 +178,7 @@ Inflammation refers to an organism's natural biological response to harmful stim
 for instance, the immune system response to a foreign disease.
 While it has been known that immune cells interact with and are involved in tumor formation, research over the last few decades has indicated that these interactions are crucial to the behavior of the tumor \cite{grivennikov2010, quail2013}.
 This has lead to a sea-change in basic models of cancer -- tumors are not some relatively homogeneous mass of cancer cells experiencing unchecked growth, but a complex orchestra of interacting cells.
-Under this tumor microenvironment (TME) model, tumors can be understood as something not unlike an organ that survives and propagates thanks to complex signaling interactions between many different cell types \cite{balkwill2012}, which are, as described above, specific to the individual \ref{fig:tme}.
+Under this tumor microenvironment (TME) model, tumors can be understood as something not unlike an organ that survives and propagates thanks to complex signaling interactions between many different cell types \cite{balkwill2012}, which are, as described above, specific to the individual.
 Specifics of the TME have been shown to contribute to immune evasion \cite{pansy2021},
 immunospression \cite{balta2021}, and immune cell reprogramming \cite{cao2022}.
 It has also been shown that the immune responses within the TME can have 
@@ -261,10 +262,10 @@ For reference, humans have on the order of 20k protein coding genes.
 While these methods offer deep insight into the inner workings of an individual cell, they must do so at the cost of much less transcriptomic information.
 Single-cell technologies rely on a processing step in which successfully captured reads are first replicated before aligned.
 The failure rates associated with capturing and replicating reads are thought to cause a "dropout" effect, where the single-cell observation fails to detect genes that are actually expressed.
-However, it is understood that cells may express only a small fraction of genes at any given time \cite{need}.
+However, it is understood that, at any given time, cells may express only a small subset of their total genes \cite{adams2008}.
 This biological sparsity is then conflated with the technical sparsity due to the dropout effect.
 Dealing with the sparsity and (relatively) low information content of this data is a major challenge in the analysis and modeling of single-cell data.
-Popular computational strategies utilized in the analsis ofscRNA-seq data is explored in the next section \ref{need}.
+Popular computational strategies utilized in the analysis of scRNA-seq data is explored in section \ref{sec:scrna-seq}.
 
 \subsection{Proteomic technologies}
 %\begin{enumerate}
@@ -315,7 +316,7 @@ Thus, the atomic cloud is observed in terms of a composite signal over the mass-
 Protein abundance is then approximated based on the relative abundance of the corresponding levels of detected heavy metal signatures,
 which have unique fingerprints in the mass-to-charge space.
 
-\paragraph{4i}
+\paragraph{4i} % TODO: expand more here
 4i (iterative indirect immunofluorescence imaging) \cite{gut2018}
 is an imaging-based technology that measures protein levels with immunofluorescent labels.
 These labels bind to their target proteins and emit a specific color of light
@@ -340,7 +341,7 @@ This project has been a major source of inspiration and data for this thesis.
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/introduction/tupro.jpg}
   \end{center}
-  \caption{}\label{fig:tupro-overview}
+  \caption{}\label{fig:tupro-overview} % TODO: caption, adapted from
 \end{figure}
 
 Over the course of three years, the project applied cutting-edge multi-modal profiling technologies to a total of 240 samples spanning metastatic melanoma, metastatic epithelial ovarian cancer, and acute myeloid leukemia.
@@ -351,7 +352,7 @@ Analysis from each node is integrated and distilled into a report and
 this report is further distilled by a "pre-tumor" board and finally by the final tumor board where treatment decisions are made.
 For each sample, the target turn around time for collection, profiling, and analysis is two weeks.
 
-\section{Representation learning, scRNA-seq}
+\section{Representation learning, scRNA-seq} \label{sec:scrna-seq}
 Raw read outs of single-cell profiling technologies often have statistical properties that are difficult for computational tools to handle.
 These statistical properties, present especially in scRNA-seq but applicable for biological data in general,
 include challenges like high-dimensionality, heavy-tailed distributions, sparsity, and noisy observations.
@@ -376,9 +377,9 @@ There are two main sources of variation underlying the measurements made in scRN
 variation in the capture reads and variation in the relative rate of replication in the amplification step.
 Since RNA molecules are distinct entities, their abundances are modeled using discrete probability distributions.
 The Poisson distribution is a popular choice to model these variations,
-as the number of RNA molecules or UMIs of a given gene in a single cell is typically conceptualized as a count of independent capture events \cite{breda2021,more},
+as the number of RNA molecules or UMIs of a given gene in a single cell is typically conceptualized as a count of independent capture events \cite{breda2021},
 which is the key assumption underlying the Poisson distribution.
-scRNA-seq data can exhibit additional sources of variations, from both technical sources and dynamics in underlying biological mechanisms \cite{need},
+scRNA-seq data can exhibit additional sources of variations, from both technical sources and dynamics in underlying biological mechanisms \cite{hicks2018},
 that break these assumptions.
 In such cases, a popular choice is the more complex negative binomial distribution \cite{choudhary2022}.
 While many methods have been introduced that utilize the negative binomial distribution \cite{lopez2018, risso2018, eraslan2019},
@@ -449,7 +450,6 @@ Although technologies exist to measure cells on each of these levels,
 a common shared limitation is their requirement to consume or destroy profiled cells.
 So while we would ideally like to make multiple observations of an individual cell, for example with different profiling technologies or at different points in time, we are typically limited to make only one observation.
 
-\subsection{Methods to align single-cell populations}
 A major focus of this thesis is the development and applications of methods that can \emph{reconstruct} multiple observations of individual cells with computational approaches.
 
 In this case, the general strategy is to take some cellular sample
@@ -460,6 +460,7 @@ Say $\eta$ represents the distribution of cellular states representing the sampl
 We assume that $\mu$ and $\nu$ are somehow derived from $\eta$ and our aim is to then describe how to align $\mu$ and $\nu$.
 This alignment appears in two main paradigms, described below:
 
+% TODO: caption
 \begin{figure}
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/introduction/thesis-overview-pgm.pdf}
@@ -472,8 +473,8 @@ Often it is advantageous to understand cellular state in the context of multiple
 for instance, to understand the joint-wise state of gene expression and protein levels.
 Here, $\mu$ and $\nu$ can be considered projects of $\eta$ from some abstract space representing a holistic cellular state into their respective observable domains, e.g. gene expression space or protein space, as summarized in Figure \ref{need}a.
 The key complication here is that $\mu$ and $\nu$ are typically in distinct feature spaces that might not have a trivial correspondence.
-For instance, the relationship between genes and proteins are known to not be 1-to-1 \cite{need}.
-Chapter \ref{need} describes SCIM, a framework that performs multi-modal single-cell integration in the absence of corresponding cellular feature sets.
+For instance, the relationship between genes and proteins are known to not be 1-to-1 \cite{edfors2016}.
+Chapter \ref{ch:scim} describes SCIM, a framework that performs multi-modal single-cell integration in the absence of corresponding cellular feature sets.
 
 \paragraph{Constructing time-resolved cellular observations}
 The cellular responses to perturbations can be considered as a temporal process.
@@ -481,5 +482,5 @@ Cells are exposed to some agent of perturbation, such as a drug treatment, that 
 Here, $\mu$ and $\nu$ can be considered observations of $\eta$ within the same observational domain but under different conditions, summarized in Figure \ref{need}b
 Typically $\mu$ will refer to the population treated and profiled with some control condition, while $\nu$ will refer to the population treated with the perturbation of interest and profiled after some time has passed.
 The key complication here is that the underlying cellular populations will be heterogeneous in composition and response, and these complicated responses will need to be recovered without access to paired input-output cellular states.
-Chapter \ref{need} describes CellOT, a framework to learn and predict such heterogenous perturbation responses from uncoupled cellular observations using recent advances in neural optimal transport.
-Chapter \ref{need} explores the clinical utility of such an approach by applying it to learn and predict the responses of a cohort of melanoma patients to a set of standard-of-care treatments.
+Chapter \ref{ch:cellot} describes CellOT, a framework to learn and predict such heterogenous perturbation responses from uncoupled cellular observations using recent advances in neural optimal transport.
+Chapter \ref{ch:cohort} explores the clinical utility of such an approach by applying it to learn and predict the responses of a cohort of melanoma patients to a set of standard-of-care treatments.

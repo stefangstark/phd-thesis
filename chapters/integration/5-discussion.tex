@@ -11,7 +11,7 @@ The scalability of our framework ensures applicability beyond single samples, fa
  
 As the low-dimensional representation of the data produced by SCIM is used solely to perform cell matching, it can be combined with any other analytical methods.
 The truly observed signals per cell pair measured with different technologies can be used for any downstream analysis.
-By adopting a divergence measure \cite{Wang2009}, we addressed common constraints in adversarial training, such as training instability and convergence problems.
+By adopting a divergence measure \cite{wang2009}, we addressed common constraints in adversarial training, such as training instability and convergence problems.
 To ensure scalability, we used a modified bipartite matching solution to efficiently match corresponding cells across technologies.
 Our extensions guarantee  wider applicability of SCIM, since shifts in cell-type composition across disjoint aliquots, even coming from the same sample, can be expected.
 Furthermore, the introduction of the \textit{null} node ensures a higher quality of matches by avoiding forced mismatches and thus, improving confidence in the cell-to-cell assignments.
@@ -36,7 +36,7 @@ Recently, \citeauthor{samaran2024} introduced a multi-modal integration framewor
 This framework is also based on unpaired, modality specific auto-encoders, but uses a modality pairwise optimal transport coupling between a subset of shared features to help regularize and align the construction of the latent space.
 
 \paragraph{Impact} Despite the emergence of other methods, the modeling approach taken by SCIM has proven to be influential in independent analyses of multimodal single-cell datasets. 
-\citeauthor{fleck2022} and \citeauthor{wahle2023} adapted the SCIM framework in their respective multi-modal analyses of brain and retinal organoids.
+\citeauthor{fleck2023} and \citeauthor{wahle2023} adapted the SCIM framework in their respective multi-modal analyses of brain and retinal organoids.
 These authors substitute the auto-encoder framework with the more simple canonical correlation analysis in order to construct an integrated representation space across scRNA-seq and scATAC-seq data, then utilized a bi-partite matching to recover "multiomic metacells."
 In a similar vein, \citeauthor{meier2023} studied the specification and differentiation of epicardioids in the development of heart tissue, under a multi-modal lens.
 While they opted for the use of GLUE embeddings \cite{cao2022}, they modified its approach with a SCIM-inspired bi-partite matching scheme to finalize the integration.

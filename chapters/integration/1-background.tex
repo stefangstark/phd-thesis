@@ -1,14 +1,14 @@
 \section{Background}
 The ability to dissect a tissue into its cellular components to study them individually or to investigate the interplay between the different cell type fractions is an exciting new possibility in biological research.
-These lines of research have yielded important insights into the dynamics of various diseases, especially for cancer  \cite{Chevrier2017,Tirosh2016}.
-Recent advances in single-cell technologies enable molecular profiling of samples with greater granularity at the transcriptomic, proteomic, genomic as well as the functional assays level \cite{Irmisch2020,Rozenblatt2017}.
+These lines of research have yielded important insights into the dynamics of various diseases, especially for cancer \cite{chevrier2017,tirosh2016}.
+Recent advances in single-cell technologies enable molecular profiling of samples with greater granularity at the transcriptomic, proteomic, genomic as well as the functional assays level \cite{irmisch2021,rozenblatt-rosen2017}.
 While each of these data modalities offer insight into different types and levels of internal cellular processes,
 a \textit{holistic} understanding of cellular state could be obtained through the combination or integration of these modalities.
 Knowing the measurement of multiple modalities for individual cells would deepen our understanding of the cellular mechanisms at play in, for instance, the tissue microenvironment, and construct a comprehensive molecular view of profiled samples.
 
 A key challenge towards such integration, however, lies in the limitations of profiling technologies.
 Since ubiquitous technologies, such as scRNA-seq and CyTOF, consume the profiled cells, it is typically not possible to observe these cells in more than one modality.
-While technologies capable of measuring multiple modalities simultaneously are emerging \cite{Stoeckius2017,Zhu2020}, they remain limited in terms of scalability and practicality.
+While technologies capable of measuring multiple modalities simultaneously are emerging \cite{stoeckius2017,zhu2020}, they remain limited in terms of scalability and practicality.
 Thus, the multi-modal integration of cellular processes falls to computational methods.
 Given observation datasets across individual profiling modalities, these methods typically assume that the samples profiled in each modality are somehow similar in composition, and perform integration bo constructing and \textit{alignment} across these datasets.
 A critical complication towards this alignment lies in the weak correspondences between the feature sets over these modalities
@@ -16,11 +16,11 @@ For instance, there does not exist a one-to-one correspondence between genes (as
 Thus, proper alignment is a challenging task.
 
 %\bold{Related work}
-While multiple data integration tools have been developed, most approaches either depend on or impose feature correspondences \cite{Stuart2019,Welch2019}, or are designed to applied to a limited set of modalities, for instance, scRNA and scDNA data \cite{Campbell2019,McCarthy2020}.
-To the best of our knowledge only two other approaches have been published \cite{Amodio2018,Welch2017} able to perform integration over general modalities.
-MAGAN \cite{Amodio2018} is a Generative Adversarial Network capable of aligning the manifold between two technologies that relies on a feature correspondence loss.
-MATCHER \cite{Welch2017} is based on a Gaussian process latent variable model (GPLVM) \cite{Lawrence2004} that can integrate technologies if their underlying latent structures can be represented in one dimension, applicable, for example, to model monotonic temporal processes.
-Other yet unpublished methods, such as MMD-MA \cite{Liu2019} and UnionCom \cite{Cao2020}, rely on large kernel matrices which limit their scalability when using datasets of the sizes generally produced by molecular profiling.
+While multiple data integration tools have been developed, most approaches either depend on or impose feature correspondences \cite{stuart2019,welch2019}, or are designed to applied to a limited set of modalities, for instance, scRNA and scDNA data \cite{campbell2019,mccarthy2020}.
+To the best of our knowledge only two other approaches have been published \cite{amodio2018,welch2017} able to perform integration over general modalities.
+MAGAN \cite{amodio2018} is a Generative Adversarial Network capable of aligning the manifold between two technologies that relies on a feature correspondence loss.
+MATCHER \cite{welch2017} is based on a Gaussian process latent variable model (GPLVM) \cite{lawrence2004} that can integrate technologies if their underlying latent structures can be represented in one dimension, applicable, for example, to model monotonic temporal processes.
+ather yet unpublished methods, such as MMD-MA \cite{liu2019} and UnionCom \cite{cao2020}, rely on large kernel matrices which limit their scalability when using datasets of the sizes generally produced by molecular profiling.
 
 Here, we propose Single-cell Integration via Matching (SCIM), a method to match cells across different single-cell ’omics technologies.
 Our approach is universal, in the sense that it is in principle applicable to any single-cell technology and overcomes the scaling issues of contemporary approaches.

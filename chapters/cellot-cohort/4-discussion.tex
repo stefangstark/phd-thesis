@@ -4,9 +4,9 @@ Unlike various other drug profiling efforts, 4iDRP focuses on acute phenotypic c
 Accordingly, our multiplexed, 4i-based measurements capture cell physiology features aimed at generating information-rich sinmgle-cell profiles suited for reverse translational efforts as wells as clinical event predictions. 
 
 Our findings underscore the critical challenge of patient-to-patient heterogeneity and intra-sample single-cell heterogeneity in generating functional omics data from solid oncology samples.
-The need to account for underlying variability in the control state has been well established in the domains of functional genomics and compound profiling \cite{need}.
-Our work demonstrates that extending these concepts to clinically oriented efforts is both necessary and beneficial.
-We do so here with the first-ever application of a neural-optimal transport on clinical samples and develop the concept of single-cell Drug Responses (scDRs), a novel functional data modality, which captures the high-dimensional response of individual cells to treatments.
+While the need to account for underlying variability in the control state has been well established \cite{icgc2020},
+our work demonstrates that extending these concepts to clinically oriented efforts is both necessary and beneficial.
+We do so here with the first-ever application of a neural-optimal transport on clinical samples and develop the concept of single-cell Drug Responses (scDRs), a novel functional data modality that captures the high-dimensional response of individual cells to treatments.
 
 A major limitation of the current work stems from the size of the cohort.
 Although this is one of the largest cohorts measuring patient responses to cancer treatments, \textsc{CellOT} and other methods applied here are able to scale to, and benefit from, much larger cohort sizes.
@@ -27,7 +27,7 @@ In the context of CellOT-powered predictions, we envision two potential avenues 
 Information available only on untreated cells can be considered as cell-level metadata and conditioned on, in a similar fashion to sample-level metadata.
 Other spatial and multi-modal profiles available both before and after treatment can be incorporated by learning integrative representations \cite{lotfollahi2019, cao2022a}.
 These methods aim to represent cells such that they contain information across multiple profile modalities, which can be relevant towards determining disease behavior.
-Using these models, response prediction can proceed in the representation space, which can be mapped back to data space, as we have demonstrated previously \cite{bunne2023a}.
+Using these models, response prediction can proceed in the representation space, which can be mapped back to data space, as we have demonstrated previously \cite{bunne2023}.
 Single-cell foundation models \cite{theodoris2023,cui2024,ma2024}, which utilize cutting edge architectures that have had major success in modeling the complexities of language \cite{vaswani2023, devlin2019, openai2024},
 promise to improve cellular representations with nuances that these architectures would be able to capture.
 With these improved and nuanced representations, the ability for response predictions to handle complex heterogeneous behavior will be essential, a characteristic at which neural-OT approaches like CellOT excel.

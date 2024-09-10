@@ -2,8 +2,8 @@
 
 
 We apply SCIM to integrate two sets of scRNA/CyTOF data,
-one set corresponds to a melanoma tumor from the Tumor Profiler project \cite{Irmisch2020}
-and the other one to a human bone marrow sample from \citet{Oetjen2018}.
+one set corresponds to a melanoma tumor from the Tumor Profiler project \cite{irmisch2020}
+and the other one to a human bone marrow sample from \citet{oetjen2018}.
 The scRNA technology was chosen both times as the source technology, and the latent space is initialized by training a VAE.
 SCIM is trained for 64 epochs to integrate the CyTOF technologies.
 The discriminator is trained in both cases to classify the source technology.
@@ -12,9 +12,9 @@ Bipartite matching is performed in both cases using $k=50$ and a null match pena
 
 
 \subsection{Integration of a melanoma sample}
-A major motivation for this work is derived from the setting of the Tumor Profiler (TuPro) Consortium \cite{Irmisch2020}.
+A major motivation for this work is derived from the setting of the Tumor Profiler (TuPro) Consortium \cite{irmisch2020}.
 This multi-center, multi-cancer study peforms a deep phenotyping of metastatic tumors from a real-life cohort, 
-analyzing each sample with multiple technologies, including scRNA-sequencing \cite{Tang2009} and Cytometry by Time Of Flight \cite[CyTOF]{Bandura2009},
+analyzing each sample with multiple technologies, including scRNA-sequencing \cite{tang2009} and Cytometry by Time Of Flight \cite[CyTOF]{bandura2009},
 all of which are capable of dissecting the tumor microenvironment and providing single-cell level, complementary information about the sample of interest.
 Although cell identity is lost throughout the experimental process, the cells profiled by both technologies stem from the same population
 (i.e., were obtained from an aliquot of a common cell suspension), and can be thought of as being sampled from the same distribution of cells.
@@ -24,7 +24,7 @@ Here, we consider a melanoma sample from this study, and use SCIM to integrate C
 \subsubsection{Data Preparation}
 \paragraph{CyTOF}
 The patient's sample was profiled with CyTOF using a 41-markers panel designed for an in-depth characterization of the immune compartment of a sample.
-Data preprocessing was performed following the workflow described in \cite{Chevrier2017, Chevrier2018}.
+Data preprocessing was performed following the workflow described in \cite{chevrier2017, chevrier2018}.
 Cell-type assignment was performed using a Random Forest classifier trained on multiple manually gated samples.
 To investigate the utility of SCIM, we considered a subset comprising B-cells and T-cells only, for a total of $n{=}135,334$ cells (\textbf{Table \ref{tbl:tupro-dataset}}).
 This dataset is further referred to as \textit{target} dataset.
@@ -34,7 +34,7 @@ A second aliquot of the same patient sample was analyzed by droplet-based scRNA-
 A detailed description of the data analysis workflow is beyond the scope of this work and will be published elsewhere.
 In brief, standard QC-measures and preprocessing steps, such as removal of low quality cells, as well as filtering out mitochondrial, ribosomal and non-coding genes, were applied.
 Expression data was library-size normalized and corrected for the cell-cycle effect.
-Cell-type identification was performed using a set of cell-type-specific marker genes \cite{Tirosh2016}.
+Cell-type identification was performed using a set of cell-type-specific marker genes \cite{tirosh2016}.
 Genes were then filtered to retain those that could code for proteins measured in CyTOF channels, the top 32 T-cell / B-cell marker genes, and the remaining most variable genes for a final set of 256.
 The total number of B-cells and T-cells in this dataset amounts to $m{=}4,683$ (\textbf{Table \ref{tbl:tupro-dataset}}).
 The scRNA dataset is used as \textit{source} dataset throughout the manuscript.
@@ -59,7 +59,7 @@ The scRNA dataset is used as \textit{source} dataset throughout the manuscript.
 \paragraph{Autoencoders}
 The training procedure for SCIM's autocoders is goverened by an adversarial loss function.
 Model selection in this setting with real-world data is challenging since, as there is no metric that captures model performance, nor is there access to some ground truth data with which to evaluate.
-To facilitate model selection, we employ a universal divergence estimator \cite{Wang2009} to evaluate the quality of the integrated latent space (Figure\textbf{\ref{fig:tupro-train}}).
+To facilitate model selection, we employ a universal divergence estimator \cite{wang2009} to evaluate the quality of the integrated latent space (Figure\textbf{\ref{fig:tupro-train}}).
 
 This score measures how well two sets of points are mixed and it is computed pairwise between source and target technologies.
 An optimization is defined as successful if the divergence and reconstruction errors are below the empirically set thresholds.
@@ -177,7 +177,7 @@ A more fine-grained visual evaluation is performed by inspecting the matches on 
 Given different cell-type proportions in the data, a certain number of mismatches is expected, which corresponds to the lines joining points across the two cell types.
 The latent representation is explored thoroughly as 98\%, and 99.9\% of cells are matched to their analogs, from CyTOF and scRNA datasets, respectively.
 To evaluate the latent space matching further, we used a more fine-grained information of marker expression correlation, to quantitatively assess the latent-space matching quality.
-We used the correlation coefficients between the expression of immunomarkers \textit{CD20} and \textit{CD3}.
+We used the correlation coefficients between the expression of immunomarkers \textit{cd20} and \textit{cd3}.
 Both markers are characteristic for a subset of our data, as they are used to differentiate B-cells and T-cells, respectively.
 We found that matching using shared latent representations provides relatively high correlation coefficients
 (Pearson: 0.63 \textit{CD20} and 0.51 for \textit{CD3} marker, see \textbf{Supplemental Figure~\ref{fig:tupro-marker-correlation-uni}}),
@@ -191,7 +191,7 @@ given the expected low correlation between RNA expression and protein abundance.
     Discriminators are semi-supervised using 10\% of the cell-type labels.
     Cells are colored by their cell-type label and shaded by their technology (dark shades: CyTOF, light shades: scRNA).
     Matches produced by SCIM are represented by grey lines connecting cells.
-    tSNE embeddings \cite{Maaten2008} are computed on the whole dataset and then 10,000 matched pairs are sampled at random for visualization.}
+    tSNE embeddings \cite{maaten2008} are computed on the whole dataset and then 10,000 matched pairs are sampled at random for visualization.}
     \label{fig:tupro-tsne-uni}
 \end{figure*}
 
@@ -212,10 +212,10 @@ given the expected low correlation between RNA expression and protein abundance.
 
 
 \subsection{Integration of a human bone marrow sample}
-\cite{Oetjen2018} used several bulk and single-cell technologies to comprehensively characterize human bone marrow.
+\cite{oetjen2018} used several bulk and single-cell technologies to comprehensively characterize human bone marrow.
 The data was obtained from 20 healthy donors, whereas all data modalities were acquired for 8 samples.
 For our application we consider the single-cell transcriptome profile as well as CyTOF measurements of sample \textit{O} from this dataset, that were carried out with the objective of describing in detail a T-cell~population.
-The data was preprocessed as described in \cite{Oetjen2018}.
+The data was preprocessed as described in \cite{oetjen2018}.
 A subpopulation of CD8 naive T-cells was filtered out due to a very small number of cells.
 The preprocessed data of the analysed sample included several T-cell~subtypes (\textbf{Table~\ref{tbl:oetjen-dataset}}).
 
