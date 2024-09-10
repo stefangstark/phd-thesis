@@ -4,7 +4,8 @@ Popular approaches to model single-cell perturbation responses fall into three m
 The first takes a simple approach that ignores heterogeneity in response and models perturbations as linear shifts in data space, figure \ref{fig:arrows} left.
 Cell typing approaches take this assumption, at least piece wise, and thus fail to capture any intra cell-type heterogeneity.
 A popular approach is to model perturbation effects as a linear shift in some latent space that is then decoded with a non-linear function
-These approaches include models like \textsc{scGen} \cite{lotfollahi2019} but many other models take similar approaches \cite{need}
+These approaches include models like \textsc{scGen} \cite{lotfollahi2019} but many other models, including those that condition on discrete metadata,
+take similar approaches \cite{lopez2018, lotfollahi2022, lotfollahi2023, bereket2023}.
 While this approach is able to model heterogeneity, they need to implicitly solve a challenging disentanglement task \cite{locatello2019}, which, if not solved correctly, leads to aberrant behavior, figure \ref{fig:arrows} middle. 
 In this work we opt to use a modern parameterization of an optimal transport coupling, figure \ref{fig:arrows} right.
 Thanks to the mathematics of optimal transport, this allows us to predict treated states accurately by following a strict adherence to the control and treated distribution geometries.
