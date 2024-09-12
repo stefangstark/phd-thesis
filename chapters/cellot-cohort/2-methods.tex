@@ -1,18 +1,16 @@
-\section{Methods}
-
-% TODO: fill in values
+% !TeX root = ../../main.tex
+\section{The 4i drug response platform}
 In total, we profiled 47 patients between the years of 2018 and 2022.
-For each cell, we used 4i to measure 65 morphological and intensity features resulting in a high-dimensional, multiplexed dataset of over 190M cells (Fig. 1c).
-We developed a cohort normalization approach by leveraging cell line references which we measured with each patient sample (Supplementary Figure \ref{need})
+Patients arrive to the hospital, a biopsy is taken and then processed with the 4iDRP pipeline (Figure \ref{fig:cellot-cohort-overview}a).
+For each cell, we used 4i to measure 65 morphological and intensities of tagged proteins that mark for essential cancer processes (Figure \ref{fig:cellot-cohort-overview}b), resulting in a high-dimensional, multiplexed dataset of over 190M cells (Figure \ref{fig:cellot-cohort-overview}c).
+We developed a cohort normalization approach by leveraging cell line references which we measured with each patient sample (Supplementary Figure \ref{fig:cellot-cohort-normalization}).
 Our dataset contains two replicate samples originating from the same patient, which were analyzed independently.
-We find that the two replicate samples share the highest similarity in their single-cell data both in control and drug-treatment conditions (Supplementary Figure \ref{need}).
-We observed that our cohort of 37 melanoma samples was composed of individuals with highly personalized clinical profiles, including differing biopsy sites, melanoma subtypes, experienced treatment lines, and the genetic alteration driving the disease (Figure 1d). 
+We find that the two replicate samples share the highest similarity in their single-cell data both in control and drug-treatment conditions (Supplementary Figure \ref{fig:cellot-cohort-normalization}c).
+We observed that our cohort of 37 melanoma samples was composed of individuals with highly personalized clinical profiles, including differing biopsy sites, melanoma subtypes, experienced treatment lines, and the genetic alteration driving the disease (Figure \ref{fig:cellot-cohort-overview}d). 
 Traditionally, deriving biological findings or clinical hypotheses based on ex-vivo drug screening from such a small and diverse cohort would have been exquisitely challenging for solid tumors \cite{williams2022}.
 We hypothesized that the patient-to-patient heterogeneity and single-cell heterogeneity within individual patient sample had been one of the primary challenges of the field to derive consistent biological findings from clinical samples of advanced cancer patients.
 
-% TODO: fill in missing numbers
 \begin{figure}[h!]
-  \label{cellot-cohort-overview}
   \centering
   \includegraphics[width=\textwidth]{figures/cellot-cohort/overview.pdf}
   \caption{
@@ -20,25 +18,35 @@ We hypothesized that the patient-to-patient heterogeneity and single-cell hetero
     From sample collection to machine learning to evaluation.
     a) 4i DRP pipeline for a single sample from tumor profiler.
     A tumor biopsy is taken from a cancer patient, prepared,
-    exposed, in parallel, to $N$ treatments, including control (1-3).
+    exposed, in parallel, to 56 unique treatments, including control (1-3).
     Cell morphology and marker intensities are imaged (4).
     An in house imaging processing pipeline performs cell segmentation,
     extracts marker intensity levels and morphology features (5,6).
     Extracted features are selected, standardized, normalized and batch corrected (7).
     Modeling and validation (8) of single-cell responses in two settings: learning individual responses and predicting responses of \emph{incoming} samples
     b) 4i-profiled markers are selected from known key signaling pathways in cancer.
-    c) In total, 47 patients are profiled, XX cellular features are extracted, XX drug responses are measured, each containing about 3000 cells. In total over 190M cells are profiled.
+    c) In total, 47 patients are profiled, 65 cellular features are extracted, 56 total drug responses are measured, each containing about 3000 cells. In total over 190M cells are profiled.
     d) The melanoma cohort represents a diverse, heterogenous set of samples,
     across biopsy location, cancer subtype, number of lines of treatment, and (known) driver mutation.
-  }
+  }\label{fig:cellot-cohort-overview}
 \end{figure}
 
 \subsection{Data}
 
 \paragraph{Normalization}
-The extracted features are then further normalized and processed to remove batch effects and standardize the range of values. First, wells with an abnormally low number of cells ($< 50$) are considered low-quality and are removed. The range of feature values are then standardized with a quantile rescaling computed on the individual morphological features and the joint intensity features. After, the level of background light intensity for each plate is computed and removed. A secondary control measuring background light intensity, i.e. without a probe, is included in each plate. In order to standardize the intensity level of the protein markers across plates, the intensity features of the secondary control are computed and cells on the plate with intensity features below the 75th quantile are clipped. An additional quality control is then applied to cells that are inflated for no marker intensity. Cells are removed in which four or more intensity features are measured as zero. Finally, a variance stabilizing monotonic log + 1 transform is performed to mitigate the influence of any extreme outliers in both the morphological and intensity features.
+The extracted features are then further normalized and processed to remove batch effects and standardize the range of values. First, wells with an abnormally low number of cells ($< 50$) are considered low-quality and are removed.
+The range of feature values are then standardized with a quantile rescaling computed on the individual morphological features and the joint intensity features.
+After, the level of background light intensity for each plate is computed and removed.
+A secondary control measuring background light intensity, i.e. without a probe, is included in each plate. 
+In order to standardize the intensity level of the protein markers across plates, the intensity features of the secondary control are computed and cells on the plate with intensity features below the 75th quantile are clipped.
+An additional quality control is then applied to cells that are inflated for no marker intensity.
+Cells are removed in which four or more intensity features are measured as zero.
+Finally, a variance stabilizing monotonic log + 1 transform is performed to mitigate the influence of any extreme outliers in both the morphological and intensity features.
 
-% TODO: describe replicates, normalization validation
+Due to challenges stemming from the real-time processing of these cancer patients, including time constraints, variations in biopsy size and availability, available materials, etc, a subset of samples, features and treatments is taken to construct a standardized dataset for the purposes of the machine learning tasks.
+In all that follows, a subset of the full dataset is taken consisting of 47 samples, 33 features and 35 treatments.
+
+
 
 \subsection{Training of IID tasks}
 Heterogeneous single-cell perturbation responses are computed for each treatment using CellOT \cite{bunne2023}. Optimal transport is a rich field of mathematics that describes how to align probability distributions according to a principle of minimum action. In this case, we are unable to observe the state of a cell before and after treatment, thus we rely on the optimal transport map to inform us what the individual cellular responses were that transformed the set of observed untreated (control) cells into the set of observed treated cells. CellOT utilizes neural optimal transport theory to learn a neural-network parameterization of this optimal transport map, allowing us to make predictions on cells that are not available at training time.

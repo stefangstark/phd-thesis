@@ -36,7 +36,8 @@ The task is to generalize (o.o.d.) the development trajectory of the population 
 \paragraph{Cross species LPS}
 scRNAseq profiles of control and lipopolysaccharide (LPS) stimulated cells across four different species.
 LPS induces an immune response and 
-the task is to generalize (o.o.d.) this response to held out species.
+the task is to generalize (o.o.d.) this response to cells from held out species.
+Four species are present, pig, rabbit, mouse, and rat. 
 
 \subsection{CellOT outperforms state-of-the-art methods at learning responses}
 
@@ -54,28 +55,25 @@ the task is to generalize (o.o.d.) this response to held out species.
   \label{fig:cellot-main-marginals}
 \end{figure}
 
-% TODO: decide what to do about supplemental marginals
 We apply \textsc{CellOT} to predict the responses of cell populations to cancer treatments using a proteomic dataset consisting of two melanoma cell lines (M130219 and M130429) \cite{raaijmakers2015}, profiled by 4i \cite{gut2018}, and a scRNAseq dataset \cite{srivatsan2020}, which contain 34 and 9 different treatments, respectively.
 We benchmarked \textsc{CellOT} against two autoencoder-based tools, \textsc{scGen} \cite{lotfollahi2019} and \textsc{cAE} \cite{lopez2018}, as well as \textsc{PopAlign} \cite{chen2020}, a method based on aligning subpopulations of the control and treated space approximated through a mixture of Gaussian densities.
 Due to the high dimensional nature of scRNA-seq data, we apply $\textsc{CellOT}$ on latent representations learned by an autoencoder.
-The marginal distributions for observed and predicted cell populations for two 4i treatments and two scRNAseq treatments are shown in figure \ref{fig:cellot-main-marginals}a, d.
-Two features are selected for each perturbation and the complete set of marginals is shown in Supplemental Figure \ref{supp_fig:4i_all_marginals_imatinib}. % TODO: check this
+The marginal distributions for observed and predicted cell populations for two 4i treatments and two scRNAseq treatments are shown in Figure \ref{fig:cellot-main-marginals}a, d.
+Two features are selected for each perturbation and a complete set of marginals is shown in Supplemental Figures \ref{supp_fig:4i_all_marginals_imatinib} and \ref{supp_fig:4i_all_marginals_trametinib}.
 While the autoencoder baselines tend to capture the mean of the treated cell population, they are less successful in matching all heterogeneous states of the perturbed population, i.e., higher moments of the perturbed population.
 Thus, these models tend to learn over-simplified perturbation effects and are insufficient when aiming to understand heterogeneous rather than average cellular behaviors.
 \textsc{CellOT}, on the other hand, is able to capture these higher moments, yielding accurate and nuanced predictions.
 
-This can be further quantified % differences between the distributions of observed and predicted treated cell populations, we determine 
-through distributional metrics such as the maximum mean discrepancy (MMD) \cite{gretton2012}.
-Low values of MMD imply that all moments of two distributions are matched, and thus the entire distribution of perturbed cells is captured in fine detail, beyond the population average (see Online Methods for details).
+This can be further quantified through distributional metrics such as the maximum mean discrepancy (MMD) \cite{gretton2012}.
+Low values of MMD imply that all moments of two distributions are matched, and thus the entire distribution of perturbed cells is captured in fine detail, beyond the population average.
 The MMDs between the predicted and observed populations for the selected perturbations are shown in figure \ref{fig:cellot-main-marginals}b, e.
-For scRNA-seq data, MMD evaluations are computed using the top 50 marker genes. An analysis on the influence of the number of chosen marker genes can be found in \ref{supp_fig:sciplex_num_markers}.
+For scRNA-seq data, MMD evaluations are computed using the top 50 marker genes. An analysis on the influence of the number of chosen marker genes can be found in Supplemental Figure \ref{supp_fig:sciplex_num_markers}.
 In addition to the autoencoder baselines, we include the trivial \emph{identity} baseline that predicts treatment effects simply by returning the untreated states,
 as well as a theoretical lower bound, \emph{observed}, comprising a different set of observed perturbed cells, thus only varying from the true predictions up to experimental noise.
 We find that \textsc{CellOT} can approach the lower bound (\emph{observed} setting), while the baseline methods often do not improve much over the \emph{identity} setting.
 
-% TODO: decide what to do about supplemental metrics
 Different evaluation metrics across all 35 4i therapies and 6 scRNAseq therapies are summarized in Supplemental Figures \ref{supp_fig:4i_all_results} and \ref{supp_fig:sciplex_all_results}.
-Besides MMD, we additionally include the $\ell_2$(DS) metric that measures the distance between the observed and predicted \emph{mean} drug effect, where these drug signatures are computed as the difference in means between the treated and untreated cell populations.
+Besides MMD, we additionally include the $\ell_2$ metric that measures the distance between the observed and predicted \emph{mean} drug effect, where these drug signatures are computed as the difference in means between the treated and untreated cell populations.
 %Lastly, we compare the overall mean correlation coefficient $r^2$ between the predicted and observed data on all features (see Online Methods).
 $\textsc{CellOT}$ outperforms the baselines in both metrics across all treatments, typically by one order of magnitude.
 We attribute the strong performance of \textsc{CellOT} to its ability to learn a transport function that considers explicitly the data geometries of cell populations through the theory of optimal transport.
@@ -147,7 +145,6 @@ Our results on two co-cultured primary melanoma cell lines treated with various 
 
 \subsection{CellOT accurately infers cellular responses in unseen patients}
 
-% TODO: fix caption length
 \begin{figure}
   \begin{center}
     \includegraphics[width=0.6\textwidth]{figures/cellot-methods/Bunne_Main_Fig4.pdf}
@@ -183,8 +180,8 @@ in the management of patients with lupus and, likely, other interferonopathies \
 These selected genes show a large change in expression from the control to the perturbed population, partially exhibiting a bimodal gene expression profile upon perturbation. In contrast to \textsc{CellOT}, the baselines do not accurately predict these large transcriptomic shifts of these genes.
 An extended analysis of additional genes strongly affected by the IFN-$\beta$ treatment can be found in Supplemental Figures \ref{supp_fig:lupus_all_marginals_iid} and \ref{supp_fig:lupus_all_marginals_ood}.
 
-All models, including \textsc{CellOT}, show little performance drop when modeling the treatment outcome on a new patient using the generalized perturbation model $T_L$ trained on the patient cohort and using the control cells $\rho_{c_z}$ of the unseen patient as input.
-This becomes evident when comparing the predicted population $\hat{\rho}_{k_z}$ with observations $\rho_{k_z}$ using the MMD metric. figure \ref{fig:cellot-main-ood}c displays summary results in which each individual patient was considered for the holdout set.
+All models, including \textsc{CellOT}, show little performance drop when modeling the treatment outcome on a new patient using the generalized perturbation model $T_L$ trained on the patient cohort and using the control cells $\mu_z$ of the unseen patient as input.
+This becomes evident when comparing the predicted population $\hat{\nu}_z$ with observations $\nu_z$ using the MMD metric. figure \ref{fig:cellot-main-ood}c displays summary results in which each individual patient was considered for the holdout set.
 Further evaluation metrics, including the $\ell_2(\text{DS})$ score, can be found in Supplemental Figure \ref{supp_fig:lupus_iid_ood_l2ds}.
 \textsc{CellOT} outperforms previous baselines both in the i.i.d.~and in the o.o.s.~setting, while further showing a smaller performance drop when generalizing to the unseen patient.
 For more results, see Supplemental Figure \ref{supp_fig:lupus_umaps_all}.
@@ -219,12 +216,12 @@ By tracking an initial cell population along the differentiation process, \texts
 
 \citet{weinreb2020} analyzed the fate potential of hematopoietic stem and progenitor cells (HSPCs), by tracking a broad class of oligopotent %(LIN$^{-}$KIT$^{+}$SCA$^{-}$) 
 and multipotent %(LIN$^{-}$KIT$^{+}$SCA$^{+}$)
-progenitor cell subpopulations and observing samples on days 2, 4, and 6 (figure \ref{fig:cellot-main-ood}h).
+progenitor cell subpopulations and observing samples on days 2, 4, and 6 (Figure \ref{fig:cellot-main-ood}h).
 Here, we test how well \textsc{CellOT} and other baselines can learn the differentiation process of the cells observed on day 2 to the cells observed on days 4 and 6 (combined) and generalize from one subpopulation to another (o.o.d. setting).
 % Similar to the o.o.s. setting, we train two models per each subpopulation.
 We learn two maps, where map $T_o$ is trained exclusively on oligopotent cells, $T_m$ on multipotent cells.
 I.i.d.~versions of these maps are trained on both oligopotent and multipotent cells, such that each pair of i.i.d.~and o.o.d.~maps is evaluated on the same test set.
-Comparing the distributional distance between predicted and observed differentiated cell states using the MMD metric, \textsc{CellOT} outperforms current state-of-the-art methods in this i.i.d.~setting for both the oligopotent and the multipotent subsets (see figure \ref{fig:cellot-main-ood}i).
+Comparing the distributional distance between predicted and observed differentiated cell states using the MMD metric, \textsc{CellOT} outperforms current state-of-the-art methods in this i.i.d.~setting for both the oligopotent and the multipotent subsets (see Figure \ref{fig:cellot-main-ood}i).
 Furthermore, while baselines struggle to perform in either o.o.d.~setting, \textsc{CellOT} is able to generalize its predictions in one direction, i.e., from multipotent cells to the oligopotent setting.
 In contrast to oligopotent cells, multipotent cells have a higher potency and thus can potentially differentiate into more cell types, and so we would expect $T_m$ is more likely to generalize than $T_o$, trained on the less potent oligopotent cells.
 When predicting developmental perturbations on multipotent cells using $T_o$, the differentiated cell fates cannot be recovered.

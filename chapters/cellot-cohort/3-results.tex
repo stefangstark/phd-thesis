@@ -1,5 +1,5 @@
+% !TeX root = ../../main.tex
 \section{Learning the single-cell treatment responses of individual patients} \label{sec:cellot-cohort-iid}
-% TODO: enter all XX placeholders
 To capture patient-specific drug responses as accurately as possible, we go on to train a \textsc{CellOT} model to learn the responses of each sample to each of their treatment, for a total of 1322 individual models (Figure \ref{fig:iid-prediction}a).
 For each model, we train on 75\% of the data and perform model selection and stopping criteria using another 10\%,
 and the remaining 15\% of yet unseen control cells to predict their perturbed state using the trained model.
@@ -21,21 +21,20 @@ d) UMAPs constructed with equal parts of observed-treated and predicted-treated 
 We implement three baseline approaches trained on and predicted with the same data splits as CellOT: a simple model that predicts a homogenous response corresponding to the average response of the sample (mean correction) and two auto-encoder based approaches, \textsc{scGen} \cite{lotfollahi2019} and conditional autoencoders \cite{lopez2018} (cAE), respectively. 
 
 We went on to evaluate model performances both qualitatively and quantitatively by comparing the distribution of predicted cell states to the observed cell states.
-We found that across markers and patient treatments, CellOT outperformed the implemented baselines when comparing the single-cell predictions as probability distribution functions (Figure \ref{fig:iid-prediction}b and Supplementary Figure \ref{need}).
-We also implemented a quantitative framework based on the Earth Mover’s Distance (EMD) \cite{villani2009} and Maximum Mean Discrepancy (MMD) \cite{gretton2012} to measure the similarity of predicted and observed cells in one dimension and multiple dimensions respectively \ref{Methods}.
+We found that across markers and patient treatments, CellOT outperformed the baselines (Figure \ref{fig:iid-prediction}b and Supplementary Figure \ref{fig:cellot-cohort-iid-metrics}).
+We also implemented a quantitative framework based on the Earth Mover’s Distance (EMD) \cite{villani2009} and Maximum Mean Discrepancy (MMD) \cite{gretton2012} to measure the similarity of predicted and observed cells in one dimension and multiple dimensions respectively.
 For either metric, low values correspond to accurate predictions.
-We went on to compare the implemented baselines to our CellOT predictions using our two metrics and found CellOT-predicted distributional data to be most similar to observed data, and oftentimes hardly distinguishable from the latter (Supplementary Figure \ref{need}).
+%We went on to compare the implemented baselines to our CellOT predictions using our two metrics and found CellOT-predicted distributional data to be most similar to observed data, and oftentimes hardly distinguishable from the latter (Supplementary Figure \ref{need}).
 We summarized our EMD finding both for patients and treatment in relation to the treatment effect and found that CellOT predictions, unlike its comparator baselines, remained accurate even when these were large (Figure \ref{fig:iid-prediction}c).  
 
-% TODO: add numbers
 Next, we went on to test whether our predictions were not only accurate at the distributional level but also for individual cells.
 For this we constructed UMAPs containing equal parts of predicted-perturbed cells and measured-perturbed (observed) cells.
 Our hypothesis was that accurately predicted cells would intermix neatly with observed cells.
 Indeed, in a UMAP generated with CellOT-predicted and observed cells, we found the whole space to be populated by cells of either origin, indicating that CellOT was capable of predicting indistinguishable perturbation profiles of individual cells.
 We found, in contrast, that a UMAP constructed using equal numbers of observed and scGen-predicted cells, displayed areas exclusively populated by cells of one of the two origins, which we believe are caused by inaccurate cell predictions (Figure \ref{fig:iid-prediction}d).
 We quantified our observation by implementing a nearest neighbor analysis for which we quantified the identity k=50 neighboring cells for each cell in the original feature space.
-Given the equal number of cells from each origin, optimal mixing of the two cell populations would have resulted in a neighborhood value of 0.5. For the displayed treatment, CellOT-Observed achieved a neighborhood value of XXX , whereas \textsc{scGen}-Observed was XXX.
-Across all patient-treatment pairs the neighborhood value averaged at XXX and XXX, respectively (Supplementary Figure \ref{need}).
+Given the equal number of cells from each origin, optimal mixing of the two cell populations would have resulted in a neighborhood value of 0.5. For the displayed treatment, CellOT-Observed achieved a neighborhood value of 0.497 , whereas \textsc{scGen}-Observed was 0.451.
+Across all patient-treatment pairs the neighborhood value averaged at 0.495 and 0.477, respectively (Supplementary Figure \ref{fig:cellot-cohort-iid-knn}).
 Our quantitative assessment shows that single-cell drug responses of progressed melanoma patients can be predicted accurately using CellOT. 
 
 % TODO: check that all Figure X references are correctly rendered with \ref
@@ -44,7 +43,6 @@ Ex-vivo drug profiling has been used successfully to profile cytotoxic effects o
 Different to previous work, the primary aim of the 4iDRP, was to measure the modulation of signaling pathways in response to pharmacological insults with multiplexed readouts.
 Our hope at the outset of our study, was that we would identify strong patient-level drug response signatures which would allow us to differentiate between control and treated samples and ultimately use such signatures to derive mechanistic insights about differences in treatment mechanisms and outcomes.  
 
-% TODO: fix caption & fig size
 \begin{figure}[htp!]
   \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/cellot-cohort/iid-response-structure.pdf}
@@ -68,29 +66,25 @@ Further, we found that control profiles were distributed across the first 4 dime
 This intermixing is consistent with patient-level diversity being a dominant factor of variation across all measurements.
 
 Next, we are interested in understanding to what extent drug treatment effects are distinct and coherent throughout our cohort.
-For this, we selected three drug treatments, Trametinib + Dabrafenib (MEK inhibitor + BRAF inhibitor, Tram+Dabra), Vindesine (Vinca alkaloid), and Ixazomib (Proteasome inhibitor) (Figure \ref{fig:iid-structure}b).
-These treatments were selected as representatives as they each have a different mechanism of action (MOA), and are indicative of the various effects strength measured with our ex-vivo drug profiling platform (Supplementary Figure \ref{need}).
+For this, we selected three drug treatments, Trametinib + Dabrafenib (MEK inhibitor + BRAF inhibitor, Tram+Dabra), Vindesine (Vinca alkaloid), and Ixazomib (Proteasome inhibitor), Figure \ref{fig:iid-structure}b.
+These treatments were selected as representatives as they each have a different mechanism of action (MOA) and are indicative of the various effects strength measured with our platform.
 Thanks to \textsc{CellOT}, we have matched control (green) and predicted-treated profiles (blue), and so we were able to measure and visualize patient-specific drug effects (grey arrow).
- We found that Tram+Dabra indeed affected most samples similarly, exemplified by the common direction of the grey arrows, and that the expected mode of actions was reflected in the effect direction in the PC space 
- For this, we selected three drug treatments, Trametinib + Dabrafenib (MEK inhibitor + BRAF inhibitor), Vindesine (Vinca alkaloid), and Ixazomib (Proteasome inhibitor) (Figure \ref{fig:iid-structure}b).
- These treatments were selected to have different mechanism of action (MOA), and to be representative of the various effects strength measured with our ex-vivo drug profiling platform (Supplementary Figure \ref{need}).
-Thanks to \textsc{CellOT}, we have matched control (green) and predicted-treated profiles (blue), and so we were able to measure and visualize patient-specific drug effects (grey arrow).
- We found that Tram+Dabra indeed affected most samples similarly, exemplified by the common direction of the grey arrows, and that the expected mode of actions \cite{subbiah2020} are reflected in the effect direction in the PC space (Supplementary Figure \ref{need}).
- However, the severity of the drug effect varied across the cohort, indicated by the differing arrow length and heterogeneity in effect size and strength increased in the third and fourth PC.
+ We found that Tram+Dabra indeed affected most samples similarly.
+The severity of drug effects, however, varied across the cohort, as indicated by the differing arrow length and heterogeneity in effect size and strength increased in the third and fourth PC.
  Similarly, Vindesine showed a common but variably strong drug effect in the 3rd and 4th PC (Figure \ref{fig:iid-structure}b, second column, bottom row), consistent with the respective PC loadings and MOA of a Vinca Alkaloida \cite{dhyani2022} and variable effects in the first two PCs (Figure \ref{fig:iid-structure}b, second column, top row).
  Unlike the other two highlighted drugs, the Ixazomib showed no consistent drug effect in the visualized PC space at the patient level.  
 
 From these findings, we then explored whether treatment effects could be better described at the single-cell level by potentially overcoming artifacts introduced by a patient-level aggregation approach.
- We started by constructing UMAP projects of the control and predicted treated cellular states of a single sample, Figure \ref{fig:iid-structure}d.
- Similar to our cohort-level view, we found that both control and predicted-treated cells intermixed heavily.
- The control cells formed multiple clusters, akin to cancerous subclones.
- For relatively strong perturbations, such as Tram+Dabra and Vindesine, the predicted-treated cells clustered closely together, far removed from their corresponding control cells.
- For the less strong Ixazomib perturbation, however, predicted cells formed two distinct clusters, highlighting that within a sample the drug response of cells may very well be heterogeneous and dampen a strong patient-level response.
- We found similar observations across samples and drug treatments in our cohort (Supplementary Figure \ref{need}).
- We investigated the notion further, that cell-to-cell variability in single-cell drug responses may mask patient-level treatment signatures.
- To do this we compared treatment effect size and variability in effect direction of single cells for each sample-treatment condition (Figure \ref{fig:iid-structure}e).
- We discovered that condition-averaged angular dispersion, a measure of variability in effect direction, was anticorrelated to effect size with a Pearson’s R of -0.91 (p value of XXX) % TODO: get value
- and that heterogeneity in effect size, i.e. the extent to which a drug effects cells, increases as the condition-averaged effect size increases (growing diameters along x-axis). 
+We started by constructing UMAP projects of the control and predicted treated cellular states of a single sample, Figure \ref{fig:iid-structure}d.
+Similar to our cohort-level view, we found that both control and predicted-treated cells intermixed heavily.
+The control cells formed multiple clusters, akin to cancerous subclones.
+For relatively strong perturbations, such as Tram+Dabra and Vindesine, the predicted-treated cells clustered closely together, far removed from their corresponding control cells.
+For the less strong Ixazomib perturbation, however, predicted cells formed two distinct clusters, highlighting that within a sample the drug response of cells may very well be heterogeneous and dampen a strong patient-level response.
+ %We found similar observations across samples and drug treatments in our cohort (Supplementary Figure \ref{need}).
+We investigated the notion further, that cell-to-cell variability in single-cell drug responses may mask patient-level treatment signatures.
+To do this we compared treatment effect size and variability in effect direction of single cells for each sample-treatment condition (Figure \ref{fig:iid-structure}e).
+We discovered that condition-averaged angular dispersion, a measure of variability in effect direction, was anticorrelated to effect size with a Pearson’s R of -0.91.
+and that heterogeneity in effect size, i.e. the extent to which a drug effects cells, increases as the condition-averaged effect size increases (growing diameters along x-axis). 
 
 In total, these findings indicate that to best capture drug responses from a clinically diverse cohort, the poorly defined differences between control and treated states and extensive treatment-dependent single-cell heterogeneity need to be accounted for.
  This requires the quantification of a treatment effect on an individual patient cell as a function of that cell’s untreated (control) state, effectively measuring single-cell drug responses (scDR).
@@ -141,14 +135,14 @@ These results show that a large majority of BRAF V600 mutated samples cluster to
  Further, this new modality allows for the investigation of differential drug depending on clinical subcohorts. 
 
 We then extended this analysis to all drugs of our 4iDRP platform by developing an algorithm that identifies the overrepresentation of clinical features within a patient group using a hypo-geometric test.
- We found that for all but two drugs, scDRs-based profiles led to the identification of more clinical associations (Figure \ref{fig:iid-associations}b, Supplementary Figure \ref{need}),
+ We found that for all but two drugs, scDRs-based profiles led to the identification of more clinical associations (Figure \ref{fig:iid-associations}b),
  resulting in over 80 known and unknown associations detected by scDR in our dataset (Figure \ref{fig:iid-associations}c).
  Surprisingly, the unperturbed state (control) of tumor cells only revealed differences between samples derived from the brain and other biopsy sites (Figure \ref{fig:iid-associations}d),
  highlighting the differences in tumor biology between brain metastases and metastases of other locations \cite{eichler2011}
  as well as reaffirming the need to compensate for underlying control state heterogeneity in order to accurately measure drug responses.
 
 In line with our qualitative findings for Tram+Dabra, this quantitative approach found associations related to driver mutations and subtypes in scDR profiles but failed to find any significant associations in the observed-treated setting (Figure \ref{fig:iid-associations}b).
- Importantly, patient profiles generated by \textsc{scGen} failed to identify the said associations too (Figure \ref{fig:iid-associations}c, Supplementary Figure \ref{need}).
+ Importantly, patient profiles generated by \textsc{scGen} failed to identify the said associations too.
  We decided to investigate the differential response of BRAF-mutated patients further by comparing their 4iDRP readouts to the rest of the cohort (Figure \ref{fig:iid-associations}e).
  We found 2 4i measurements, pERK and pAKT, to significantly differ between the groups when using scDRs and no significant differences between the two subcohorts in the other two modalities (Control and ODT).
  pERK was reduced in both groups, but showed a stronger reduction in the BRAF-mutated samples, in line with the intended use for patients with a BRAF mutation.
@@ -156,7 +150,7 @@ In line with our qualitative findings for Tram+Dabra, this quantitative approach
  This differential response recapitulates extensive findings about a PI3K-mediated escape mechanism in Melanoma \cite{penna2015,irvine2018} and reaffirms the need of a coordinated de-activation of MAPK and MTOR pathways to achieve clinically meaningful treatment responses. 
 
 We, also found unexpected and unreported associations such as a differential treatment response of NRAS-mutated samples to Paclitaxel (Figure \ref{fig:iid-associations}b).
- Paclitaxel is a chemotherapy approved in the early nineteen-nineties which induces cell cycle arrest and apoptosis in proliferating cells by preventing depolymerisation of microtubules \cite{panchagnula1998}.
+ Paclitaxel is a chemotherapy approved in the early 1990s that induces cell cycle arrest and apoptosis in proliferating cells by preventing depolymerisation of microtubules \cite{panchagnula1998}.
  Fittingly to its MoA, we found upon further investigating of the drug response that NRAS-mutated samples had a reduced Tubulin accumulation compared to the rest of the cohort which was independent of the respective control states and statistically undetectable in the observed-treated measurements (Figure \ref{fig:iid-associations}f).
  This finding points towards attenuated efficiency of Paclitaxel in NRAS-mutated patients, which may serve as the foundation for further experimental and clinical evidence gathering.
  Identifying treatment options which are of particular benefit to patients with NRAS-mutated tumors would be of particular value since NRAS is the second most prevalent genetic alteration in Melanoma (16.4\%), currently lacks targeted therapies and is associated with overall poorer health outcomes \cite{gutierrez-castaneda2020}. 
@@ -226,7 +220,19 @@ We, also found unexpected and unreported associations such as a differential tre
 %  }\label{fig:progression-exclude-motamuh}
 %\end{figure}
 
-\subsection{Predicting drug responses of unseen patients}
+\section{Predicting the clinical response of incoming patients}
+Accurately predicting the responses of incoming unseen cancer patients is crucial for the optimization of their care.
+By anticipating how a patient may respond to different therapies, clinicians can tailor their approach and prepare for potential challenges, enabling proactive interventions and personalized care.
+Furthermore, predicting patient response can inform clinical decision-making, resource allocation, and the development of more effective treatment strategies, ultimately improving the overall quality of care delivery for cancer patients.
+Here we predict the drug responses of untreated cells from unseen patients.
+This is of practical importance, as it forms the foundation for AI-assisted personalized and predictive oncology.
+We demonstrate how, from these predictions, we can classify samples into clinically relevant groups, such as the speed of their cancer progression.
+
+\subsection{Predicting treatment effects of unseen patients}
+Given observations of how a cohort of patients respond to available treatments, we aim to generalize these responses in order to predict the drug response of an incoming patient.
+We refer to these tasks as out-of-distribution, since the cellular states and responses of the test data, i.e. the untreated cells from the unseen patient, are sampled from a different distribution as the training data (the patients in the observed cohort).
+Such out-of-distribution tasks are challenging, as we are unable to inform our predictions with the individual effects of the unseen patient.
+
 
 \begin{figure}[htp!]
   \begin{center}
@@ -249,13 +255,6 @@ We, also found unexpected and unreported associations such as a differential tre
   }\label{fig:ood-main}
 \end{figure}
 
-Next we predict the drug responses of untreated cells from unseen patients.
-This is of practical importance, as it forms the foundation for AI-assisted personalized and predictive oncology.
-Given observations of how a cohort of patients respond to available treatments, we aim to generalize these responses in order to predict the drug response of an incoming patient.
-Oncologist could then leverage these predictions to tailor treatments or anticipate disease relapse of this new patient.
-We refer to this as an out-of-distribution task, since the cellular states and responses of the test data, i.e. the untreated cells from the unseen patient, are sampled from a different distribution as the training data (the patients in the observed cohort).
-Such out-of-distribution tasks are challenging, as we are unable to inform our predictions with the individual effects of the unseen patient. 
-
 In order to simulate the clinic environment, we construct, for each patient, a training set composed of all other patients in the cohort (Figure \ref{fig:ood-main}a).
 Then, for each perturbation available,
 we train a model on the control and treated cells across the whole observed cohort
@@ -269,11 +268,11 @@ For instance, for Trametinib, this feature is pERK.
 The marker feature is of particular interest to the clinician as this typically corresponds to the cellular pathways the treatment is designed to control.
 
 Within each treatment, we compare the ability of CellOT to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
-We first qualitatively compare marker feature distributions of 4 treatments with differing MOAs (Figure \ref{fig:ood-main}c, Supplementary Figure \ref{need}) and include the MMD metric corresponding to the selected CellOT predictions, to give a general indication of how well the model is performing (Figure \ref{fig:ood-main}c, dot plot inset).
+We first qualitatively compare marker feature distributions of 4 treatments with differing MOAs (Figure \ref{fig:ood-main}c, Supplementary Figure \ref{fig:ood-predict-marginals}) and include the MMD metric corresponding to the selected CellOT predictions, to give a general indication of how well the model is performing (Figure \ref{fig:ood-main}c, dot plot inset).
 We find that in most cases CellOT not only outcompetes the baselines in its ability to predict OOD populations, it also reproduces distributional motifs (i.e. subpopulations) observed in the holdout populations.
 We then quantitatively compare for which drug treatments does \textsc{CellOT} scDRs consistently outperform other approaches in terms of both MMD and EMD metrics.
 This is accomplished with a relative t-test (Figure \ref{fig:ood-main}b, $p < 0.01$) pairwise between metrics computed on \textsc{CellOT} scDRs and other approaches.
-The full distributions for the differences of these metrics can be found in Supplemental Figure \ref{need}a and b.
+The full distributions for the differences of these metrics can be found in Supplemental Figures \ref{fig:ood-eval-logmmd} and \ref{fig:ood-eval-marker}.
 We demonstrate that we can make strong gains in many perturbation settings, particularly within the targeted therapies, where treatment effects tend to be quite strong.
 Other treatments with more subtle effects, are more difficult to generalize as these perturbations tend to be more subtle and sample-specific effects may become as dominant as the drug effect.
 Here, \textsc{CellOT} rarely underperforms against the baselines, and in the few cases when it does, treatment effect sizes are small such as for Olaparib.
@@ -282,7 +281,7 @@ Note that while \textsc{scGen} tends to capture the response of a particular mar
 \textsc{CellOT} typically is able to offer the best of both, highlighting both its accuracy and robustness.
 
 %Within each treatment, we compare the ability of CellOT to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
-%Fig \ref{fig:ood-main}b shows for which treatments there are significant differences across the whole cohort between
+%Figure \ref{fig:ood-main}b shows for which treatments there are significant differences across the whole cohort between
 %the metric reported by CellOT and the baseline approach, as measured by a relative t-test (p-value < 0.01).
 %The full distributions for the differences of these metrics can be found in Supplementary Figures \ref{fig:ood-eval-logmmd} and \ref{fig:ood-eval-marker}.
 %We demonstrate that we are able to make strong gains in many perturbation settings, including most of the targeted therapies.
@@ -291,7 +290,7 @@ Note that while \textsc{scGen} tends to capture the response of a particular mar
 %However, CellOT rarely underperforms against the baselines, and in the few cases when it does, it does so with small effect sizes.
 %Note that while \textsc{scGen} tends to capture the response of a particular marker feature (EMD metric), it struggles to capture realistic cellular states (MMD metric), while the other baseline methods have the inverse behavior.
 %CellOT is able to offer the best of both, highlighting its robustness and stability.
-%We furthermore provide some example marginals (Fig \ref{fig:ood-main}c, full set in Fig \ref{fig:ood-predict-marginals}), showcasing how CellOT is able to learn biologically relevant states.
+%We furthermore provide some example marginals (Figure \ref{fig:ood-main}c, full set in Figure \ref{fig:ood-predict-marginals}), showcasing how CellOT is able to learn biologically relevant states.
 %We include the MMD metric corresponding to the selected CellOT predictions, to give a general indication of how well the model is performing.
 
 \subsection{Identifying at-risk patients from predicted cellular responses}
@@ -313,7 +312,7 @@ We simulate the clinic environment by splitting the patients into a train (75\%)
 
 Our prediction model, summarized in Figure \ref{fig:ood-main}d, works as follows: first, single-cell responses are clustered and patients are represented as frequencies over these clusters, and then an SVM classification model is trained to predict the binary progression status using the patient representations.
 To construct the patient representations of the training set, a KMeans clustering is computed using the single-cell treatment responses from all patients in the training set, as predicted using the IID \textsc{CellOT} models, described in section \ref{sec:cellot-cohort-iid}.
-We perform a soft assignment of each cell to the $k$ cluster centers, via a softmax transformation over the negative distances to each cluster center, to smooth cluster assignments and help include a notion of cluster similarities, Fig \ref{fig:ood-main}e left.
+We perform a soft assignment of each cell to the $k$ cluster centers, via a softmax transformation over the negative distances to each cluster center, to smooth cluster assignments and help include a notion of cluster similarities, Figure \ref{fig:ood-main}e left.
 After this step, each cell is now represented as a probability over the set of cluster centers, Figure \ref{fig:ood-main}e right.
 A patient-level representation is constructed by averaging the cluster assignments over all cells from each patient.
 At test time, the OOD-predicted cell responses are used instead of the IID, as we are unable to access their treated cell states.
@@ -328,12 +327,10 @@ We furthermore compare our approach to a similar approach that uses predicted tr
 
 The prediction accuracy of holdout samples over 100 train-test splits are shown in Figure \ref{fig:ood-main}f, where we compare using single-cell responses to using control and (predicted) treated states.
 In addition, we include a random forest model trained on relevant metadata information, the sample’s subtype, known driver mutation and lines of treatment.
-% TODO: fill with actual numbers
-The random forest trained on sample metadata and SVM classification using control states only struggle to perform, yielding accuracies of XXX +/- XX. % TODO: values
-The SVM classification using treated states fares slightly better, reporting accuracies of XXX +/- XX. % TODO: values
-We see the most drastic improvement using \emph{response} information, which reports accuracies of XXX +/- XX. % TODO: values
-% TODO: add fig
-Comparisons to the autoencoder approaches as well as ablations over the number of clusters can be found in  Supplemental Figure \ref{}, where we show specifically that \textsc{CellOT} responses are stable with respect to classification parameters and out perform baseline approaches.
+The random forest trained on sample metadata and SVM classification using control states only struggle to perform, yielding accuracies of 0.478 (95\% confidence interval of 0.395 and 0.500).
+The SVM classification using treated states fares slightly better, reporting accuracies of 0.558 (95\% c.i. of 0.505 and 0.613).
+We see the most drastic improvement using \emph{response} information, which reports accuracies of 0.820 (95\% c.i. of 0.783 and 0.826).
+Comparisons to the autoencoder approaches as well as ablations over the number of clusters can be found in  Supplemental Figure \ref{fig:survival-accuracies}, where we show specifically that \textsc{CellOT} responses are stable with respect to classification parameters and out perform baseline approaches.
 
 A benefit of using a straight-forward clustering approach is the ability to interpret the behavior of the model.
 We can interpret the decisions made by the model by analyzing the cluster means and patient frequencies over them shown in Figure \ref{fig:ood-main}e.
@@ -370,9 +367,9 @@ Here include sample metadata in the inputs of \textsc{CellOT}, by way of \emph{c
 Here, we focus on the dabrafenib treatment, a targeted therapy to treat BRAF-positive patients.
 We observe a strongly differential structure in the responses across the cohort.
 Sample similarities are determined by computing the MMD between the learned (IID) single-cell responses of each pair of samples.
-Figure \ref{fig:conditional-ot}a) shows a dendrogram computed over the set of these pairwise similarities where were we find three main clusters: non-BRAF samples, BRAF positive samples with no previous lines of treatment, and BRAF positive samples with at least one line of treatment.
+Figure \ref{fig:conditional-ot}a shows a dendrogram computed over the set of these pairwise similarities where were we find three main clusters: non-BRAF samples, BRAF positive samples with no previous lines of treatment, and BRAF positive samples with at least one line of treatment.
 While the differential response across BRAF status can be easily explained by the targeted nature of the treatment, the differential response to number of treatment lines might be due to a particularly advanced or difficult cancer that necessitates several rounds of treatment.
-Fig \ref{fig:conditional-ot}b shows the differential response of pERK, the marker feature for dabrafenib, across BRAF mutation status, by computing the EMD of pERK between the control and observed dabrafenib responses.
+Figure \ref{fig:conditional-ot}b shows the differential response of pERK, the marker feature for dabrafenib, across BRAF mutation status, by computing the EMD of pERK between the control and observed dabrafenib responses.
 Here we observe that dabrafenib induces a strong pERK response in patients with the BRAF mutation, but a weak response in those without,
 an observation is in agreement with the intended design and use of the drug.
 
@@ -384,9 +381,9 @@ Note that while the potentials trained by \textsc{CellOT} must be convex in thei
 they do not need to be convex in these conditional inputs \cite{amos2017}.
 
 By comparing the conditional \textsc{CellOT} predictions to vanilla \textsc{CellOT} trained in the IID and OOD settings, we observe that the conditional version is able to better capture the differential pERK responses.
-In Fig \ref{fig:conditional-ot}c) we see that the IID \textsc{CellOT}, which is able to learn patient-specific responses, indicates that BRAF samples respond to dabrafenib by decreasing pERK levels, while non-BRAF samples have a negligible response.
+In Figure \ref{fig:conditional-ot}c) we see that the IID \textsc{CellOT}, which is able to learn patient-specific responses, indicates that BRAF samples respond to dabrafenib by decreasing pERK levels, while non-BRAF samples have a negligible response.
 OOD \textsc{CellOT}, on the other hand, predicts all samples, regardless of their BRAF status, to respond to dabrafenib with a slight decrease of pERK levels, and report little to no difference across BRAF status.
 The conditional \textsc{CellOT}, however, is able to correctly predict a differential response across BRAF status.
-This is futher quantified in Fig \ref{fig:conditional-ot}d), where we see consistent improvement in OOD pERK prediction when using conditional \textsc{CellOT} over vanilla \textsc{CellOT} and other baseline models.
-Finally, marginals highlighting the learned differential responses are shown in Fig \ref{fig:conditional-ot}e,
+This is further quantified in Figure \ref{fig:conditional-ot}d), where we see consistent improvement in OOD pERK prediction when using conditional \textsc{CellOT} over vanilla \textsc{CellOT} and other baseline models.
+Finally, marginals highlighting the learned differential responses are shown in Figure \ref{fig:conditional-ot}e,
 where it can been seen that conditional \textsc{CellOT} indeed learns the pERK response of BRAF positive samples (top) and non-response of negative (bottom).

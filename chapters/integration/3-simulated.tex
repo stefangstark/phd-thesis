@@ -20,7 +20,7 @@ and generate high-dimensional datasets consisting of 64,000 cells with 256 marke
 \end{figure*}
 
 
-The branches in the PROSSTT tree define an overarching structure that mimics common cellular phenomena such as cell-types, while the temporal component, also called "pseudotime", provides a continuous interpolation from one branch to another, as defined by the tree  (\textbf{Figure \ref{fig:prosstt5-pseudotime-inverted}}).
+The branches in the PROSSTT tree define an overarching structure that mimics common cellular phenomena such as cell-types, while the temporal component, also called "pseudotime", provides a continuous interpolation from one branch to another, as defined by the tree  (Figure \ref{fig:prosstt5-pseudotime-inverted}, left).
 In latent space, the branch structure within the data produces large clusters, while the pseudotime structure provides an \textit{orientation} within each cluster, as well as providing a global smoothing of the manifold.
 
 \subsection{Integration with SCIM}
@@ -32,43 +32,44 @@ and the two target technologies are trained for 256 epochs.
 Bipartite matching is performed for each pair of datasets,
 using $k=64$ and a null match penalty set to the $95^{th}$ percentile of edge costs. 
 
-We show that SCIM embeddings capture the branching process and furthermore correctly orient the substructure of most branches (see \textbf{Figure \ref{fig:prosstt5-pseudotime-inverted}}). 
+We show that SCIM embeddings capture the branching process and furthermore correctly orient the substructure of most branches (see Figure \ref{fig:prosstt5-pseudotime-inverted}, right). 
 The matches retained 86\% of the branch labels correctly and give strong correlations among pseudotime values (Pearson: 0.86, Spearman: 0.83)
 Furthermore, most branch mismatches occur at the nodes of the tree, where the label is ambiguous due to the continuous nature of the temporal process.
 
-\begin{figure*}[htb]
-    \centering
-    \includegraphics[width=1\textwidth]{figures/integration/3tech-pseudotime-kde.png}
-    \caption{
-    Evaluation of cross-technology cell matches made by SCIM on the simulated data with three technologies. 
-    The pairwise matching is attained for Source-Target A, Source-Target B, and Target A-Target B, respectively. The sink edge capacities were unbounded in all cases.
-    Here, we show a density plot for matched pseudotime values between the source technology and the target technology,
-    colored by the branch label. Mismatched cells are colored in grey.
-    The tree defining the temporal branching process can be found in Figure 3, left.
-    Marginal distributions of cell pseudotime for each branch is shown on the top and right.
-    }
-    \label{fig:prosstt5-3tech-pseudotime}
-\end{figure*}
+%\begin{figure*}[htb]
+%    \centering
+%    \includegraphics[width=1\textwidth]{figures/integration/3tech-pseudotime-kde.png}
+%    \caption{
+%    Evaluation of cross-technology cell matches made by SCIM on the simulated data with three technologies. 
+%    The pairwise matching is attained for Source-Target A, Source-Target B, and Target A-Target B, respectively. The sink edge capacities were unbounded in all cases.
+%    Here, we show a density plot for matched pseudotime values between the source technology and the target technology,
+%    colored by the branch label. Mismatched cells are colored in grey.
+%    The tree defining the temporal branching process can be found in Figure 3, left.
+%    Marginal distributions of cell pseudotime for each branch is shown on the top and right.
+%    }
+%    \label{fig:prosstt5-3tech-pseudotime}
+%\end{figure*}
 
 The SCIM framework can be applied to a many-technology setting, and we demonstrate this by obtaining pairwise matches between all three datasets. 
-SCIM successfully aligns the cells, based on evaluations on pseudotime (see \textbf{Supplemental Figure \ref{fig:prosstt5-3tech-pseudotime}}) as well as branch label (see \textbf{Supplemental Table \ref{tbl:prosstt_conf_SB} and  \ref{tbl:prosstt_conf_AB}}), even when using codes from such an extended latent space. 
+SCIM successfully aligns the cells, based on evaluations on pseudotime (Supplemental Figure \ref{fig:prosstt5-3tech-pseudotime}) as well as branch label (Supplemental Tables \ref{tbl:prosstt_conf_SB} and  \ref{tbl:prosstt_conf_AB}), even when using codes from such an extended latent space. 
 
-\begin{table*}%[H]
-\begin{tabular}{lrrrrr}
-\toprule
-Target B &     A &     B &      C &     D &     E \\
-Source &       &       &        &       &       \\
-\midrule
-A      &  8,833 &   430 &    709 &     1 &     0 \\
-B      &   249 &  6,710 &    536 &   526 &   681 \\
-C      &   925 &   552 &  19,275 &     5 &     0 \\
-D      &     0 &   326 &      2 &  7,906 &   314 \\
-E      &     0 &   382 &      0 &   742 &  7,523 \\
-\bottomrule
-\end{tabular}
-%\caption{Confusion table showing branch labels of the optimal matches of cells in the simulated \prost data, between Source and Target B. Entries on the diagonal correspond to correct matches whereas off-diagonal elements to mismatches. The overall accuracy, with respect to the branch label, equals 89\%.}
-\label{tbl:prosstt_conf_SB}
-\end{table*}
+%\begin{table}[ht]
+%\centering
+%\begin{tabular}{lrrrrr}
+%\toprule
+%Target B &     A &     B &      C &     D &     E \\
+%Source &       &       &        &       &       \\
+%\midrule
+%A      &  8,833 &   430 &    709 &     1 &     0 \\
+%B      &   249 &  6,710 &    536 &   526 &   681 \\
+%C      &   925 &   552 &  19,275 &     5 &     0 \\
+%D      &     0 &   326 &      2 &  7,906 &   314 \\
+%E      &     0 &   382 &      0 &   742 &  7,523 \\
+%\bottomrule
+%\end{tabular}
+%\caption{Confusion table showing branch labels of the optimal matches of cells in the simulated PROSST data, between Source and Target B. Entries on the diagonal correspond to correct matches whereas off-diagonal elements to mismatches. The overall accuracy, with respect to the branch label, equals 89\%.}
+%\label{tbl:prosstt_conf_SB}
+%\end{table}
 
 These results demonstrate that SCIM is capable of accurately identifying the best matching cells across multiple technologies, based on the shared latent representations in the presence of an underlying branching process but in the absence of paired features.
 
@@ -78,7 +79,7 @@ MATCHER, however, assumes a one-dimensional latent structure that struggles to c
 Moreover, MATCHER is built around a GPLVM \citep{lawrence2004}, which limits its scalability.
 To this end, we set a budget of 48 hours compute time and limit memory consumption to 40 Gb.
 Using the latent representations generated by MATCHER, we solve the bipartite matching problem setting the same hyperparameter configuration.
-MATCHER is unable to model the PROSSTT branching structure and is outperformed by SCIM with respect to matching (see \textbf{Table  \ref{tbl:prosstt_matcher}} and \textbf{Figure \ref{fig:prosstt5-matcher-psuedotime}}).
+MATCHER is unable to model the PROSSTT branching structure and is outperformed by SCIM with respect to matching (see Supplemental Table  \ref{tbl:prosstt_matcher} and Supplemental Figure \ref{fig:prosstt5-matcher-psuedotime}).
 
 %\begin{table*}%[H]
 %\begin{tabular}{l|llllll}
@@ -93,15 +94,15 @@ MATCHER is unable to model the PROSSTT branching structure and is outperformed b
 %\label{tbl:prosstt_matcher}
 %\end{table*}
 
-\begin{figure*}[htp]
-    \centering
-    \includegraphics[width=1.0\textwidth]{figures/integration/matcher-pseudotime-kde.png}
-    \caption{
-    Evaluation of cross-technology cell matches using latent representation obtained by MATCHER on the simulated data.
-    Cells are matched across datasets pairwise using the bipartite matching scheme.
-    Here we show a density plot for matched pseudotime values between the source technology and the target technology,
-    colored by the branch label. Mismatched cells are colored in grey.
-    Marginal distributions of cell pseudotime for each branch are shown on the top and right.
-    }
-    \label{fig:prosstt5-matcher-psuedotime}
-\end{figure*}
+%\begin{figure*}[htp]
+%    \centering
+%    \includegraphics[width=1.0\textwidth]{figures/integration/matcher-pseudotime-kde.png}
+%    \caption{
+%    Evaluation of cross-technology cell matches using latent representation obtained by MATCHER on the simulated data.
+%    Cells are matched across datasets pairwise using the bipartite matching scheme.
+%    Here we show a density plot for matched pseudotime values between the source technology and the target technology,
+%    colored by the branch label. Mismatched cells are colored in grey.
+%    Marginal distributions of cell pseudotime for each branch are shown on the top and right.
+%    }
+%    \label{fig:prosstt5-matcher-psuedotime}
+%\end{figure*}

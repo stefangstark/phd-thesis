@@ -1,26 +1,43 @@
+% !TeX root = ../main.tex
+
 \pdfbookmark[1]{Abstract}{Abstract}
 \begingroup
 \let\clearpage\relax
 \let\cleardoublepage\relax
 \let\cleardoublepage\relax
 \chapter*{Abstract}
-% TODO: write
-english abstract
-\vfill
+Cellular states are complex -- their underlying genomic sequence, RNA transcription levels, accessibility of chromatin regions, protein levels, chemical activity, etc, work in tandem to determine the behavior of a cell and its responses to changes in its environment.
+Initially, the study of cellular populations relied on bulk profiling technologies, which average individual cellular signals across population into a single observation, and made it difficult to study heterogeneous populations.
+However, this last decade has seen, and continues to see, an explosion in the development of single-cell profiling technologies that allow us to make observations of individual cellular states at scale.
+While these technologies revolutionized our ability to study cells, they are still typically limited in the sense that they consume or otherwise destroy a cell as it is profiled.
+This means that an individual cell can only be measured once.
+As a result, these technologies can only measure projections of the underlying \textit{holistic} cellular state into an observable domains, measuring, for example, the RNA transcript abundance or protein levels of an individual cell.
+Furthermore, temporal processes like perturbation responses are challenging to model, as these complex non-linear behaviors must be recovered without access to some ideal set of paired "input-output" states.
+
+This thesis is broadly concerned with the development and application of machine-learning based methods to reconcile this single-observation limitation.
+The typical modern single-cell experiment will generate two (or more) datasets, which we can consider sampled from distributions over cellular states, $\mu$ and $\nu$ that share some non-trivial relationship.
+We aim to recover this relationship by learning to \emph{align} these two cellular populations.
+Specifically we describe how to
+i) integrate multi-modal observations, in which $\mu$ and $\nu$ represent the state of population different observable domains
+and ii) model perturbation responses of cellular populations, in which $\mu$ and $\nu$ represent population state at two different time points.
+A major theme throughout this thesis is the demonstration of clinical utility of the developed methods.
+In particular, we explore how a method developed to recover and predict heterogeneous single-cell responses can improve the analysis, understanding, and ultimately help tailor and optimize the treatments of cancer patients.
+
+
+
 
 \newpage
 \begin{otherlanguage}{ngerman}
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
 \chapter*{Zusammenfassung}
-% TODO: translate
-german translation
+% TODO: (later) translate abstract
+[german translation]
 \end{otherlanguage}
 
 
-\newpage
-\chapter*{Acknowledgments}
-% TODO: write
-awks here
+%\newpage
+%\chapter*{Acknowledgments}
+% TODO: (later) write awks
 \endgroup
 
 \vfill

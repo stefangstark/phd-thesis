@@ -1,1 +1,210 @@
-% TODO: write whole discussion
+% !TeX root = ../main.tex
+
+\chapter{Concluding Remarks}
+%\begin{enumerate}
+%  \item developed methods to align single cell populations
+%  \item enhance the potential of profiling technologies
+%  \item destructive/consuming nature of technologies
+%  \item address limitation of single state observations
+%  \item recover multiple observations through the alignment of datasets
+%  \item both multi-modal integration and perturbation resposnes
+%  \item applied these methods to several real world settings
+%  \item including the clinic where we demonstrated the potential to improve care
+%\end{enumerate}
+
+In this thesis we developed and applied methods that align single-cell populations to enhance the potential of single-cell profiling technologies.
+While single-cell profiling technologies have revolutionized the way we are able to study cellular biology, providing observations of individual cells,
+they are limited in the sense that they typically require the profiled cells to be consumed or otherwise destroyed.
+Many fundamental problems in biology wish to be addressed by observing the same cell across multiple contexts, such as different modalities or points in time.
+%We have come to understand cellular states as composed of many different levels, e.g. genetic state, transcriptomic state, proteomic state, etc,
+%and these technologies are only able to measure cells typically within the context of one of these modalities.
+%Furthermore, many fundamental problems in biology wish to be addressed through the understanding of cellular state over time,
+%which would require non-destructive measurements of the same cell.
+The methods developed within this thesis address the single-observation limitation, imposed by the consumption of profiled cells,
+by learning to \emph{align} observations of similar cell populations in different modalities or time points.
+The developed methods are then applied these methods to several real world settings,
+including the clinic where we demonstrated the potential to improve patient care.
+
+\section{Learning to align single-cell multi-modal profiles}
+
+%\begin{enumerate}
+%  \item single-cell technologies provide a high resolution view into cellular state
+%  \item however each technology is limited to measuring a single modality
+%  \item cellular states are complex and exist across many modalities, DNA, RNA, protein, chromatin, chemical activity, etc
+%  \item understanding the behavior of, for instance a cancer cell, requires a holistic multi-modal view
+%  \item profiling technologies are limited to single-modalities as they consume profiled cells
+%\end{enumerate}
+
+Single-cell profiling technologies have revolutionized our ability to study cellular biology, providing unprecedented resolution into the intricate states of individual cells.
+These powerful tools are limited in the sense that each technology can typically only measure a single cellular state modality - whether that be the genetic, transcriptomic, proteomic, or some other aspect.
+We have come to understand, especially in the context of diseases like cancer,
+that cellular states are highly complex and exist across a multiple interconnected modalities, from DNA and RNA to proteins, chromatin structure, and chemical activity. 
+Therefore, to truly understand the behavior of a cell a holistic, multi-modal view is required.
+
+%\begin{enumerate}
+%  \item in chapter X we developed SCIM to perform multi-modal integration
+%  \item construct integrated latent space with a modular auto encoder framework
+%  \item addressed instability in training
+%  \item bipartite matching pairwise across technologies
+%\end{enumerate}
+
+In chapter \ref{ch:scim} we developed \textsc{SCIM} to peform cell-level multi-modal integration from a set of single-cell profiling technologies.
+\textsc{SCIM} operates in two main steps.
+First, a technology-invariant latent space is constructed within a modular autoencoder framework such that \emph{aligns} the manifolds of multiple profiling technologies such that similar cells profiled by these different technologies are located within the same neighborhoods in the representation space.
+This is acheived with an adversarial optimization scheme wherein (semi-) supervision and novel stabalization normalization schemes are employed to help correctly orient the constructed latent space.
+Afterwords, integration is performed by matching cells across all modalities pairwise using a bi-partite matching scheme modified to i) scale to large single-cell datasets and ii) allow for differences in cell sample compositions.
+
+%\begin{enumerate}
+%  \item extensive analysis of simulated data, highlighting pros and cons
+%  \item application to cancer data
+%  \item follow up work, highlights importance of pairing individual cells, modularity, adaptibility, other data types
+%\end{enumerate}
+We performed an indepth analysis of \textsc{SCIM} on both simulated and real-world data where we have shown that our approach is able to match structure across multiple modalities.
+On simulated data, we demonstrated that \textsc{SCIM} is able to align a complex branching process.
+On a simulated dataset of a multi-modal profile of a cellular branching process, \textsc{SCIM} outperformed struggling baseline approaches and largely correctly aligned this complex, high-dimensional data.
+However, the full alignment of this complex branching process remains somewhat challenging.
+Nonetheless, \textsc{SCIM} shows promise when applied to integrate the multi-modal scRNA-seq and CyTOF profiles of a sample from the TuPro cohort \citep{irmisch2020}.
+Furthermore, as show cased in independent follow-up publications \citep{wahle2023,fleck2023,meier2023}, the modularity and flexibility of the framework is successfully applied in different modalities, where it helped analyze the multi-omic landscape of organoid states and development .
+
+%In chapter \ref{} we developed SCIM to holistic multi-modal cellular representations 
+%The developed SCIM method enables the identification of cell analogs profiled with different technologies. It is a modular framework that first constructs a technology-invariant latent space using a set of autoencoders trained in an adversarial manner. Then, it uses the obtained embeddings to match cells across technologies using a customized bipartite matching algorithm. The introduced extensions to the matching algorithm enable one-to-many matches, circumvent misalignments and increase scalability to large datasets. We have shown, both on simulated and real-world data, that SCIM can align even a fine-grained structure across data modalities, such as underlying temporal processes or immune cell subpopulations. As demonstrated by others in subsequent publications [Fle+22; Wah+23; Mei+23], SCIM can be success- fully applied also to other data types and can help elucidate the multi-omic landscape of different diseases and developmental processes.
+
+\section{Learning to align single-cell perturbation response}
+%\begin{enumerate}
+%  \item many problems in biology can be conceptualized the understanding of a perturbation response
+%  \item cell development trajectories, treatment effects, responses to basic enviornmental changes, etc
+%  \item temporal process but due to the destructive nature of profiling technologies we typically lack time-resolved observations
+%  \item furthermore, cellular populations of interest are heterogeneous in composition and response
+%  \item from a modeling perspective this is challenging as we must learn a heterogeneous response (i.e. non-linear function) without access to a set of input-output pairs on the cellular level
+%\end{enumerate}
+
+Many fundamental problems in biology can be conceptualized through the understanding of cellular responses to perturbations.
+This includes understanding and predicting the trajectories of cellular development, effects of therapeutic interventions, and, general responses to the changes within a cellular environmental.
+These phenomena are temporal in nature and the destructive nature typical of profiling technologies limits our ability to obtain desired time-resolved observations of cellular states.
+Recovering these observations is further complicated by the fact that cellular populations are often highly heterogeneous in their composition and response to perturbations.
+Thus, from a modeling perspective, this represents a significant challenge, as we must learn to characterize a heterogeneous, non-linear function, representing cellular response, without access to a set of input-output pairs at the level of individual cells.
+What we often have access to instead, is a set of similar cells profiled in the control and perturbed state, from which the individual effects must be extracted.
+
+%\begin{enumerate}
+%  \item we developed cellot to address this problem
+%  \item previous approaches to this problem fail to adequately address the alignment problem
+%  \item cellot however is rooted in the theory of optimal transport, which provides us with mathematical tools to transform probability distributions
+%  \item specifically, cellot applies cutting edge advancements in neural optimal transport, wherein the transport function is parameterized with neural networks that are optimized in a stable and scalable manner
+%  \item while traditional OT approaches require observations of both control and perturbed states, CellOT, thanks to this parameterization, is able to, after training, predict cellular responses without access to the treated states
+%  \item This allows the framework to bring the power of OT to prediction tasks
+%\end{enumerate}
+To address the challenges, in chapter \ref{} we described \textsc{CellOT}, a novel framework that recovers individual cell responses by learning to \emph{align} the full set of perturbed and unperturbed observations. 
+While previous approaches to this problem have fail to adequately address the fundamental alignment challenge,
+\textsc{CellOT}, however, leverages the mathematical theory of optimal transport to strongly align the distribution of cellular states.
+By way of cutting-edge advancements in neural optimal transport, the learned transport function that applies the perturbation effect is parameterized using neural networks that are optimized in a stable and scalable manner.
+This key innovation sets CellOT apart from traditional optimal transport methods \cite{}, which typically require observations of both control and perturbed cellular states.
+Thanks to this parameterization, the CellOT framework introduces the powerful mathematical tools of optimal transport to a wide range of predictive tasks in cellular biology.
+%\textsc{CellOT} represents a significant advancement in our ability to study the complex, heterogeneous, and dynamic responses of cellular populations to various perturbations. This novel framework holds great promise for unlocking new insights into fundamental biological processes and accelerating our understanding of cellular behavior.
+
+
+%\begin{enumerate}
+%  \item We demonstrate the robustness of cellot in several perturbation tasks, including
+%  \item cancer treatment responses in two modalities
+%  \item predicting stem cell development of unseen sub populations,
+%  \item cross-species immune responses
+%  \item and effects of lupus treatments on unseen samples
+%  \item we show that cellot recovers the expected response of a mixture of cell lines
+%  \item and we futhermore demonstrated the ability of CellOT to improve over current state-of-the-art to produce biologically relevant predicted states, especially in challenging out-of-distribution prediction tasks
+%\end{enumerate}
+
+We demonstrated the robustness and versatility of the \textsc{CellOT} framework across a diverse set of perturbation tasks in cellular biology, including
+learning the response of cancer cell lines to treatments across two modalities,
+forecasting the development trajectories of unseen stem cell subpopulations, 
+characterizing cross-species immune responses,
+and predicting the effects of lupus treatments on unseen patient samples.
+Notably, we show that CellOT is able to recover the expected responses of heterogeneous cell lines, providing more insightful cellular representations.
+Furthermore, we demonstrated the ability of CellOT to improve over current state-of-the-art to produce biologically relevant predicted states, especially in challenging out-of-distribution prediction tasks.
+
+Through these extensive evaluations we underscore the robustness and broad applicability of the CellOT framework.
+By leveraging the power of optimal transport and neural network parameterization, CellOT has proven itself as a versatile tool for tackling a wide range of perturbation response problems in cellular biology.
+Given its ability to predict complex heterogeneous responses, even on unseen cellular subpopulations or experimental conditions,
+it is our hope that \textsc{CellOT} lays the ground work for optimal transport-based approaches to enhance our ability to model, understand, and ultimately predict the complex dynamics of biological systems.
+
+%\begin{enumerate}
+%  \item OT is a powerful tool with many applicaitons within the biological sciences
+%  \item CellOT lays the ground work for bringing these tools to the forefront of prediction tasks
+%\end{enumerate}
+
+\section{Exploring the clinical utility of single-cell perturbation responses}
+%\begin{enumerate}
+%  \item describe challenges of cancer
+%  \item tumors as heterogeneous cell populations
+%  \item individual effects
+%  \item need to model and predict
+%\end{enumerate}
+Designing effective cancer treatments has proven to be one of the most challenging problems in medicine over the last couple decades \cite{}.
+The severity and behavior of a cancer is determined by both the internal biological processes, which allow cancer cells to evade regulation and promote growth, and the composition and cell-to-cell interactions within the tumor microenvironment itself.
+Thus the tumor can be considered not as a simple homogeneous mass of a single aberrant cell that proliferates unchecked, but as a complex heterogenous entity.
+Understanding the effects of an intervention in light of this heterogeneity is a core challenge towards the development of effective cancer treatments.
+%Furthermore, while some elements of cancer behavior can be shared across individuals, e.g. through the effects of certain driver mutations,
+%key properties of a tumor can be specific to the individual.
+
+In chapter \ref{ch:cohort} we demonstrated the clinical utility of \textsc{CellOT},
+and described its potential to enhance the care of cancer patients.
+Using a subcohort of melanoma patients from the Tumor Profiler project \cite{irmisch2020},
+we applied \textsc{CellOT} to learn and analyze their individual responses to a panel of FDA-approved cancer treatments.
+In addition to outperforming currently-available perturbation modeling approaches, we showed, that \textsc{CellOT} learns useful and informative patient representations through recovered individual cell responses.
+We then continued to demonstrate the ability of \textsc{CellOT} to \emph{predict} treatment responses of unseen patients.
+This is a particularly challenging task, as while some elements of cancer behavior can be shared across individuals, e.g. through the effects of certain driver mutations, key aspects can be specific to the individual.
+%Despite the cohort being one of the largest instances of single-cell profiled tumor responses, we did 
+Nonetheless, we were able to demonstrate the potential of our predicted drug responses,
+by classifying the severity of an incoming patient's condition, by way of progression time.
+
+These findings demonstrate the potential of \textsc{CellOT} and the 4iDRP to predict the treatment response of unseen patients, and lay the groundwork for AI-assisted personalized oncology.
+Through accurate modeling the cellular therapy response, these tools cannot only contribute to the hypothesis generation of tumor dynamics and mechanisms, but also assist oncologists triage and optimize their treatments to the individual.
+While currently one of the largest of its type, a major bottleneck in this study stems from the limitation of the cohort size.
+Given that the computational approaches applied here can scale well beyond the current sample sizes, these approaches should only improve given a proper integration within a clinic environment.
+This highlights the need for continued development of such approaches to harness the full potential of drug profiling to ultimately improve understanding and treatment outcomes of advanced cancers.
+It is our hope that \textsc{CellOT} and the 4iDRP can continue to enable oncologists to tailor therapies to individual tumor profiles and anticipate disease progression.
+
+\section{Outlook}
+%\begin{enumerate}
+%  \item reliance on representations to perform integration and perturbation responses
+%  \item auto encoders are uninformed of the properties of features
+%  \item following success in NLP, cutting edge ML frameworks are being adapted
+%  \item single-cell foundation models, by way of their feature embeddings and attention mechanisms, have the ability to incorporate better feature representations and interactions
+%\end{enumerate}
+The methods developed within this thesis rely, to some degree, on properties of their cellular representations.
+For instance, \textsc{CellOT}'s learning of perturbation responses with optimal transport relies on the assumption that perturbation response, within the representation space, will respect the principle of minimal action that underlies the OT coupling.
+While the usefulness of the responses learned by \textsc{CellOT} discussed in this thesis, particularly in the context of the melanoma cohort, demonstrate that this is largely the case, it could be that there are complicated perturbations where this is less so.
+Furthermore, with complicated or subtle perturbations, it may not be trivial to construct representations, as is needed with high-dimensional data like scRNA-seq, that align with the OT assumptions.
+Likewise, \textsc{SCIM}
+%and other representation-based multi-modal integration techniques
+relies on the correct orientation of a representation space, which we addressed the with (semi-)supervision during the construction of the integrated latent space.
+When low-dimensional representations were required to be learned within this thesis,
+autoencoders were used to do so, as is currently popular in the field.
+However autoencoders are, in a way, uninformed about the properties of the features that make up their data.
+This makes it difficult, though not impossible, for them to learn complex feature-feature interactions, such as the hierarchical signaling processes that we understand to drive much of cellular biology.
+
+Recently, a new class of models known as single-cell foundation models have been introduced within community.
+In lieu of multi-layer perceptrons, these models \cite{} utilize more modern attention-based architectures \cite{}, which have revolutionized fields such as natural language processing \cite{}.
+Single-cell foundation models imbue features with their own embeddings which, by way of the attention mechanism, interact with and self-update according to learned interactions between the states of other features, within the same cell.
+Thus, these models have the potential to produce more nuanced cellular representations that incorporate biological structure \cite{stark2021,roohani2023}
+or interactions, pathways, and signaling roles of elements across different modalities \cite{argelaguet2018, immer2024,}.
+However, these models have many challenges that must be addressed, including  data that is not only noisier but less available, larger context sizes, and much more complex underlying latent structures.
+
+%\begin{enumerate}
+%  \item both of the over-arching problems addressed in this thesis, multi-modal integration and the reocver of perturbation responses, rely in someway on good representations of cells
+%  \item For instance, the learning of perturbation responses with OT relies on the assumption that the cellular representations will respect the principle of minimal action underlying the OT coupling
+%  \item while the usefulness of the learned responses discussed in this thesis demonstrate that this is largely the case, it can be that there are complicated perturbations or settings where this is less clear
+%  \item here, fms, with their enhanced modeling of cellular features and their interactions may be able to help resolve, for instance, complex signaling and pathway hierarchies \cite{pmvae, gears}
+%  \end{enumerate}
+  
+%  \begin{enumerate}
+%  \item likewise, SCIM and other representation-based multi-modal integration techniques \cite{need} rely on the correct orientation of a latent sapce.
+%  \item In SCIM, we addressed this challenge with (semi-)supervision of the latent space construction
+%  \item foundation models, however, have the potential to integrate with more nuance and insight into modality feature sets
+%  \item for instance, utilizing the shared interactions, pathway, or signaling roles of elements across different modalities \cite{alexpaper}.
+%  \item many challenges still exist for these approaches
+%\end{enumerate}
+
+%\begin{enumerate}
+%  \item complex tissues
+%  \item implementations in the clinic
+%  \item groundwork for these applications
+%\end{enumerate}

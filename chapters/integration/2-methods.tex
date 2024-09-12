@@ -32,18 +32,19 @@ This consists of the following networks: a pair of encoder ($\phi_k$) and decode
 This discriminator is a binary classifier trained to identify the latent representation of some source technology from latent representations of all other technologies using a binary cross entropy loss.
 
 SCIM yields an integrated latent space by minimizing the reconstruction error while adversarially fooling the discriminator.
-Given the measurements of a batch of cells from the target modality $t$, $x_t$, and the (fixed) latent representations of a batch of cells from the source modality $s$, $\hat{z}_s \sim \phi_s(x_s)$,
+Let $\mu$ and $\nu$ be the distribution of cellular states in the source $s$ and target modality $t$.
+%Given the measurements of a batch of cells from the target modality $t$, $x_t$, and the (fixed) latent representations of a batch of cells from the source modality $s$, $\hat{z}_s \sim \phi_s(x_s)$,
 
-% TODO: major: fix SCIM equations, write as min-max
 \begin{equation}
-	a = b
+	\min_{\phi_t, \psi_t} \max_\gamma  \
+	\mathbb{E}_{x_t \sim \nu} \
+	[ \mathcal{L}_{nll}(x_t, \phi_t, \psi_t) - \beta \mathcal{L}_{adv}(x_t, \phi_t, \gamma) ]
   \label{eq:scim-loss}
 \end{equation}
 
 $\mathcal{L}_{nll}$ is the negative log-likelihood of the inputs under their reconstruction.
-$\mathcal{L}_{adv}$ is the discriminator’s classification error when trying to classify the latent representation samples $\hat{z}_s$ or $\hat{z}_t$ as the source or target technology.
+$\mathcal{L}_{adv}$ is the error of the discriminator $\gamma$ to classify the latent representation of source samples $z_s = \phi_s(x_s)$ from target samples $z_t = \phi_t(x_t)$.
 $\beta$ is a hyperparameter weighing the influence of the adversarial loss.
-%At the same time, c is trained to correctly classify the technology of the z^s and z^t samples.
 
 \paragraph{Latent space orientation}
 Correctly orienting the latent space in an unsupervised manner is a challenging task \cite{locatello2019a, yang2019a}.
@@ -78,10 +79,10 @@ Due to the min–max nature of adversarial training, model comparison is challen
 While the computer vision community has introduced a number of metrics specific to the image domain to help compare models \cite{heusel2017,salimans2016}, here we need to validate the quality of a set of lower-dimensional latent representations.
 To achieve this, we utilize a k-Nearest Neighbor (kNN)-based divergence estimator \cite{wang2009}.
 The divergence score between two sets of codes $Z_s$ and $Z_t$ is calculated as:
-% TODO: minor: typeset eqn
 \begin{equation}
-	a = b
+	\hat{D}(Z_s || Z_t) = \frac{1}{2} \hat{D}_{KL}(Z_s || Z_t) + \frac{1}{2} \hat{D}_{KL}(Z_t || Z_s)
 \end{equation}
+where $\hat{D}_{KL}$ is the KL divergence estimated from samples.
 This estimator approximates a symmetric variant of a KL divergence, a measure of how much two distributions differ, using only empirical data.
 The divergence estimate is computed between the latent representations of the source technology and the target technology to measure the alignment of codes from the two technologies.
 Model selection can proceed at scale by selecting parameter configurations that align technology distributions and have low reconstruction error.
@@ -107,7 +108,7 @@ If more fine-grained cellular information is available, such as pseudotime, a di
 Furthermore, in real-world data settings we utilize the raw marker expression to investigate correspondence of the matched cells.
 Namely, Spearman’s and Pearson’s correlation coefficients are computed between the expression values across matches.
 
-\subsubsection{Graph modifications}
+%\subsubsection{Graph modifications}
 
 \paragraph{kNN subgraph approximation}
 Given the large number of cells in single-cell datasets, we reduce the search space to the $k$ most likely potential matches.

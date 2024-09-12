@@ -1,13 +1,14 @@
+% !TeX root = ../../main.tex
+
 \section{Learning single-cell perturbation responses}
-% TODO: finish
-Popular approaches to model single-cell perturbation responses fall into three main camps, figure \ref{fig:arrows}.
-The first takes a simple approach that ignores heterogeneity in response and models perturbations as linear shifts in data space, figure \ref{fig:arrows} left.
+Popular approaches to model single-cell perturbation responses fall into three main camps, Figure \ref{fig:arrows}.
+The first takes a simple approach that ignores heterogeneity in response and models perturbations as linear shifts in data space, Figure \ref{fig:arrows} left.
 Cell typing approaches take this assumption, at least piece wise, and thus fail to capture any intra cell-type heterogeneity.
 A popular approach is to model perturbation effects as a linear shift in some latent space that is then decoded with a non-linear function
 These approaches include models like \textsc{scGen} \cite{lotfollahi2019} but many other models, including those that condition on discrete metadata,
 take similar approaches \cite{lopez2018, lotfollahi2022, lotfollahi2023, bereket2023}.
-While this approach is able to model heterogeneity, they need to implicitly solve a challenging disentanglement task \cite{locatello2019}, which, if not solved correctly, leads to aberrant behavior, figure \ref{fig:arrows} middle. 
-In this work we opt to use a modern parameterization of an optimal transport coupling, figure \ref{fig:arrows} right.
+While this approach is able to model heterogeneity, they need to implicitly solve a challenging disentanglement task \cite{locatello2019}, which, if not solved correctly, leads to aberrant behavior, Figure \ref{fig:arrows} middle. 
+In this work we opt to use a modern parameterization of an optimal transport coupling, Figure \ref{fig:arrows} right.
 Thanks to the mathematics of optimal transport, this allows us to predict treated states accurately by following a strict adherence to the control and treated distribution geometries.
 
 \begin{figure}[ht]
@@ -18,12 +19,15 @@ Thanks to the mathematics of optimal transport, this allows us to predict treate
     Approaches to modeling single-cell perturbations.
     The control (light blue) and treated (dark blue) states are shown as a KDE plot.
     Arrows depict how each of the three approaches would predict responses at each location in feature space.
+    Left: linear shifts in data space predict homogeneous effects and fail to model any heterogeneity in response.
+    Middle: heterogeneous behavior is modeled by applying a linear effect in some representation space, such as from an autoencoder, which is then decoded into a non-linear response. Such approaches attempt to implicitly impose an invariance between the manifold of treated and control, i.e. that they are linearly transposed in representation space. This invariance is difficult to achieve \cite{locatello2019} and if it is not, predicted states can leave the manifold, resulting in predicted states that are biologically non-relevant.
+    Right: We propose to strongly couple the treated and control manifolds using the mathematics of optimal transport. The transport function in \textsc{CellOT} is parameterized with recent advancements \cite{makkuva2020} in neural optimal transport that allow it to predict the responses of incoming cells, without access to their treated states.
   }
   \label{fig:arrows}
 \end{figure}
 
 
-\subsection{Cell-type approaches}  % TODO: linear shifts in dataspace
+\subsection{Cell-type approaches} 
 Within one sample distinct cell types might exhibit very different responses toward a perturbation.
 This heterogeneity suggests modeling perturbation effects by first identifying different subpopulations and then predicting the response for each of those subpopulations individually.
 In the following, we introduce a method built upon that insight, which serves as a baseline in this study.
@@ -65,19 +69,19 @@ Most importantly, while all those methods contribute to a better understanding o
 
 
 \subsection{Representation learning approaches for heterogeneous models}  % linear shifts in latent space
-Current state-of-the-art methods~\citep{lopez2018, lotfollahi2019, yang2020} aim to learn low-dimensional representations of inputs using autoencoders such that perturbation effects can be applied with simple linear interpolations in representation space. Thus, they predict perturbation responses via linear shifts in a learned low-dimensional latent space. These models are attractive because they are fully parameterized, enabling us to make predictions on unseen cells. By tackling the task of perturbation response predictions via the even more challenging task of learning a meaningful low-dimensional embedding, these methods can be expected to, at best, only perform moderately well. Therefore, we sought to learn a fully parameterized perturbation model that robustly describes the cellular dynamics upon intervention while accounting for underlying variability across samples. More details on both methods are provided in Supplementary Section~\ref{supp:ae_methods}.
+Current state-of-the-art methods~\citep{lopez2018, lotfollahi2019, yang2020} aim to learn low-dimensional representations of inputs using autoencoders such that perturbation effects can be applied with simple linear interpolations in representation space. Thus, they predict perturbation responses via linear shifts in a learned low-dimensional latent space. These models are attractive because they are fully parameterized, enabling us to make predictions on unseen cells. By tackling the task of perturbation response predictions via the even more challenging task of learning a meaningful low-dimensional embedding, these methods can be expected to, at best, only perform moderately well. Therefore, we sought to learn a fully parameterized perturbation model that robustly describes the cellular dynamics upon intervention while accounting for underlying variability across samples.
 % Further, modeling perturbation responses via a matching problem was considered in \citet{suppstark2020} for mapping cell populations that are profiled with different profiling technologies.
 
-\subsubsection{Modeling perturbation responses as shifts in latent space} \label{supp:ae_methods}
+\subsubsection{Modeling perturbation responses as shifts in latent space}
 % \label{sec:related}
 Consider a single-cell dataset of a binary perturbation.
-Let $\{x_1 \ldots x_n\}$, $x_i \in \mathcal{X}$, drawn from $\rho_c \cup \rho_k$
+Let $\{x_1 \ldots x_n\}$, $x_i \in \mathcal{X}$, drawn from $\mu \cup \nu$
 and let $c(i) \in \{0, 1\}$ indicate the perturbation status of a single cell,
 \[
     c(i) = 
 \begin{cases}
-    0, & \text{if } x_i \sim \rho_c\\
-    1, & \text{if } x_i \sim \rho_k.
+    0, & \text{if } x_i \sim \mu \\
+    1, & \text{if } x_i \sim \nu.
 \end{cases}
 \]
 
@@ -88,13 +92,13 @@ Let $\bar{z}^{(l)}$ be the mean of representations in condition $l$
 \begin{equation*}
     \bar{z}^{(l)} = \frac{1}{|\{i: c(i) = l\}|} \sum{z_i \delta_{c(i)l}},
 \end{equation*}
-the perturbed state of $x^\prime \sim \rho_c$ is predicted as
+the perturbed state of $x^\prime \sim \mu$ is predicted as
 \begin{equation*}
     \psi(\phi(x^\prime) - \bar{z}^{(0)} + \bar{z}^{(1)}).
 \end{equation*}
 
 \paragraph{\textsc{cAE}}
-The conditional autoencoder is based on a popular batch correction technique within the single-cell community, first introduced by~\citep{lopez2018}.
+The conditional autoencoder is based on a popular batch correction technique within the single-cell community, first introduced by \citet{lopez2018}.
 It introduces condition-specific parameters into the encoder and decoder that attempt to remove and replace information in the data specific to their conditions.
 They operate by concatenating one-hot encodings of condition labels (here, perturbation status) to the inputs of the encoder and decoder.
 These encodings, in effect, make the bias term in the first layer of the encoder and decoder a learnable parameter specific to each condition. I can thus be considered equivalent to learning a linear shift in the latent space.

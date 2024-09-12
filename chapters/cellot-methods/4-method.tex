@@ -1,11 +1,10 @@
 \section{Learning and predicting single-cell responses with \textsc{CellOT}}
-% TODO: minor: connect flow
 
-% Small molecule drugs can have profound effects on the cellular phenotype by, for instance, altering signaling cascades.
-% Most of these effects depend on the context in which the perturbation occurs.
-% Given the heterogeneity among single cells in cell populations and tissues, predicting cellular responses requires understanding the rules by which context shapes genome activity and its response to drugs.
-% High-dimensional single-cell data measured via single-cell genomics or multiplexed imaging technologies can provide this contextual information but only return  unpaired or unaligned observations of cell populations.
-% Here, \textsc{CellOT} allows us to utilize such unpaired data and enables learning cell state transitions upon perturbation.
+Small molecule drugs can have profound effects on the cellular phenotype by, for instance, altering signaling cascades.
+Most of these effects depend on the context in which the perturbation occurs.
+Given the heterogeneity among single cells in cell populations and tissues, predicting cellular responses requires understanding the rules by which context shapes genome activity and its response to drugs.
+High-dimensional single-cell data measured via single-cell genomics or multiplexed imaging technologies can provide this contextual information but only return  unpaired or unaligned observations of cell populations.
+Here, \textsc{CellOT} allows us to utilize such unpaired data and enables learning cell state transitions upon perturbation.
 
 We denote the unperturbed control population by $\mu$ consisting of $n$ cells $x_i$ for $i = 1, \dots, n$.
 Upon perturbation $k$, the multivariate state of each cell $x_i$ of the unperturbed population changes, which we observe as the perturbed population $\nu$ (Figure \ref{fig:cellot-overview}a).
@@ -24,7 +23,7 @@ As directly parameterizing the optimal transport map $T$
 \cite{korotin2020, yang2019, prasad2022} is unstable \citep[Table 1]{makkuva2020}, we parameterize the convex potentials of the dual optimal transport problem $f$ and $g$ by convex neural networks \cite{amos2017} and recover the optimal map $T$ using the gradient of a convex function $g_k$, i.e., $\nabla g_k$ \cite{makkuva2020}.
 
 To put \textsc{CellOT}'s performance in perspective, we benchmark it against current state-of-the-art autoencoder-based methods \cite{lotfollahi2019, lopez2018},
-which attempt to add perturbation effects through the manipulation of a learned latent representation (review in Supplementary Section \ref{supp:related_work}).
+which attempt to add perturbation effects through the manipulation of a learned latent representation.
 To further test the hypothesis of the optimal transport modeling prior, we compare the learned OT map $\nabla g_k$ for each perturbation $k$ with naive non-OT-based alignments.
 
 
@@ -38,10 +37,11 @@ To further test the hypothesis of the optimal transport modeling prior, we compa
 \end{figure}
 
 \subsection{Evaluation strategies}
-% TODO: check wording 
 Since we lack access to the ground truth set of control and treatment observations on the single-cell level,
 we analyze the effectiveness of \textsc{CellOT} using evaluations that operate on the level of the distribution of real and predicted perturbation states.
-Three metrics are considered, i.e., MMD, $\ell_2$ feature means, and the average correlation of the feature means.
+These metrics provide a \emph{quantitative} check that we produce treated states that are not only realistic, but cover the full distribution of these treated states.
+We pair these quantitative metrics, in the coming sections, with analysis to demonstrate the usefulness of our predictions.
+Here, three metrics are considered, i.e., MMD, $\ell_2$ feature means, and the average correlation of the feature means.
 
 $\ell_2$ feature means refers to the $\ell_2$-distance between means of the observed and predicted distributions. Similarly, $r$ feature means refers to the correlation of the means of the observed and predicted distributions.
 However, metrics based only on feature means can be insensitive in settings where heterogeneity is not captured. Consider, for example, a target distribution with multiple modes. These metrics will favorably evaluate a uni-modal predicted distribution that simply models the mean of this multi-modal distribution. To this end, we include a distributional distance sensitive to this type of behavior by measuring differences in the properties of higher moments, i.e., the maximum mean discrepancy.

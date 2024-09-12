@@ -1,11 +1,13 @@
+% !TeX root = ../main.tex
+
 \chapter{Introduction}
 
-\subsection{Scope}
-% TODO: write
-\subsection{Publications}
-% TODO: write
-\subsection{Collaborators}
-% TODO: write
+%\subsection{Scope}
+% TODO: (later) write scope
+%\subsection{Publications}
+% TODO: (later) write pubs
+%\subsection{Collaborators}
+% TODO: (later) write collabs
 
 \section{Individual cells as complex machinery}
 Cells are the basic building block of life -- all living organisms are composed of one or more cells.
@@ -90,7 +92,7 @@ Pathways govern fundamental cellular decisions, for instance, dictating how and 
 These decisions are typically enacted through the activation (or deactivation) of some key protein, or by ordering the transcription and translation of some specific gene.
 Figure \ref{fig:hallmarks} depicts the general structure of a signaling pathway and a cartoon of the MAPK-ERK pathway, a pathway essential to regulating cell growth.
 
-% TODO: adapt figure better
+% TODO: (later) adapt figure better
 \begin{figure}
   \begin{center}
   \includegraphics[width=0.95\textwidth]{figures/introduction/hallmarks.pdf}
@@ -137,7 +139,7 @@ In essence, the framework poses that in order for a cell to become a cancer cell
 i) sustain, promote, or generate cell growth signals, and, simultaneously,
 ii) ignore or resist growth suppression or death (apoptosis) signals \cite{hanahan2011}.
 
-\subsubsection{Genome instability \& mutations} \label{sec:cancer-mutations}
+\subsubsection{Genome instability \& mutations}
 Genetic mutations are one of the underlying causes that enable cells to gain hallmark capabilities.
 These "hallmark-granting" mutations typically change the coding of specific proteins key to cellular regulation.
 As a result, these proteins become composed of slightly different amino acids and their shape and therefore function are changed.
@@ -173,7 +175,7 @@ Cancer cells, when compared to normal cells, are typically more susceptible to a
 As a result, the genetics of cancer cells can exhibit a branching process within tumor clones, resulting what are known as tumor subclones.
 The presence of these subclones represents a further complication in effective cancer treatment as these are not only specific to the individual but treatments need to address all active subclones which may exhibit differential responses to therapies.
 
-\subsection{"Tumor-promoting inflammation" and the tumor microenvironment}
+\subsection{Inflammation and the tumor microenvironment}
 Inflammation refers to an organism's natural biological response to harmful stimuli,
 for instance, the immune system response to a foreign disease.
 While it has been known that immune cells interact with and are involved in tumor formation, research over the last few decades has indicated that these interactions are crucial to the behavior of the tumor \cite{grivennikov2010, quail2013}.
@@ -316,7 +318,7 @@ Thus, the atomic cloud is observed in terms of a composite signal over the mass-
 Protein abundance is then approximated based on the relative abundance of the corresponding levels of detected heavy metal signatures,
 which have unique fingerprints in the mass-to-charge space.
 
-\paragraph{4i} % TODO: expand more here
+\paragraph{4i} % TODO: (later) expand more here
 4i (iterative indirect immunofluorescence imaging) \cite{gut2018}
 is an imaging-based technology that measures protein levels with immunofluorescent labels.
 These labels bind to their target proteins and emit a specific color of light
@@ -327,7 +329,7 @@ Furthermore, as the number of available color channels is limited,
 An image processing pipeline is then used to identify cellular boundaries and extract a set of observables of each individual cell.
 These observations include not only the intensity levels of each marker, but morphological features such as cell area, circumference, roundness, etc.
 
-\subsection{Tumor profiler project}
+\subsection{Multi-modal single-cell profiling with the Tumor profiler project}
 The Tumor Profiler (Tupro) study \cite{irmisch2021} explores the clinical feasibility and utility of applying multi-modal single-cell profiling technologies to precision oncology.
 It is a multi-center initiative, of which I am a contributing member, based in Switzerland across the state hospitals, University Hospital Zurich and University Hospital Basel, and academic institutions, ETH Zurich and University of Zurich, with support from the pharmacological industry, including Roche Ltd and NEXUS of ETH.
 Its goals (Figure \ref{fig:tupro-overview} are two fold:
@@ -341,7 +343,8 @@ This project has been a major source of inspiration and data for this thesis.
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/introduction/tupro.jpg}
   \end{center}
-  \caption{}\label{fig:tupro-overview} % TODO: caption, adapted from
+  \caption{Overview of the Tumor Profiler project, adopted from \cite{irmisch2020}. The project is split in two stages: a fast diagonstic loop, which performs multi-modal single-cell profiling on biopsies of incoming cancer patients to supplement traditional diagnostic stragies, and an exploratory science loop, which performs cohort-wide analysis on the collected samples.
+  }\label{fig:tupro-overview}
 \end{figure}
 
 Over the course of three years, the project applied cutting-edge multi-modal profiling technologies to a total of 240 samples spanning metastatic melanoma, metastatic epithelial ovarian cancer, and acute myeloid leukemia.
@@ -352,7 +355,7 @@ Analysis from each node is integrated and distilled into a report and
 this report is further distilled by a "pre-tumor" board and finally by the final tumor board where treatment decisions are made.
 For each sample, the target turn around time for collection, profiling, and analysis is two weeks.
 
-\section{Representation learning, scRNA-seq} \label{sec:scrna-seq}
+\section{Representation learning of scRNA-seq data} \label{sec:scrna-seq}
 Raw read outs of single-cell profiling technologies often have statistical properties that are difficult for computational tools to handle.
 These statistical properties, present especially in scRNA-seq but applicable for biological data in general,
 include challenges like high-dimensionality, heavy-tailed distributions, sparsity, and noisy observations.
@@ -361,7 +364,7 @@ technical variations that arise from uncontrollable differences in experimental 
 As such, special care must be paid to not only the normalization of data, but their representation as well.
 In this section we detail some of the major sources of noise in scRNA-seq data, how they are addressed or not addressed in common normalization strategies, and autoencoder-based approaches to learn compressed and more manageable cellular representations.
 
-\subsection{normalization, hvg, etc of scRNA-seq}
+\subsection{Normalization and preprocessing of scRNA-seq}
 The usual approach to scRNA-seq involves several steps: read extraction, amplification, and mapping.
 Read extraction involves converting RNA molecules into complementary DNA (cDNA) and attaching adapters for sequencing.
 Then, amplification via PCR generates millions of copies of the cDNA, which are finally sequenced and mapped to a reference genome.
@@ -404,7 +407,7 @@ Therefore, the library size is typically normalized such that the total number o
 After library size normalization, a variance-stabilizing log transform is applied.
 Since many gene counts are still zero, a constant offset or pseudocount is applied, $log(x + 1)$ also referred to as \textit{log1p}, to avoid \textit{nan}s.
 There is a relationship between the normalized library size and the pseudocount, as smaller library sizes imply, in effect, larger pseudocounts.
-This in turn affects the statistics and behavior of lowly expressed genes \cite{ahlmann-eltze2023}. % TODO: how?
+This in turn affects the statistics and behavior of lowly expressed genes \cite{ahlmann-eltze2023}.
 
 Even after normalization, the sparsity and high-dimensionality of scRNA-seq data still remain as challenges.
 In addition to the filtering genes and cells that exhibit a high degree of sparsity, it is commonplace to select for some subset of highly-variable genes (HVGs).
@@ -413,7 +416,7 @@ Furthermore, there may be a large number of genes that mark for specific pathway
 HVG selection aims to remove such genes automatically, by determining non-informative genes whose expression does not change across the population.
 Oftentimes, this step can reduce the dimensionality from the tens of thousands to the much more manageable hundreds to thousand \cite{satija2015,zheng2017,stuart2019}.
 
-\subsection{autoencoders, vae} \label{sec:autoencoders}
+\subsection{Learning low-dimensional representations with (variational) autoencoders}
 Autoencoders (AEs) have emerged has powerful and ubiquitous tools to aid in the modeling and analysis of scRNA-seq data.
 These models learn compressed representations of high-dimensional data by training a pair of neural networks, an encoder $\phi$, and a decoder $\psi$,
 to map data into and out of a low-dimensional "bottleneck" feature space such that data points can be faithfully reconstructed from their bottleneck representations.
@@ -424,7 +427,6 @@ that is $z = \phi(x)$ and $x\prime = \psi(z)$ is the resulting reconstructed dat
 The autoencoder is trained, typically with gradient descent methods \cite{kingma2017} to minimize the reconstruction error:
 \begin{equation}
   \mathcal{L}_{ae}(\phi, \psi; x) = -\frac{1}{2} || x - x\prime ||^2
-  \label{eq:ae-loss}
 \end{equation}
 
 The popular Variational Autoencoders (VAEs)~\citep{kingma2013} take a generative approach and are frequently applied to scRNA-seq data \cite{lopez2018, huang2018, eraslan2019, lotfollahi2019}.
@@ -442,9 +444,8 @@ The KL term in equation \ref{eq:vae-loss} is often regarded as a regularization 
 When applied to scRNA-seq data, it is common to use a hyperparameter $\beta$ that tunes the strength of the regularization, 
 $-\log p_\phi(x | \hat{z}) + \beta \mathcal{D}_{KL}(q_\psi(z|x) || p(z))$,
 and is related to the variance of the prior distribution $p(z)$.
-% TODO: check
 
-\section{Aligning cellular states across contexts}
+\section{Learning to align cellular states across contexts}
 We have seen that in order to understand complex biological processes, such as the mechanisms governing the development of cancer, cellular behavior must be understood across many time points and levels, e.g. from its mutational state, levels of gene regulation, abundance of signaling proteins, etc.
 Although technologies exist to measure cells on each of these levels,
 a common shared limitation is their requirement to consume or destroy profiled cells.
@@ -460,18 +461,21 @@ Say $\eta$ represents the distribution of cellular states representing the sampl
 We assume that $\mu$ and $\nu$ are somehow derived from $\eta$ and our aim is to then describe how to align $\mu$ and $\nu$.
 This alignment appears in two main paradigms, described below:
 
-% TODO: caption
-\begin{figure}
+\begin{figure}[htp]
   \begin{center}
     \includegraphics[width=0.95\textwidth]{figures/introduction/thesis-overview-pgm.pdf}
   \end{center}
-  \caption{}\label{fig:thesis-overview-pgm}
+  \caption{Learning to align single-cell populations. $\nu$ represents some holistic distribution of cellular states that is manipulated or projected into observable distributions $\mu$ and $\nu$.
+  In this thesis, methods are developed to align $\mu$ and $\nu$ in order to recover or understand some biological process or state.
+  \textbf{a)} multi-modal integration. $\mu$ and $\nu$ are realized through different single-cell profiling technologies. \textsc{SCIM} \cite{stark2020} is developed to construct multi-modal single-cell observations.
+    \textbf{b)} single-cell perturbation responses. $\mu$ and $\nu$ are represent the control and perturbed population states. \textsc{CellOT} \cite{bunne2023} is developed to recover the perturbation responses of individual cells.
+  }\label{fig:thesis-overview-pgm}
 \end{figure}
 
 \paragraph{Constructing holistic view of cells}
 Often it is advantageous to understand cellular state in the context of multiple modalities,
 for instance, to understand the joint-wise state of gene expression and protein levels.
-Here, $\mu$ and $\nu$ can be considered projects of $\eta$ from some abstract space representing a holistic cellular state into their respective observable domains, e.g. gene expression space or protein space, as summarized in Figure \ref{need}a.
+Here, $\mu$ and $\nu$ can be considered projects of $\eta$ from some abstract space representing a holistic cellular state into their respective observable domains, e.g. gene expression space or protein space, as summarized in Figure \ref{fig:thesis-overview-pgm}a.
 The key complication here is that $\mu$ and $\nu$ are typically in distinct feature spaces that might not have a trivial correspondence.
 For instance, the relationship between genes and proteins are known to not be 1-to-1 \cite{edfors2016}.
 Chapter \ref{ch:scim} describes SCIM, a framework that performs multi-modal single-cell integration in the absence of corresponding cellular feature sets.
@@ -479,7 +483,7 @@ Chapter \ref{ch:scim} describes SCIM, a framework that performs multi-modal sing
 \paragraph{Constructing time-resolved cellular observations}
 The cellular responses to perturbations can be considered as a temporal process.
 Cells are exposed to some agent of perturbation, such as a drug treatment, that causes a cascade of signal activation within the cell, changing its state.
-Here, $\mu$ and $\nu$ can be considered observations of $\eta$ within the same observational domain but under different conditions, summarized in Figure \ref{need}b
+Here, $\mu$ and $\nu$ can be considered observations of $\eta$ within the same observational domain but under different conditions, summarized in Figure \ref{fig:thesis-overview-pgm}b
 Typically $\mu$ will refer to the population treated and profiled with some control condition, while $\nu$ will refer to the population treated with the perturbation of interest and profiled after some time has passed.
 The key complication here is that the underlying cellular populations will be heterogeneous in composition and response, and these complicated responses will need to be recovered without access to paired input-output cellular states.
 Chapter \ref{ch:cellot} describes CellOT, a framework to learn and predict such heterogenous perturbation responses from uncoupled cellular observations using recent advances in neural optimal transport.
