@@ -10,34 +10,32 @@ and the remaining 15\% of yet unseen control cells to predict their perturbed st
   \begin{center}
     \includegraphics[width=0.5\textwidth]{./figures/cellot-cohort/iid-predictions.pdf}
   \end{center}
-  \caption{CellOT learns from and accurately predicts multivariate feature profiles of patient-derived tumor cells treated with cancer drugs.
-  a) Graphical representation of the prediction set-up. CellOT is trained on a subset of untreated (control) and drug-treated cells individually for each patient treatment pair. 
-  b) Histogram comparing the distribution of predicted-treated pERK single-cell values by CellOT (red), Mean corrections (light green), scGen (grey) to observed-treated values (dark blue) and control (light blue). Unlike other prediction methods, the CellOT-derived marginal almost perfectly overlaps with observed-treated.
+  \caption{\textsc{CellOT} learns from and accurately predicts multivariate feature profiles of patient-derived tumor cells treated with cancer drugs.
+  a) Graphical representation of the prediction set-up. \textsc{CellOT} is trained on a subset of untreated (control) and drug-treated cells individually for each patient treatment pair. 
+  b) Histogram comparing the distribution of predicted-treated pERK single-cell values by \textsc{CellOT} (red), Mean corrections (light green), scGen (grey) to observed-treated values (dark blue) and control (light blue). Unlike other prediction methods, the \textsc{CellOT}-derived marginal almost perfectly overlaps with observed-treated.
   c) Results overview of the methods benchmarking aggregated for samples (top) and drug treatments (bottom). Y axis represents the distributional similarity of  predicted cells to observed cells using an inverse transform MMD metric ($exp^{-MMD}$), where a value of 1 indicates exactness. 
-d) UMAPs constructed with equal parts of observed-treated and predicted-treated cells, either by CellOT (left) or scGEN (right).}
+d) UMAPs constructed with equal parts of observed-treated and predicted-treated cells, either by \textsc{CellOT} (left) or scGEN (right).}
   \label{fig:iid-prediction}
 \end{figure}
 
-We implement three baseline approaches trained on and predicted with the same data splits as CellOT: a simple model that predicts a homogenous response corresponding to the average response of the sample (mean correction) and two auto-encoder based approaches, \textsc{scGen} \cite{lotfollahi2019} and conditional autoencoders \cite{lopez2018} (cAE), respectively. 
+We implement three baseline approaches trained on and predicted with the same data splits as \textsc{CellOT}: a simple model that predicts a homogenous response corresponding to the average response of the sample (mean correction) and two auto-encoder based approaches, \textsc{scGen} \cite{lotfollahi2019} and conditional autoencoders \cite{lopez2018} (cAE), respectively. 
 
 We went on to evaluate model performances both qualitatively and quantitatively by comparing the distribution of predicted cell states to the observed cell states.
-We found that across markers and patient treatments, CellOT outperformed the baselines (Figure \ref{fig:iid-prediction}b and Supplementary Figure \ref{fig:cellot-cohort-iid-metrics}).
+We found that across markers and patient treatments, \textsc{CellOT} outperformed the baselines (Figure \ref{fig:iid-prediction}b and Supplementary Figure \ref{fig:cellot-cohort-iid-metrics}).
 We also implemented a quantitative framework based on the Earth Mover’s Distance (EMD) \cite{villani2009} and Maximum Mean Discrepancy (MMD) \cite{gretton2012} to measure the similarity of predicted and observed cells in one dimension and multiple dimensions respectively.
 For either metric, low values correspond to accurate predictions.
 %We went on to compare the implemented baselines to our CellOT predictions using our two metrics and found CellOT-predicted distributional data to be most similar to observed data, and oftentimes hardly distinguishable from the latter (Supplementary Figure \ref{need}).
-We summarized our EMD finding both for patients and treatment in relation to the treatment effect and found that CellOT predictions, unlike its comparator baselines, remained accurate even when these were large (Figure \ref{fig:iid-prediction}c).  
+We summarized our EMD finding both for patients and treatment in relation to the treatment effect and found that \textsc{CellOT} predictions, unlike its comparator baselines, remained accurate even when these were large (Figure \ref{fig:iid-prediction}c).  
 
 Next, we went on to test whether our predictions were not only accurate at the distributional level but also for individual cells.
 For this we constructed UMAPs containing equal parts of predicted-perturbed cells and measured-perturbed (observed) cells.
 Our hypothesis was that accurately predicted cells would intermix neatly with observed cells.
-Indeed, in a UMAP generated with CellOT-predicted and observed cells, we found the whole space to be populated by cells of either origin, indicating that CellOT was capable of predicting indistinguishable perturbation profiles of individual cells.
+Indeed, in a UMAP generated with \textsc{CellOT}-predicted and observed cells, we found the whole space to be populated by cells of either origin, indicating that \textsc{CellOT} was capable of predicting indistinguishable perturbation profiles of individual cells.
 We found, in contrast, that a UMAP constructed using equal numbers of observed and scGen-predicted cells, displayed areas exclusively populated by cells of one of the two origins, which we believe are caused by inaccurate cell predictions (Figure \ref{fig:iid-prediction}d).
 We quantified our observation by implementing a nearest neighbor analysis for which we quantified the identity k=50 neighboring cells for each cell in the original feature space.
-Given the equal number of cells from each origin, optimal mixing of the two cell populations would have resulted in a neighborhood value of 0.5. For the displayed treatment, CellOT-Observed achieved a neighborhood value of 0.497 , whereas \textsc{scGen}-Observed was 0.451.
+Given the equal number of cells from each origin, optimal mixing of the two cell populations would have resulted in a neighborhood value of 0.5. For the displayed treatment, \textsc{CellOT}-Observed achieved a neighborhood value of 0.497 , whereas \textsc{scGen}-Observed was 0.451.
 Across all patient-treatment pairs the neighborhood value averaged at 0.495 and 0.477, respectively (Supplementary Figure \ref{fig:cellot-cohort-iid-knn}).
-Our quantitative assessment shows that single-cell drug responses of progressed melanoma patients can be predicted accurately using CellOT. 
-
-% TODO: check that all Figure X references are correctly rendered with \ref
+Our quantitative assessment shows that single-cell drug responses of progressed melanoma patients can be predicted accurately using \textsc{CellOT}. 
 
 Ex-vivo drug profiling has been used successfully to profile cytotoxic effects of various anti-cancer drugs to guide personalized therapy selection, in particular hematological indications \cite{liebers2023, kropivsek2023}.
 Different to previous work, the primary aim of the 4iDRP, was to measure the modulation of signaling pathways in response to pharmacological insults with multiplexed readouts.
@@ -49,7 +47,7 @@ Our hope at the outset of our study, was that we would identify strong patient-l
   \end{center}
   \caption{Unaccounted sample heterogeneity dominates functional measurements of cancer samples. a) Scatter plots of the first 4 PCs of control and average patient response profiles. Green dots represent the average control state of each patient, grey dots the average response each patient takes to a drug.
   b) Scatter plots of the 4 principal components highlighting control and treated patient profiles of three specific treatments. Green dots: patient profiles derived from control cells. blue dots: patient profiles derived from treated cells. Grey arrow: patient-level treatment effect.
-  c) UMAP project of control and CellOT-predicted treated cells of a single sample. Dots represent cells and are color-coded by treatment, grey: other treatments.
+  c) UMAP project of control and \textsc{CellOT}-predicted treated cells of a single sample. Dots represent cells and are color-coded by treatment, grey: other treatments.
   d) Scatterplot comparing patient-aggregated single-cell measurements of drug effect size (x axis) and angular dispersion (y axis). Angular dispersion measures the homogeneity of the response, where low values are homogeneous and high values are heterogeneous.
   e) and f) UMAP project of a random selection of observed treated cells (e) and scDRs (f) across all samples and treatments, colored by sample (top). Trametinib - Dabrafenib responses are highlighted in the bottom panels.
   g) Neighborhood analysis in observed drug treated cells (top) and scDRs (bottom). The analysis measures the fraction of cells in the data space neighborhood of each cells sharing either the same sample origin or treatment.
@@ -58,7 +56,7 @@ Our hope at the outset of our study, was that we would identify strong patient-l
 \end{figure}
 
 \subsection{Heterogeneity dominates patient drug responses}
-To gain an improved understanding of our dataset we first generated aggregated 4i profiles of our patients from control and the corresponding CellOT-predicted-treated cells by averaging single-cell results to patient-treatment profile.
+To gain an improved understanding of our dataset we first generated aggregated 4i profiles of our patients from control and the corresponding \textsc{CellOT}-predicted-treated cells by averaging single-cell results to patient-treatment profile.
 Next, we used the generated profiles to conduct a Principal Component (PC) Analysis and visualized the cohort in two scatter plots using the first and second, and the third and fourth PC, respectively (Figure \ref{fig:iid-structure}a).
 We visualized predicted-treated profiles in grey and control profiles in green.
 Surprisingly, we find that the control profiles interspersed extensively with predicted-treated profiles.
@@ -149,7 +147,7 @@ In line with our qualitative findings for Tram+Dabra, this quantitative approach
  Intriguingly, the treatment led to a reduction of AKT phosphorylation in the BRAF-mutated samples, whilst it increase levels of pAKT in the other samples.
  This differential response recapitulates extensive findings about a PI3K-mediated escape mechanism in Melanoma \cite{penna2015,irvine2018} and reaffirms the need of a coordinated de-activation of MAPK and MTOR pathways to achieve clinically meaningful treatment responses. 
 
-We, also found unexpected and unreported associations such as a differential treatment response of NRAS-mutated samples to Paclitaxel (Figure \ref{fig:iid-associations}b).
+We also found unexpected and unreported associations such as a differential treatment response of NRAS-mutated samples to Paclitaxel (Figure \ref{fig:iid-associations}b).
  Paclitaxel is a chemotherapy approved in the early 1990s that induces cell cycle arrest and apoptosis in proliferating cells by preventing depolymerisation of microtubules \cite{panchagnula1998}.
  Fittingly to its MoA, we found upon further investigating of the drug response that NRAS-mutated samples had a reduced Tubulin accumulation compared to the rest of the cohort which was independent of the respective control states and statistically undetectable in the observed-treated measurements (Figure \ref{fig:iid-associations}f).
  This finding points towards attenuated efficiency of Paclitaxel in NRAS-mutated patients, which may serve as the foundation for further experimental and clinical evidence gathering.
@@ -244,7 +242,7 @@ Such out-of-distribution tasks are challenging, as we are unable to inform our p
     We report significant differences (t-test, $p < 0.01$) to each baseline model as colored boxes. Blue hues indicate significant improvements.
     The relative treatment strengths, computed as the metric between the observed control and treated cells, are reported as purple column colors.
     c) Selected predicted marginals of marker features.
-    The distribution of CellOT-predicted MMD scores is shown in the inlay, highlighting the selected sample.
+    The distribution of \textsc{CellOT}-predicted MMD scores is shown in the inlay, highlighting the selected sample.
     d) Predicting the progression status of incoming samples at 90 days using predicted cellular responses.
     Given access to a training subset of the cohort, IID-predicted cellular responses are clustered and a binary SVM is trained to classify progression status within 90 days using sample level cluster frequencies.
     Incoming samples are predicted using the \emph{OOD}-predicted cellular responses, i.e. without observations of treated states.
@@ -267,9 +265,9 @@ i.e. the feature that was most affected by the perturbation.
 For instance, for Trametinib, this feature is pERK.
 The marker feature is of particular interest to the clinician as this typically corresponds to the cellular pathways the treatment is designed to control.
 
-Within each treatment, we compare the ability of CellOT to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
-We first qualitatively compare marker feature distributions of 4 treatments with differing MOAs (Figure \ref{fig:ood-main}c, Supplementary Figure \ref{fig:ood-predict-marginals}) and include the MMD metric corresponding to the selected CellOT predictions, to give a general indication of how well the model is performing (Figure \ref{fig:ood-main}c, dot plot inset).
-We find that in most cases CellOT not only outcompetes the baselines in its ability to predict OOD populations, it also reproduces distributional motifs (i.e. subpopulations) observed in the holdout populations.
+Within each treatment, we compare the ability of \textsc{CellOT} to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
+We first qualitatively compare marker feature distributions of 4 treatments with differing MOAs (Figure \ref{fig:ood-main}c, Supplementary Figure \ref{fig:ood-predict-marginals}) and include the MMD metric corresponding to the selected \textsc{CellOT} predictions, to give a general indication of how well the model is performing (Figure \ref{fig:ood-main}c, dot plot inset).
+We find that in most cases \textsc{CellOT} not only outcompetes the baselines in its ability to predict OOD populations, it also reproduces distributional motifs (i.e. subpopulations) observed in the holdout populations.
 We then quantitatively compare for which drug treatments does \textsc{CellOT} scDRs consistently outperform other approaches in terms of both MMD and EMD metrics.
 This is accomplished with a relative t-test (Figure \ref{fig:ood-main}b, $p < 0.01$) pairwise between metrics computed on \textsc{CellOT} scDRs and other approaches.
 The full distributions for the differences of these metrics can be found in Supplemental Figures \ref{fig:ood-eval-logmmd} and \ref{fig:ood-eval-marker}.
@@ -280,18 +278,18 @@ We believe these effects are explained by the size of our cohort, which is curre
 Note that while \textsc{scGen} tends to capture the response of a particular marker feature (EMD), it struggles to capture realistic cellular states (MMD), while the other baseline methods have the inverse behavior.
 \textsc{CellOT} typically is able to offer the best of both, highlighting both its accuracy and robustness.
 
-%Within each treatment, we compare the ability of CellOT to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
+%Within each treatment, we compare the ability of \textsc{CellOT} to consistently improve predictions of heldout samples across the whole cohort against baseline approaches.
 %Figure \ref{fig:ood-main}b shows for which treatments there are significant differences across the whole cohort between
-%the metric reported by CellOT and the baseline approach, as measured by a relative t-test (p-value < 0.01).
+%the metric reported by \textsc{CellOT} and the baseline approach, as measured by a relative t-test (p-value < 0.01).
 %The full distributions for the differences of these metrics can be found in Supplementary Figures \ref{fig:ood-eval-logmmd} and \ref{fig:ood-eval-marker}.
 %We demonstrate that we are able to make strong gains in many perturbation settings, including most of the targeted therapies.
 %These therapies are of particular interest as they are among some of the most commonly administered treatments \cite{need} and, in addition, tend to have the strongest effects.
 %Many other treatments tend to have more subtle effects, wherein individual effects can dominate the response and thus generalization is difficult to attain.
-%However, CellOT rarely underperforms against the baselines, and in the few cases when it does, it does so with small effect sizes.
+%However, \textsc{CellOT} rarely underperforms against the baselines, and in the few cases when it does, it does so with small effect sizes.
 %Note that while \textsc{scGen} tends to capture the response of a particular marker feature (EMD metric), it struggles to capture realistic cellular states (MMD metric), while the other baseline methods have the inverse behavior.
-%CellOT is able to offer the best of both, highlighting its robustness and stability.
-%We furthermore provide some example marginals (Figure \ref{fig:ood-main}c, full set in Figure \ref{fig:ood-predict-marginals}), showcasing how CellOT is able to learn biologically relevant states.
-%We include the MMD metric corresponding to the selected CellOT predictions, to give a general indication of how well the model is performing.
+%\textsc{CellOT} is able to offer the best of both, highlighting its robustness and stability.
+%We furthermore provide some example marginals (Figure \ref{fig:ood-main}c, full set in Figure \ref{fig:ood-predict-marginals}), showcasing how \textsc{CellOT} is able to learn biologically relevant states.
+%We include the MMD metric corresponding to the selected \textsc{CellOT} predictions, to give a general indication of how well the model is performing.
 
 \subsection{Identifying at-risk patients from predicted cellular responses}
 Finally, we demonstrate clinical utility of the predicted drug responses of holdout samples by training a model to predict binarized time to progression (TTP) of patients at 90 days.
@@ -347,14 +345,14 @@ while samples that exhibit higher degrees of heterogeneity in response are shown
     \includegraphics[width=\textwidth]{figures/cellot-cohort/condot.pdf}
   \end{center}
   \caption{
-    Predicting strongly differential responses to Dabrafenib of holdout samples using Conditional CellOT.
+    Predicting strongly differential responses to Dabrafenib of holdout samples using Conditional \textsc{CellOT}.
     a) Dendrogram of sample-level pairwise similarities of Dabrafenib responses, computed using the MMD distances between each sample's distribution of IID-predicted responses reveal similarly responding clusters of non-BRAF samples, BRAF samples with no lines of treatment, and BRAF samples with at least one line of treatment.
     Samples (columns) are colored based on the number of lines of treatment and driver mutation status.
     b) Differential effect strength of Dabrafenib, measured using the EMD of its marker, pERK, between control and treated cells of samples with and without the BRAF driver mutation that the treatment targets.
     c) Predicted responses of pERK for samples with and without the BRAF driver mutation, in both IID and OOD settings.
     OOD \textsc{CellOT} is not able to generalize the differential responses out-of-distribution, while the conditional model has improved performance when compared to the IID model.
-    d) Improvements of the pERK marker EMD for predictions made by the conditional CellOT vs other approaches. The metric is computed on the predictions of each approach on cells from holdout samples and the pairwise differences to conditional CellOT are shown. Negative values correspond to improvements Conditional CellOT makes. 
-    e) pERK marker marginals for CellOT and conditional CellOT models for BRAF positive (top) and negative (bottom) samples.
+    d) Improvements of the pERK marker EMD for predictions made by the conditional \textsc{CellOT} vs other approaches. The metric is computed on the predictions of each approach on cells from holdout samples and the pairwise differences to conditional \textsc{CellOT} are shown. Negative values correspond to improvements Conditional \textsc{CellOT} makes. 
+    e) pERK marker marginals for \textsc{CellOT} and conditional \textsc{CellOT} models for BRAF positive (top) and negative (bottom) samples.
   }\label{fig:conditional-ot}
 \end{figure}
 
@@ -374,7 +372,7 @@ Here we observe that dabrafenib induces a strong pERK response in patients with 
 an observation is in agreement with the intended design and use of the drug.
 
 In order to learn the strongly differential response of dabrafenib,
-we train a version of CellOT whose inputs inputs are \emph{conditioned} \cite{bunne2022} with the status of the sample's driver mutation and lines of treatment. 
+we train a version of \textsc{CellOT} whose inputs inputs are \emph{conditioned} \cite{bunne2022} with the status of the sample's driver mutation and lines of treatment. 
 These conditional parameters are able to inform and influence its learned responses with clinical metadata
 This is achieved by concatenating a one-hot encoding of each metadata to the cellular features.
 Note that while the potentials trained by \textsc{CellOT} must be convex in their inputs,

@@ -93,11 +93,11 @@ What we often have access to instead, is a set of similar cells profiled in the 
 %  \item while traditional OT approaches require observations of both control and perturbed states, CellOT, thanks to this parameterization, is able to, after training, predict cellular responses without access to the treated states
 %  \item This allows the framework to bring the power of OT to prediction tasks
 %\end{enumerate}
-To address the challenges, in chapter \ref{} we described \textsc{CellOT}, a novel framework that recovers individual cell responses by learning to \emph{align} the full set of perturbed and unperturbed observations. 
+To address the challenges, in chapter \ref{ch:cellot} we described \textsc{CellOT}, a novel framework that recovers individual cell responses by learning to \emph{align} the full set of perturbed and unperturbed observations. 
 While previous approaches to this problem have fail to adequately address the fundamental alignment challenge,
 \textsc{CellOT}, however, leverages the mathematical theory of optimal transport to strongly align the distribution of cellular states.
 By way of cutting-edge advancements in neural optimal transport, the learned transport function that applies the perturbation effect is parameterized using neural networks that are optimized in a stable and scalable manner.
-This key innovation sets CellOT apart from traditional optimal transport methods \cite{}, which typically require observations of both control and perturbed cellular states.
+This key innovation sets \textsc{CellOT} apart from other optimal transport methods \cite{schiebinger2019}, which typically require observations of both control and perturbed cellular states.
 Thanks to this parameterization, the CellOT framework introduces the powerful mathematical tools of optimal transport to a wide range of predictive tasks in cellular biology.
 %\textsc{CellOT} represents a significant advancement in our ability to study the complex, heterogeneous, and dynamic responses of cellular populations to various perturbations. This novel framework holds great promise for unlocking new insights into fundamental biological processes and accelerating our understanding of cellular behavior.
 
@@ -182,11 +182,11 @@ However autoencoders are, in a way, uninformed about the properties of the featu
 This makes it difficult, though not impossible, for them to learn complex feature-feature interactions, such as the hierarchical signaling processes that we understand to drive much of cellular biology.
 
 Recently, a new class of models known as single-cell foundation models have been introduced within community.
-In lieu of multi-layer perceptrons, these models \cite{} utilize more modern attention-based architectures \cite{}, which have revolutionized fields such as natural language processing \cite{}.
+In lieu of multi-layer perceptrons, these models \cite{theodoris2023, cui2024, rosen2023} utilize more modern attention-based architectures \cite{vaswani2023}, which have revolutionized fields such as natural language processing \cite{devlin2019, openai2024}.
 Single-cell foundation models imbue features with their own embeddings which, by way of the attention mechanism, interact with and self-update according to learned interactions between the states of other features, within the same cell.
 Thus, these models have the potential to produce more nuanced cellular representations that incorporate biological structure \cite{stark2021,roohani2023}
 or interactions, pathways, and signaling roles of elements across different modalities \cite{argelaguet2018, immer2024,}.
-However, these models have many challenges that must be addressed, including  data that is not only noisier but less available, larger context sizes, and much more complex underlying latent structures.
+However, these models have many challenges \cite{ma2024, kedzierska2023, crowell2023} that must be addressed, including  data that is not only noisier but less available, larger context sizes, and much more complex underlying latent structures.
 
 %\begin{enumerate}
 %  \item both of the over-arching problems addressed in this thesis, multi-modal integration and the reocver of perturbation responses, rely in someway on good representations of cells

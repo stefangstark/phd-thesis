@@ -133,7 +133,7 @@ The magnitude of the null match penalty is a hyperparameter that corresponds to 
   \label{fig:null-cell}
 \end{figure}
 
-The extended graph structure is depicted in Figure XX, where $R$ and $S$ refer to the root and sink nodes, respectively.
+The extended graph structure is depicted in Figure \ref{fig:null-cell}, where $R$ and $S$ refer to the root and sink nodes, respectively.
 Furthermore, to account for differences in the number of cells between modalities ($n$, $m$), we allow for one-to-many matches by increasing the capacity of the edges incoming to the sink ($u_i$ for $i \in {1, \ldots, m}$, assuming the nodes linked to the sink correspond to the smaller dataset, i.e. $m \leq n$.
 To prevent all matches from collapsing onto a very small set of nodes, we constrain the incoming sink capacities, excluding the null node, to equal the cardinality of the bigger dataset divided by the cardinality of the smaller dataset, with the capacities distributed uniformly across the sink edges.
 If more than two data modalities are present, the bipartite matching is solved sequentially by obtaining pairwise matches between technologies.

@@ -1,5 +1,3 @@
-% TODO: remove online methods references
-
 \section{Applications of \textsc{CellOT}}
 
 We apply \textsc{CellOT} to learn treatment responses and development processes in two modalities, 4i \cite{gut2018} and scRNAseq. Several settings and tasks are considered, outlined below:
@@ -74,7 +72,7 @@ We find that \textsc{CellOT} can approach the lower bound (\emph{observed} setti
 
 Different evaluation metrics across all 35 4i therapies and 6 scRNAseq therapies are summarized in Supplemental Figures \ref{supp_fig:4i_all_results} and \ref{supp_fig:sciplex_all_results}.
 Besides MMD, we additionally include the $\ell_2$ metric that measures the distance between the observed and predicted \emph{mean} drug effect, where these drug signatures are computed as the difference in means between the treated and untreated cell populations.
-%Lastly, we compare the overall mean correlation coefficient $r^2$ between the predicted and observed data on all features (see Online Methods).
+%Lastly, we compare the overall mean correlation coefficient $r^2$ between the predicted and observed data on all features
 $\textsc{CellOT}$ outperforms the baselines in both metrics across all treatments, typically by one order of magnitude.
 We attribute the strong performance of \textsc{CellOT} to its ability to learn a transport function that considers explicitly the data geometries of cell populations through the theory of optimal transport.
 This hypothesis is supported by the observation that the inter-feature correlation structure remains largely conserved between treated and untreated populations, thus depicting a setting where optimal transport approaches excel. For more information, see Supplemental Figure \ref{supp_fig:data_correlation}.
@@ -89,7 +87,7 @@ and thus the perturbed state of different subpopulations is not captured consist
 Capturing distinct perturbation responses of different cell types within the same sample remains a challenging computational task. To reduce the task's complexity, prediction algorithms can be guided by predefined cell type labels both in the perturbed and unperturbed states \cite{chen2020} or set to approximate the mean drug response \cite{lotfollahi2019}.  These simplifications come at a cost: the reliance on a priori knowledge about present and relevant cell types, the assumption that cell types are characterized by the same features before and after a perturbation and that the drug response is uniform within a cell type.
 In the worst case, these limitations risk masking true and important drug response heterogeneity  and thus hamper the discovery of novel cell type or cell state-specific perturbation responses (see further comparisons in Supplemental Figure \ref{supp_fig:comparison_cellot_average}).
 \textsc{CellOT} is free of these limitations and enables scientists to query the predicted single-cell responses at the granularity best suited to answer their biological questions.
-As a proof of concept, we co-cultured the aforementioned patient-derived melanoma cell lines (see Online Methods) at equal ratios and performed a boutique drug screen, during which we exposed cells 8h to a panel of 34 drugs and measured the single-cell drug responses with the 4i technology. 
+As a proof of concept, we co-cultured the aforementioned patient-derived melanoma cell lines at equal ratios and performed a boutique drug screen, during which we exposed cells 8h to a panel of 34 drugs and measured the single-cell drug responses with the 4i technology. 
 
 \begin{figure}
   \begin{center}
@@ -120,8 +118,8 @@ A UMAP embedding of all cells color-coded by the treatment distinctly separates 
 Such distinct treatment embeddings are not present when accounting only for an average perturbation effect (\ref{supp_fig:4i_analysis_extended}d), indicating the importance of capturing the cellular heterogeneity of drug responses.
 
 Using Leiden clustering on the full feature set, we grouped unperturbed control cells in 12 cellular states (figure \ref{fig:cellot-main-4i-analysis}d, \ref{supp_fig:4i_analysis_extended}g.
-Cellular states 1, 5, 6, 9, and 12 show high levels of MelA and no SOX9 and thus correspond to the melanocytic cell line M130429, whereas the SOX9\textsuperscript{+} and MelA\textsuperscript{-} states 2, 3, 4, 7, 8, 10, and 11 represent the mesenchymal cell line M130219 (see Online Methods). Overall, we find that M130429 cells have higher phosphorylation levels of the measured signaling kinases compared to M130219;
-% The cluster structure derived from the control cells is further persistent in the perturbed states. 
+Cellular states 1, 5, 6, 9, and 12 show high levels of MelA and no SOX9 and thus correspond to the melanocytic cell line M130429, whereas the SOX9\textsuperscript{+} and MelA\textsuperscript{-} states 2, 3, 4, 7, 8, 10, and 11 represent the mesenchymal cell line M130219.
+The cluster structure derived from the control cells is further persistent in the perturbed states. 
 a stereotypical spatial organization of cellular states is retained for the majority of the drugs,  and cell states belonging to the same cell line cluster together (Supplmental Figure \ref{supp_fig:4i_analysis_extended}f). 
 
 Computing the difference between the control and treated state of each drug, i.e., the optimal

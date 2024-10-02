@@ -15,18 +15,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \dissnum{$000000$}
 \title{Learning to align single-cell populations}
-\author{Stefan Stark}
-\acatitle{\normalsize M.Sc. in Computer Science,\\ETH Zurich} % TODO: fix cover page
+\author{Stefan G. Stark}
+\acatitle{\normalsize M.Sc. in Computer Science,\\ETH Zurich}
 \dateofbirth{March $11$, $1992$}
 \citizen{United States}
-%\date{November 2020}
 \Year{2024}
 \examiners{
 	\normalsize
-  Prof.\ Dr.\ Gunnar R\"atsch (ETH Zurich), examiner\linebreak
-  Dr.\ Kjong-van Lehmann (RWTH), examiner\linebreak
-  Prof. Dr.\ Andreas Krause (ETH Zurich), co-examiner\linebreak
-  Prof. Dr.\ Oliver Stegle (EMBL), co-examiner\linebreak
+  Prof.\ Dr.\ Gunnar R\"atsch, examiner\linebreak
+  Dr.\ Kjong-van Lehmann, examiner\linebreak
+  Prof. Dr.\ Andreas Krause, co-examiner\linebreak
+  Prof. Dr.\ Oliver Stegle, co-examiner\linebreak
 }
 \support{}
 \disclaimer{}
@@ -57,8 +56,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % GLOSSARY %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\printnoidxglossaries
-\cleardoublepageempty{}
+%\printnoidxglossaries
+%\cleardoublepageempty{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BODY %
@@ -78,7 +77,20 @@
 % APPENDIX %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\include{chapters/appendix}
+%\include{chapters/appendix/appendix.tex}
+\chapter{Appendix}
+
+\section{Learning to align single-cell multi-modal profiles}
+\input{chapters/appendix/integration.tex}
+\cleardoublepageempty{}
+
+\section{Learning to align single-cell perturbation responses}
+\input{chapters/appendix/cellot-methods.tex}
+\cleardoublepageempty{}
+
+\section{Exploring the clinical utility of single-cell perturbation responses}
+\input{chapters/appendix/cellot-cohort.tex}
+\cleardoublepageempty{}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
