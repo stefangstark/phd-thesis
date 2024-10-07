@@ -9,7 +9,6 @@
 \chapter*{Abstract}
 Cellular states are complex -- their underlying genomic sequence, RNA transcription levels, accessibility of chromatin regions, protein levels, chemical activity, etc, work in tandem to determine the behavior of a cell and its responses to changes in its environment. 
 Initially, the study of cellular populations relied on bulk profiling technologies
-%which average individual cellular signals across population into a single observation, and
 that made it difficult to study heterogeneous populations.
 However, this last decade has seen, and continues to see, an explosion in the development of single-cell profiling technologies that allow individual cellular states to be observed at scale.
 While these technologies revolutionized the study of cellular biology, they are still typically limited in the sense that they consume or otherwise destroy profiled cells.
@@ -33,14 +32,65 @@ In particular, we apply a method developed to recover and predict heterogeneous 
 \begin{otherlanguage}{ngerman}
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
 \chapter*{Zusammenfassung}
-% TODO: (later) translate abstract
-[german translation]
+Zelluläre Zustände sind komplex - die ihnen zugrunde liegende Genomsequenz, die RNA-Transkriptionsraten, die Zugänglichkeit von Chromatinregionen, die Proteinkonzentrationen, die chemische Aktivität usw. wirken zusammen, um das Verhalten einer Zelle und ihre Reaktionen auf Veränderungen in ihrer Umgebung zu bestimmen. Ursprünglich stützte sich die Untersuchung von Zellpopulationen auf Technologien zur Erstellung von Massenprofilen, was die Untersuchung heterogener Populationen erschwerte.
+In den letzten zehn Jahren hat sich jedoch die Entwicklung von Technologien zur Erstellung von Einzelzellprofilen, mit denen einzelne Zellzustände in großem Maßstab beobachtet werden können, explosionsartig entwickelt und wird dies auch weiterhin tun.
+Diese Technologien haben zwar das Studium der Zellbiologie revolutioniert, sind aber in der Regel immer noch insofern begrenzt, als sie die profilierten Zellen verbrauchen oder anderweitig zerstören.
+Das bedeutet, dass eine einzelne Zelle nur einmal gemessen werden kann.
+Folglich sind diese Technologien nur in der Lage, Projektionen des zugrunde liegenden ganzheitlichen zellulären Zustands auf einen einzigen beobachtbaren Bereich zu messen, z. B. die RNA-Transkriptionshäufigkeit einer Zelle oder die Proteinspiegel.
+Darüber hinaus bleibt die Modellierung zeitlicher Prozesse, wie z. B. die Reaktion auf Störungen, eine Herausforderung, da diese komplexen Verhaltensweisen ohne Zugang zu einer Reihe von gepaarten „Input-Output“-Zuständen wiederhergestellt werden müssen.
+
+Diese Arbeit befasst sich im Wesentlichen mit der Entwicklung und Anwendung von auf maschinellem Lernen basierenden Methoden, um diese Beschränkung auf Einzelbeobachtungen zu überwinden.
+Ein typisches modernes Einzelzellexperiment erzeugt zwei (oder mehr) Datensätze, die wir als Stichproben aus Verteilungen über zelluläre Zustände, $\mu$ und $\nu$, betrachten können, die eine nicht-triviale Beziehung teilen.
+Unser Ziel ist es, diese Beziehung wiederherzustellen, indem wir lernen, diese zellulären Populationen zu \emph{align}.
+Konkret beschreiben wir, wie man
+i) multimodale Beobachtungen zu integrieren, bei denen $\mu$ und $\nu$ den Zustand der Populationen in verschiedenen beobachtbaren Bereichen darstellen
+und ii) Störungsreaktionen von Zellpopulationen zu modellieren, bei denen $\mu$ und $\nu$ den Zustand der Populationen zu zwei verschiedenen Zeitpunkten repräsentieren.
+Ein wichtiges Thema dieser Arbeit ist die Demonstration des klinischen Nutzens der entwickelten Methoden.
+Insbesondere wenden wir eine Methode an, die zur Wiederherstellung und Vorhersage heterogener Einzelzellreaktionen bei einer Kohorte von Melanompatienten entwickelt wurde, und zeigen, wie sie die Analyse und das Verständnis verbessern und letztlich dazu beitragen kann, ihre Behandlungen anzupassen.
+
 \end{otherlanguage}
 
 
 %\newpage
 %\chapter*{Acknowledgments}
 % TODO: (later) write awks
+
+% Gunnar
+% \begin{enumerate}
+%   \item scientific rigor, keen attention to detail
+%   \item passion
+%   \item fostering a healthy lab dynamic
+%   \item encouraged collaboration and open thought
+% \end{enumerate}
+
+% SCIM team Kjong, ximena, joanna
+% \begin{enumerate}
+%   \item early hands-on, helping me get a good start
+%   \item continued support and guidance
+% \end{enumerate}
+
+% CellOT team
+% \begin{enumerate}
+%   \item Charlotte
+%   \item Gabrielle
+% \end{enumerate}
+
+% BMI lab
+% \begin{enumerate}
+%   \item Natalie, Faisal, Gideon
+%   \item Misha, Amir
+%   \item Marc Zimmerman
+%   \item Francesco
+%   \item Rita, hugo, olga, sonali, Andre, alex, Harun, Tanmay, Vincent
+% \end{enumerate}
+
+% Family
+% \begin{enumerate}
+%   \item Gurur
+%   \item Sara
+%   \item parents
+% \end{enumerate}
+
 \endgroup
 
 \vfill
