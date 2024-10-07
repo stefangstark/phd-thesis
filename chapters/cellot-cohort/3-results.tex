@@ -13,7 +13,7 @@ and the remaining 15\% of yet unseen control cells to predict their perturbed st
   \caption{\textsc{CellOT} learns from and accurately predicts multivariate feature profiles of patient-derived tumor cells treated with cancer drugs.
   a) Graphical representation of the prediction set-up. \textsc{CellOT} is trained on a subset of untreated (control) and drug-treated cells individually for each patient treatment pair. 
   b) Histogram comparing the distribution of predicted-treated pERK single-cell values by \textsc{CellOT} (red), Mean corrections (light green), scGen (grey) to observed-treated values (dark blue) and control (light blue). Unlike other prediction methods, the \textsc{CellOT}-derived marginal almost perfectly overlaps with observed-treated.
-  c) Results overview of the methods benchmarking aggregated for samples (top) and drug treatments (bottom). Y axis represents the distributional similarity of  predicted cells to observed cells using an inverse transform MMD metric ($exp^{-MMD}$), where a value of 1 indicates exactness. 
+  c) Results overview of the methods benchmarking aggregated for samples (top) and drug treatments (bottom). Y axis represents the distributional similarity of predicted cells to observed cells using an inverse transform MMD metric ($exp^{-MMD}$), where a value of 1 indicates exactness. 
 d) UMAPs constructed with equal parts of observed-treated and predicted-treated cells, either by \textsc{CellOT} (left) or scGEN (right).}
   \label{fig:iid-prediction}
 \end{figure}
@@ -22,22 +22,21 @@ We implement three baseline approaches trained on and predicted with the same da
 
 We went on to evaluate model performances both qualitatively and quantitatively by comparing the distribution of predicted cell states to the observed cell states.
 We found that across markers and patient treatments, \textsc{CellOT} outperformed the baselines (Figure \ref{fig:iid-prediction}b and Supplementary Figure \ref{fig:cellot-cohort-iid-metrics}).
-We also implemented a quantitative framework based on the Earth Mover’s Distance (EMD) \cite{villani2009} and Maximum Mean Discrepancy (MMD) \cite{gretton2012} to measure the similarity of predicted and observed cells in one dimension and multiple dimensions respectively.
+We also implemented a quantitative framework based on the Earth Mover’s Distance (EMD) \cite{villani2009} and Maximum Mean Discrepancy (MMD) \cite{gretton2012} to measure the similarity of predicted and observed cells in one dimension and multiple dimensions, respectively.
 For either metric, low values correspond to accurate predictions.
 %We went on to compare the implemented baselines to our CellOT predictions using our two metrics and found CellOT-predicted distributional data to be most similar to observed data, and oftentimes hardly distinguishable from the latter (Supplementary Figure \ref{need}).
 We summarized our EMD finding both for patients and treatment in relation to the treatment effect and found that \textsc{CellOT} predictions, unlike its comparator baselines, remained accurate even when these were large (Figure \ref{fig:iid-prediction}c).  
 
 Next, we went on to test whether our predictions were not only accurate at the distributional level but also for individual cells.
-For this we constructed UMAPs containing equal parts of predicted-perturbed cells and measured-perturbed (observed) cells.
+For this, we constructed UMAPs containing equal parts of predicted-perturbed cells and measured-perturbed (observed) cells.
 Our hypothesis was that accurately predicted cells would intermix neatly with observed cells.
 Indeed, in a UMAP generated with \textsc{CellOT}-predicted and observed cells, we found the whole space to be populated by cells of either origin, indicating that \textsc{CellOT} was capable of predicting indistinguishable perturbation profiles of individual cells.
-We found, in contrast, that a UMAP constructed using equal numbers of observed and scGen-predicted cells, displayed areas exclusively populated by cells of one of the two origins, which we believe are caused by inaccurate cell predictions (Figure \ref{fig:iid-prediction}d).
-We quantified our observation by implementing a nearest neighbor analysis for which we quantified the identity k=50 neighboring cells for each cell in the original feature space.
-Given the equal number of cells from each origin, optimal mixing of the two cell populations would have resulted in a neighborhood value of 0.5. For the displayed treatment, \textsc{CellOT}-Observed achieved a neighborhood value of 0.497 , whereas \textsc{scGen}-Observed was 0.451.
-Across all patient-treatment pairs the neighborhood value averaged at 0.495 and 0.477, respectively (Supplementary Figure \ref{fig:cellot-cohort-iid-knn}).
+We found, in contrast, that a UMAP constructed using equal numbers of observed and scGen-predicted cells displayed areas exclusively populated by cells of one of the two origins, which we believe are caused by inaccurate cell predictions (Figure \ref{fig:iid-prediction}d).
+Given the equal number of cells from each origin, optimal mixing of the two cell populations would have resulted in a neighborhood value of 0.5. For the displayed treatment, \textsc{CellOT}-Observed achieved a neighborhood value of 0.497, whereas \textsc{scGen}-Observed was 0.451.
+Across all patient-treatment pairs, the neighborhood value averaged at 0.495 and 0.477, respectively (Supplementary Figure \ref{fig:cellot-cohort-iid-knn}).
 Our quantitative assessment shows that single-cell drug responses of progressed melanoma patients can be predicted accurately using \textsc{CellOT}. 
 
-Ex-vivo drug profiling has been used successfully to profile cytotoxic effects of various anti-cancer drugs to guide personalized therapy selection, in particular hematological indications \cite{liebers2023, kropivsek2023}.
+Ex-vivo drug profiling has been used successfully to profile the cytotoxic effects of various anti-cancer drugs to guide personalized therapy selection, in particular hematological indications \cite{liebers2023, kropivsek2023}.
 Different to previous work, the primary aim of the 4iDRP, was to measure the modulation of signaling pathways in response to pharmacological insults with multiplexed readouts.
 Our hope at the outset of our study, was that we would identify strong patient-level drug response signatures which would allow us to differentiate between control and treated samples and ultimately use such signatures to derive mechanistic insights about differences in treatment mechanisms and outcomes.  
 
@@ -45,10 +44,10 @@ Our hope at the outset of our study, was that we would identify strong patient-l
   \begin{center}
     \includegraphics[width=0.5\textwidth]{figures/cellot-cohort/iid-response-structure.pdf}
   \end{center}
-  \caption{Unaccounted sample heterogeneity dominates functional measurements of cancer samples. a) Scatter plots of the first 4 PCs of control and average patient response profiles. Green dots represent the average control state of each patient, grey dots the average response each patient takes to a drug.
-  b) Scatter plots of the 4 principal components highlighting control and treated patient profiles of three specific treatments. Green dots: patient profiles derived from control cells. blue dots: patient profiles derived from treated cells. Grey arrow: patient-level treatment effect.
-  c) UMAP project of control and \textsc{CellOT}-predicted treated cells of a single sample. Dots represent cells and are color-coded by treatment, grey: other treatments.
-  d) Scatterplot comparing patient-aggregated single-cell measurements of drug effect size (x axis) and angular dispersion (y axis). Angular dispersion measures the homogeneity of the response, where low values are homogeneous and high values are heterogeneous.
+  \caption{Unaccounted sample heterogeneity dominates functional measurements of cancer samples. a) Scatter plots of the first 4 PCs of control and average patient response profiles. Green dots represent the average control state of each patient, and grey dots represent the average response each patient takes to a drug.
+  b) Scatter plots of the four principal components highlighting control and treated patient profiles of three specific treatments. Green dots: patient profiles derived from control cells. Blue dots: patient profiles derived from treated cells. Grey arrow: patient-level treatment effect.
+  c) UMAP project of control and \textsc{CellOT}-predicted treated cells of a single sample. Dots represent cells and are color-coded by treatment; grey: other treatments.
+  d) Scatterplot comparing patient-aggregated single-cell measurements of drug effect size (x-axis) and angular dispersion (y-axis). Angular dispersion measures the homogeneity of the response, where low values are homogeneous and high values are heterogeneous.
   e) and f) UMAP project of a random selection of observed treated cells (e) and scDRs (f) across all samples and treatments, colored by sample (top). Trametinib - Dabrafenib responses are highlighted in the bottom panels.
   g) Neighborhood analysis in observed drug treated cells (top) and scDRs (bottom). The analysis measures the fraction of cells in the data space neighborhood of each cells sharing either the same sample origin or treatment.
  }
@@ -56,7 +55,7 @@ Our hope at the outset of our study, was that we would identify strong patient-l
 \end{figure}
 
 \subsection{Heterogeneity dominates patient drug responses}
-To gain an improved understanding of our dataset we first generated aggregated 4i profiles of our patients from control and the corresponding \textsc{CellOT}-predicted-treated cells by averaging single-cell results to patient-treatment profile.
+To gain an improved understanding of our dataset, we first generated aggregated 4i profiles of our patients from control and the corresponding \textsc{CellOT}-predicted-treated cells by averaging single-cell results to the patient-treatment profile.
 Next, we used the generated profiles to conduct a Principal Component (PC) Analysis and visualized the cohort in two scatter plots using the first and second, and the third and fourth PC, respectively (Figure \ref{fig:iid-structure}a).
 We visualized predicted-treated profiles in grey and control profiles in green.
 Surprisingly, we find that the control profiles interspersed extensively with predicted-treated profiles.
@@ -64,7 +63,7 @@ Further, we found that control profiles were distributed across the first 4 dime
 This intermixing is consistent with patient-level diversity being a dominant factor of variation across all measurements.
 
 Next, we are interested in understanding to what extent drug treatment effects are distinct and coherent throughout our cohort.
-For this, we selected three drug treatments, Trametinib + Dabrafenib (MEK inhibitor + BRAF inhibitor, Tram+Dabra), Vindesine (Vinca alkaloid), and Ixazomib (Proteasome inhibitor), Figure \ref{fig:iid-structure}b.
+For this, we selected three drug treatments: Trametinib + Dabrafenib (MEK inhibitor + BRAF inhibitor, Tram+Dabra), Vindesine (Vinca alkaloid), and Ixazomib (Proteasome inhibitor), Figure \ref{fig:iid-structure}b.
 These treatments were selected as representatives as they each have a different mechanism of action (MOA) and are indicative of the various effects strength measured with our platform.
 Thanks to \textsc{CellOT}, we have matched control (green) and predicted-treated profiles (blue), and so we were able to measure and visualize patient-specific drug effects (grey arrow).
  We found that Tram+Dabra indeed affected most samples similarly.
@@ -75,25 +74,21 @@ The severity of drug effects, however, varied across the cohort, as indicated by
 From these findings, we then explored whether treatment effects could be better described at the single-cell level by potentially overcoming artifacts introduced by a patient-level aggregation approach.
 We started by constructing UMAP projects of the control and predicted treated cellular states of a single sample, Figure \ref{fig:iid-structure}d.
 Similar to our cohort-level view, we found that both control and predicted-treated cells intermixed heavily.
-The control cells formed multiple clusters, akin to cancerous subclones.
-For relatively strong perturbations, such as Tram+Dabra and Vindesine, the predicted-treated cells clustered closely together, far removed from their corresponding control cells.
+The control cells formed multiple clusters akin to cancerous subclones.
+For relatively strong perturbations, such as Tram+Dabra and Vindesine, the predicted-treated cells clustered closely together, i.e., away from their corresponding control cells.
 For the less strong Ixazomib perturbation, however, predicted cells formed two distinct clusters, highlighting that within a sample the drug response of cells may very well be heterogeneous and dampen a strong patient-level response.
- %We found similar observations across samples and drug treatments in our cohort (Supplementary Figure \ref{need}).
-We investigated the notion further, that cell-to-cell variability in single-cell drug responses may mask patient-level treatment signatures.
-To do this we compared treatment effect size and variability in effect direction of single cells for each sample-treatment condition (Figure \ref{fig:iid-structure}e).
-We discovered that condition-averaged angular dispersion, a measure of variability in effect direction, was anticorrelated to effect size with a Pearson’s R of -0.91.
-and that heterogeneity in effect size, i.e. the extent to which a drug effects cells, increases as the condition-averaged effect size increases (growing diameters along x-axis). 
+We find that condition-averaged angular dispersion, a measure of variability in effect direction, was anticorrelated to effect size with a Pearson’s R of -0.91, and that heterogeneity in effect size, i.e. the extent to which a drug influences cellular state, increases as the condition-averaged effect size increases (growing diameters along x-axis). 
 
 In total, these findings indicate that to best capture drug responses from a clinically diverse cohort, the poorly defined differences between control and treated states and extensive treatment-dependent single-cell heterogeneity need to be accounted for.
  This requires the quantification of a treatment effect on an individual patient cell as a function of that cell’s untreated (control) state, effectively measuring single-cell drug responses (scDR).
  scDRs can be constructed by subtracting the control state from their corresponding predicted treated state using \textsc{CellOT}.
 These scDR are conceptually akin to the drug effect vectors presented Figure \ref{fig:iid-structure}b, however with the key distinction that they represent individual cells and not patient averages.
 
-As a first use-case, we set out to understand whether scDRs or profiles of predicted-treated cells captured treatment effects better, both of which are derived from the same cells .
+As a first use case, we set out to understand whether scDRs or profiles of predicted-treated cells captured treatment effects better, both of which are derived from the same cells.
  For this comparison, we first generated a UMAP containing predicted-perturbed cells from all our patients.
- We found that the observed clusters were dominated by the sample ID, rather than the drug treatment (Figure \ref{fig:iid-structure}e, small UMAP).
- This became particularly apparent when only the cells of individual treatments, e.g. Tram+Dabra were color-coded for their sample ID (Figure \ref{fig:iid-structure}e, large UMAP).
- The UMAP generated with scDRs of the same cells on the other hand, revealed less pronounced sample-dependent clustering (Figure \ref{fig:iid-structure}f, small UMAP) and the Tram+Dabra scDRs clustered primarily in one section of the UMAP (Figure \ref{fig:iid-structure}f, large UMAP).
+ We found that the observed clusters were dominated by the sample ID rather than the drug treatment (Figure \ref{fig:iid-structure}e, small UMAP).
+ This became particularly apparent when only the cells of individual treatments, e.g., Tram+Dabra, were color-coded for their sample ID (Figure \ref{fig:iid-structure}e, large UMAP).
+ The UMAP generated with scDRs of the same cells, on the other hand, revealed less pronounced sample-dependent clustering (Figure \ref{fig:iid-structure}f, small UMAP), and the Tram+Dabra scDRs clustered primarily in one section of the UMAP (Figure \ref{fig:iid-structure}f, large UMAP).
  To quantify these observations, we performed a nearest neighbor analysis comparable to our approach introduced in Figure \ref{fig:iid-prediction}.
 We furthermore find that the neighborhood of predicted-treated cells was heavily enriched for cells from the same sample rather than treatments, whereas for scDRs, neighborhoods were composed of single-cell profiles originating from the same sample and same treatment (Figure \ref{fig:iid-structure}g).
 
@@ -116,7 +111,7 @@ e) and f) Clinical associations detected across three cellular representations a
   \label{fig:iid-associations}
 \end{figure}
 
-scDR provide us with access to previously inaccessible representations of cellular processes in patient samples.
+scDR provides us with access to previously inaccessible representations of cellular processes in patient samples.
 Here we show how suitable patient-level descriptors based on scDRs allow for the discovery of differential drug responses that are associated with clinical characteristics of patients.
 %We previously introduced MMD as a similarity measurement between two sets of multi-dimensional distributions.
 %We extended the concept to perform pairwise patient comparisons of scDR and treated-predicted profiles.
